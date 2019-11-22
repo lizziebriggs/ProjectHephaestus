@@ -5,18 +5,20 @@ using UnityEngine;
 
 public class GaugeManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _anvilTimerGauge;
+    [SerializeField] private GameObject[] _anvilTimerGauge;
 
     private void Start()
     {
-        _anvilTimerGauge.SetActive(false);
+        foreach (var Gauge in _anvilTimerGauge)
+            Gauge.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.GetComponent<DistanceGrabbable>() == true)
         {
-            _anvilTimerGauge.SetActive(true);
+            foreach (var Gauge in _anvilTimerGauge)
+                Gauge.SetActive(false);
         }
     }
 
@@ -24,7 +26,8 @@ public class GaugeManager : MonoBehaviour
     {
         if (other.GetComponent<DistanceGrabbable>() == true)
         {
-            _anvilTimerGauge.SetActive(false);
+            foreach (var Gauge in _anvilTimerGauge)
+                Gauge.SetActive(false);
         }
     }
 }
