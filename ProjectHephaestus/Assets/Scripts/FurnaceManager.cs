@@ -6,50 +6,43 @@ using UnityEngine;
 
 public class FurnaceManager : MonoBehaviour
 {
-    private System.Timers.Timer _timer;
     [SerializeField] int _counter;
     [SerializeField] Transform _furnaceSpawn;
+
+    private System.Timers.Timer _timer;
     private int _elapsedCounter;
+
     private GameObject _furnaceObject;
     private GameObject _switchFurnaceObject;
-    bool _spawn = true;
 
     private void Start()
     {
         _elapsedCounter = _counter;
     }
 
-    private void Update()
-    {
-        if (_spawn) return;
-        FurnaceObjectCreation();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == _furnaceSpawn) _spawn = true;
-        else _spawn = false;
-        Debug.Log(_spawn);
-        if (other.GetComponent<DistanceGrabbable>() == true)
+        if(other.GetComponent<Smelt>() && other.GetComponent<Smelt>().canBeSmelted)
         {
-            GameObject furnaceObject = other.GetComponent<Smelt>().Smelted;
-            if (furnaceObject)
-            {
-                _furnaceObject = other.gameObject;
-                _switchFurnaceObject = furnaceObject;
-            }
+            _switchFurnaceObject = other.GetComponent<Smelt>().Smelted;
 
-            SetTimer();
+            if (other.gameObject != _switchFurnaceObject)
+            {
+                if (other.GetComponent<DistanceGrabbable>())
+                {
+                    SetTimer();
+                    FurnaceObjectCreation(other.gameObject);
+                }
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<DistanceGrabbable>() == true)
+        if (other.GetComponent<DistanceGrabbable>())
         {
             _timer.Stop();
             _elapsedCounter = _counter;
-            _spawn = true;
         }
     }
 
@@ -57,6 +50,7 @@ public class FurnaceManager : MonoBehaviour
     {
         // Create a timer with a two second interval.
         _timer = new System.Timers.Timer(1000);
+
         // Hook up the Elapsed event for the timer. 
         _timer.Elapsed += timer1_Tick;
         _timer.AutoReset = true;
@@ -68,19 +62,21 @@ public class FurnaceManager : MonoBehaviour
         _elapsedCounter--;
         if (_elapsedCounter == 0)
         {
-            
             _timer.Stop();
-            
         }
     }
 
-    private void FurnaceObjectCreation()
+    private void FurnaceObjectCreation(GameObject originalObject)
     {
-        _furnaceObject.gameObject.SetActive(false);
+        // Change original item to smelted version
+        Destroy(originalObject);
         Instantiate(_switchFurnaceObject);
-        _switchFurnaceObject.transform.position = _furnaceSpawn.position;
+        
+        // Set position of new smelted object to original object
+        _switchFurnaceObject.transform.position = originalObject.transform.position;
+
+        // Reset timer
         _timer.Stop();
         _elapsedCounter = _counter;
-        _spawn = true;
     }
 }

@@ -125,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _smelted: {fileID: 1937737804836105414, guid: 063db6e07a9a431468e834d286625dec,
     type: 3}
+  canBeSmelted: 1
 --- !u!114 &3974402462227890203
 MonoBehaviour:
   m_ObjectHideFlags: 0
