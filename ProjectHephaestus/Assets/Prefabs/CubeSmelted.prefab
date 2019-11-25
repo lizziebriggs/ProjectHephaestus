@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 4565634352898159965}
   - component: {fileID: -632668452803126442}
   - component: {fileID: 370113392926074736}
-  m_Layer: 0
+  - component: {fileID: -4316357261385283975}
+  m_Layer: 8
   m_Name: CubeSmelted
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3886956993682656021}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.956152, y: 0.84302425, z: 6.449799}
+  m_LocalPosition: {x: 4.093789, y: 0.8190422, z: 6.4585}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,7 +110,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &370113392926074736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,3 +129,18 @@ MonoBehaviour:
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
   m_materialColorField: 
+--- !u!114 &-4316357261385283975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886956993682656021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77ae8621b1caaa4cbbbbd6806876707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitCount: 5
+  hammered: {fileID: 3865990066317821122, guid: c344b839ae5722c43924f241b5b827b7,
+    type: 3}

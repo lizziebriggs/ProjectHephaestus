@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1937737804836105410}
   - component: {fileID: 1937737804836105411}
   - component: {fileID: 1937737804836105408}
-  - component: {fileID: 914281610034289955}
   - component: {fileID: 1937737804836105409}
+  - component: {fileID: 914281610034289955}
   m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937737804836105414}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.9625, y: 0.737, z: 6.739}
   m_LocalScale: {x: 0.17516, y: 0.17516, z: 0.17516}
   m_Children: []
@@ -111,21 +111,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!114 &914281610034289955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937737804836105414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ec2914b8ae6f1a49b8f7901f2bd927b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _smelted: {fileID: 3974402462227890178, guid: 3e2f3a82d41058048ac326f7ea7264ce,
-    type: 3}
-  canBeSmelted: 1
 --- !u!114 &1937737804836105409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,3 +129,18 @@ MonoBehaviour:
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
   m_materialColorField: 
+--- !u!114 &914281610034289955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937737804836105414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ec2914b8ae6f1a49b8f7901f2bd927b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _smelted: {fileID: 3886956993682656021, guid: 70d2719b7c27ae741aadf2027afbd713,
+    type: 3}
+  canBeSmelted: 1

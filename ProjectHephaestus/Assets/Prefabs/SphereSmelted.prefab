@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 7732058776411928202}
   - component: {fileID: -66166543050026103}
   - component: {fileID: 5652858950234831941}
-  m_Layer: 0
+  - component: {fileID: 5727168818787712779}
+  m_Layer: 8
   m_Name: SphereSmelted
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2203721093805731654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.9448638, y: 0.82780457, z: 6.434406}
+  m_LocalPosition: {x: 3.8577557, y: 0.80284405, z: 6.4520535}
   m_LocalScale: {x: 0.1443633, y: 0.1443633, z: 0.1443633}
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,7 +110,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &5652858950234831941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,3 +129,18 @@ MonoBehaviour:
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
   m_materialColorField: 
+--- !u!114 &5727168818787712779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203721093805731654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77ae8621b1caaa4cbbbbd6806876707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitCount: 5
+  hammered: {fileID: 8440024689571798044, guid: 5c956558c4126db4cb85f961e149d2a9,
+    type: 3}
