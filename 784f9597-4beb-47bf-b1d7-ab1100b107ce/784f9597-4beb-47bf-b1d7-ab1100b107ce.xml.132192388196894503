@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<RecordingInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PublicID>784f9597-4beb-47bf-b1d7-ab1100b107ce</PublicID>
+  <SessionID>00000000-0000-0000-0000-000000000000</SessionID>
+  <SessionGroupID>00000000-0000-0000-0000-000000000000</SessionGroupID>
+  <SessionLabel>PorjectHephaestusPrototypeDemo</SessionLabel>
+  <SessionGroupLabel />
+  <UploadStatus>Offline</UploadStatus>
+  <IsFinalized>false</IsFinalized>
+  <StartTime>0001-01-01T00:00:00</StartTime>
+  <EndTime>0001-01-01T00:00:00</EndTime>
+  <Streams />
+  <EventStreams />
+  <Segments />
+  <Server>gre.cloud.panopto.eu</Server>
+  <TimeOffset>0</TimeOffset>
+  <DeleteWhenUploadComplete>false</DeleteWhenUploadComplete>
+  <UserID>00000000-0000-0000-0000-000000000000</UserID>
+  <ClientInfo>
+    <Type>Windows</Type>
+    <MachineID>S-1-5-21-3583442326-3103421343-1900662992lsdbez8dy7</MachineID>
+    <IPAddress>172.16.170.215</IPAddress>
+    <ClientBuildVersion>5.7.0.42418</ClientBuildVersion>
+    <ClientAppsVersion>5.7.0</ClientAppsVersion>
+    <OSVersion>Microsoft Windows NT 10.0.17763.0</OSVersion>
+    <ClientName>GM-KW104-09</ClientName>
+  </ClientInfo>
+  <RepairStatus>NotRepaired</RepairStatus>
+  <FaultedReason>NotFaulted</FaultedReason>
+  <FinalizeFailureCount>0</FinalizeFailureCount>
+  <LastFinalizeCall>0001-01-01T00:00:00</LastFinalizeCall>
+  <RecordingDir>L:\Year 2\Digital Media Production\Git\ProjectHephaestus\784f9597-4beb-47bf-b1d7-ab1100b107ce</RecordingDir>
+  <DeleteAfterTime xsi:nil="true" />
+</RecordingInfo>

@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<RecordingInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PublicID>af2b78da-b2ae-4c95-859c-ab1100acedb3</PublicID>
+  <SessionID>00000000-0000-0000-0000-000000000000</SessionID>
+  <SessionGroupID>00000000-0000-0000-0000-000000000000</SessionGroupID>
+  <SessionLabel>ProjectHephaestusPrototypeDemo</SessionLabel>
+  <SessionGroupLabel />
+  <UploadStatus>Offline</UploadStatus>
+  <IsFinalized>false</IsFinalized>
+  <StartTime>2019-11-26T10:34:46.8100269+00:00</StartTime>
+  <EndTime>0001-01-01T00:00:00</EndTime>
+  <Streams>
+    <Stream>
+      <PublicID>fb63953e-b8a0-4e14-a8b9-ab1100ae54a8</PublicID>
+      <Device>
+        <DeviceID>@device:cm:{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave:{26E17EC1-D151-441E-918D-69C9787FE3C4}</DeviceID>
+        <Name>Headset Microphone (12- Rift S)</Name>
+        <MediaType>Audio</MediaType>
+        <VideoWidth>0</VideoWidth>
+        <VideoHeight>0</VideoHeight>
+      </Device>
+      <IsCaptureSystemAudioEnabled>false</IsCaptureSystemAudioEnabled>
+      <Tag>AUDIO</Tag>
+      <Type>Archival</Type>
+      <StartTime>2019-11-26T10:34:46.1897502+00:00</StartTime>
+      <EndTime>0001-01-01T00:00:00</EndTime>
+      <Files>
+        <FileInfo>
+          <FilePath>L:\Year 2\Digital Media Production\Git\ProjectHephaestus\af2b78da-b2ae-4c95-859c-ab1100acedb3\fb63953e-b8a0-4e14-a8b9-ab1100ae54a8.AUDIO.64000.panra</FilePath>
+          <Length>0</Length>
+          <ModificationTime>0001-01-01T00:00:00</ModificationTime>
+          <FileUploadStatus>Progressive</FileUploadStatus>
+          <Destination>DataServer</Destination>
+        </FileInfo>
+        <FileInfo>
+          <FilePath>L:\Year 2\Digital Media Production\Git\ProjectHephaestus\af2b78da-b2ae-4c95-859c-ab1100acedb3\fb63953e-b8a0-4e14-a8b9-ab1100ae54a8.HIST.dat</FilePath>
+          <Length>0</Length>
+          <ModificationTime>0001-01-01T00:00:00</ModificationTime>
+          <FileUploadStatus>OneTime</FileUploadStatus>
+          <Destination>WebServer</Destination>
+        </FileInfo>
+      </Files>
+      <IsBroadcast>false</IsBroadcast>
+      <IsRemoteRecording>false</IsRemoteRecording>
+      <MediaFileType>mp4</MediaFileType>
+    </Stream>
+    <Stream>
+      <PublicID>540a3b75-fb8d-42cc-affa-ab1100ae54a8</PublicID>
+      <Device xsi:type="ScreenCaptureDeviceDescription">
+        <DeviceID>@screenCapture:\\.\DISPLAY1</DeviceID>
+        <Name>Main Screen</Name>
+        <MediaType>Screen</MediaType>
+        <VideoWidth>1920</VideoWidth>
+        <VideoHeight>1080</VideoHeight>
+        <OriginCoordinate>
+          <Y>0</Y>
+          <X>0</X>
+        </OriginCoordinate>
+        <IsPrimaryScreen>true</IsPrimaryScreen>
+      </Device>
+      <IsCaptureSystemAudioEnabled>false</IsCaptureSystemAudioEnabled>
+      <Tag>SCREEN</Tag>
+      <Type>Streaming</Type>
+      <StartTime>2019-11-26T10:34:46.7730466+00:00</StartTime>
+      <EndTime>0001-01-01T00:00:00</EndTime>
+      <Files>
+        <FileInfo>
+          <FilePath>L:\Year 2\Digital Media Production\Git\ProjectHephaestus\af2b78da-b2ae-4c95-859c-ab1100acedb3\540a3b75-fb8d-42cc-affa-ab1100ae54a8.SCREEN.340000.panrv</FilePath>
+          <Length>0</Length>
+          <ModificationTime>0001-01-01T00:00:00</ModificationTime>
+          <FileUploadStatus>Progressive</FileUploadStatus>
+          <Destination>DataServer</Destination>
+        </FileInfo>
+      </Files>
+      <IsBroadcast>false</IsBroadcast>
+      <IsRemoteRecording>false</IsRemoteRecording>
+      <MediaFileType>mp4</MediaFileType>
+    </Stream>
+  </Streams>
+  <EventStreams>
+    <EventStream>
+      <PublicID>7e1a6839-9479-4d57-a2e0-ab1100ae54aa</PublicID>
+      <Device>
+        <DeviceID>PPTCapture</DeviceID>
+        <Name>PPT</Name>
+        <MediaType>Unknown</MediaType>
+        <VideoWidth>0</VideoWidth>
+        <VideoHeight>0</VideoHeight>
+      </Device>
+      <EventTargets />
+      <Type>PowerPoint</Type>
+    </EventStream>
+  </EventStreams>
+  <Segments />
+  <Server>gre.cloud.panopto.eu</Server>
+  <TimeOffset>-0.21648788452148438</TimeOffset>
+  <DeleteWhenUploadComplete>false</DeleteWhenUploadComplete>
+  <UserID>adf4d8a5-f623-4a57-9cff-a95f00db84f7</UserID>
+  <ClientInfo>
+    <Type>Windows</Type>
+    <MachineID>S-1-5-21-3583442326-3103421343-1900662992lsdbez8dy7</MachineID>
+    <IPAddress>172.16.170.215</IPAddress>
+    <ClientBuildVersion>5.7.0.42418</ClientBuildVersion>
+    <ClientAppsVersion>5.7.0</ClientAppsVersion>
+    <OSVersion>Microsoft Windows NT 10.0.17763.0</OSVersion>
+    <ClientName>GM-KW104-09</ClientName>
+  </ClientInfo>
+  <RepairStatus>NotRepaired</RepairStatus>
+  <FaultedReason>NotFaulted</FaultedReason>
+  <FinalizeFailureCount>0</FinalizeFailureCount>
+  <LastFinalizeCall>0001-01-01T00:00:00</LastFinalizeCall>
+  <RecordingDir>L:\Year 2\Digital Media Production\Git\ProjectHephaestus\af2b78da-b2ae-4c95-859c-ab1100acedb3</RecordingDir>
+  <DeleteAfterTime xsi:nil="true" />
+</RecordingInfo>
