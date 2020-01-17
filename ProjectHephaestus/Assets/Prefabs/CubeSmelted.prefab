@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -632668452803126442}
   - component: {fileID: 370113392926074736}
   - component: {fileID: -4316357261385283975}
+  - component: {fileID: 4980005417493810248}
   m_Layer: 8
   m_Name: CubeSmelted
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3886956993682656021}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.9713306, y: 0.6443119, z: 6.4282413}
+  m_LocalPosition: {x: 3.9803133, y: 1.0717001, z: 6.784432}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
@@ -144,3 +145,16 @@ MonoBehaviour:
   hitCount: 5
   hammered: {fileID: 3865990066317821122, guid: c344b839ae5722c43924f241b5b827b7,
     type: 3}
+--- !u!135 &4980005417493810248
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886956993682656021}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

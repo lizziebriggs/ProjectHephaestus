@@ -702,7 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e4462eadc3262468e48c6195c31ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _anvilTimerGauge: []
+  _gauges: []
 --- !u!1001 &272656450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2384,8 +2384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ca78cac402a894a90921cc2af1728e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _counter: 5
-  _furnaceSpawn: {fileID: 1561670200}
+  _smeltedSpawn: {fileID: 1561670200}
 --- !u!65 &793174700
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2900,6 +2899,10 @@ PrefabInstance:
     - target: {fileID: 14300000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_Height
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 14300000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: m_Radius
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 11400010, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: RotationRatchet
@@ -3884,8 +3887,8 @@ Transform:
   m_LocalPosition: {x: 1.012, y: 0.077, z: 1.101}
   m_LocalScale: {x: 0.47441, y: 1, z: 0.68025}
   m_Children:
-  - {fileID: 1372247512}
   - {fileID: 1728532489}
+  - {fileID: 1372247512}
   - {fileID: 1589424726}
   m_Father: {fileID: 1223504889}
   m_RootOrder: 0
@@ -4078,7 +4081,7 @@ Transform:
   m_LocalScale: {x: 0.062352, y: 0.056171, z: 0.051203754}
   m_Children: []
   m_Father: {fileID: 1349728478}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
 --- !u!1 &1414234725
 GameObject:
@@ -4432,13 +4435,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561670199}
-  m_LocalRotation: {x: -0, y: -0.7933535, z: -0, w: 0.6087613}
-  m_LocalPosition: {x: 0.08022085, y: 0.2733, z: 0.014990837}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.022, y: 0.608, z: 0.023}
   m_LocalScale: {x: 1.5127752, y: 1, z: 2.065155}
   m_Children: []
   m_Father: {fileID: 562406223}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &1565606156
 Transform:
   m_ObjectHideFlags: 0
@@ -5290,7 +5293,7 @@ GameObject:
   - component: {fileID: 1728532491}
   - component: {fileID: 1728532490}
   m_Layer: 0
-  m_Name: TriggerArea
+  m_Name: GaugeTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5308,7 +5311,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1349728478}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1728532490
 BoxCollider:
@@ -5335,7 +5338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e4462eadc3262468e48c6195c31ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _anvilTimerGauge:
+  _gauges:
   - {fileID: 1372247508}
   - {fileID: 1589424725}
 --- !u!1 &1765048662
@@ -6295,6 +6298,11 @@ PrefabInstance:
       propertyPath: m_snapPosition
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 914281610034289955, guid: 063db6e07a9a431468e834d286625dec,
+        type: 3}
+      propertyPath: _smeltingTime
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 063db6e07a9a431468e834d286625dec, type: 3}
 --- !u!1001 &2034257070478829662
@@ -6447,6 +6455,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_materialColorField
       value: _OutlineColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493713022801846197, guid: 3e2f3a82d41058048ac326f7ea7264ce,
+        type: 3}
+      propertyPath: _smeltingTime
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e2f3a82d41058048ac326f7ea7264ce, type: 3}

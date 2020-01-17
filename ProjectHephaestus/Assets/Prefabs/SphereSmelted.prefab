@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -66166543050026103}
   - component: {fileID: 5652858950234831941}
   - component: {fileID: 5727168818787712779}
+  - component: {fileID: -8130008316803262453}
   m_Layer: 8
   m_Name: SphereSmelted
   m_TagString: Untagged
@@ -144,3 +145,16 @@ MonoBehaviour:
   hitCount: 5
   hammered: {fileID: 8440024689571798044, guid: 5c956558c4126db4cb85f961e149d2a9,
     type: 3}
+--- !u!65 &-8130008316803262453
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203721093805731654}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

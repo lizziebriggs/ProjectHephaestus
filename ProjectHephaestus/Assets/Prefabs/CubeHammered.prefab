@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1989512200119398127}
   - component: {fileID: 2326949633634793756}
   - component: {fileID: 663849835351260023}
+  - component: {fileID: -2184407314659412281}
   m_Layer: 8
   m_Name: CubeHammered
   m_TagString: Untagged
@@ -129,3 +130,17 @@ MonoBehaviour:
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
   m_materialColorField: 
+--- !u!136 &-2184407314659412281
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8440024689571798044}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.50000024
+  m_Height: 2.0000005
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 1.2705494e-21, z: -0.00000008940699}

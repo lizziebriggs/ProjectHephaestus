@@ -6,77 +6,86 @@ using UnityEngine;
 
 public class FurnaceManager : MonoBehaviour
 {
-    [SerializeField] int _counter;
-    [SerializeField] Transform _furnaceSpawn;
+    private enum FurnaceState { Waiting, Smelting };
 
-    private System.Timers.Timer _timer;
-    private int _elapsedCounter;
+    private FurnaceState currentState;
 
+    [Header("Smelting")]
+    [SerializeField] Transform _smeltedSpawn;
+    private float _timerCountdown;
     private GameObject _furnaceObject;
-    private GameObject _switchFurnaceObject;
+    private GameObject _smeltedObject;
+
+    
 
     private void Start()
     {
-        _elapsedCounter = _counter;
+        currentState = FurnaceState.Waiting;
+        _timerCountdown = 0;
     }
+
+
+    private void Update()
+    {
+        switch (currentState)
+        {
+            case FurnaceState.Waiting:
+                // On trigger enter switches to smelting state
+                break;
+
+            case FurnaceState.Smelting:
+                Smelting();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
+    private void Smelting()
+    {
+        _timerCountdown -= Time.deltaTime;
+        if (_timerCountdown > 0) return;
+        Smelt();
+    }
+
+
+    private void Smelt()
+    {
+        // Change original item to smelted version
+        Destroy(_furnaceObject);
+        Instantiate(_smeltedObject);
+
+        // Set position of new smelted object to spawn position
+        _smeltedObject.transform.position = _smeltedSpawn.transform.position;
+
+        currentState = FurnaceState.Waiting;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<Smelt>() && other.GetComponent<Smelt>().canBeSmelted)
+        if (other.GetComponent<Smelt>())
         {
-            _switchFurnaceObject = other.GetComponent<Smelt>().Smelted;
+            var timeToSmelt = other.GetComponent<Smelt>().SmeltingTime;
+            var smeltObject = other.GetComponent<Smelt>();
 
-            if (other.gameObject != _switchFurnaceObject)
+            if (smeltObject && smeltObject.canBeSmelted)
             {
-                if (other.GetComponent<DistanceGrabbable>())
+                _smeltedObject = smeltObject.Smelted;
+                _furnaceObject = smeltObject.gameObject;
+
+                if (smeltObject != _smeltedObject)
                 {
-                    SetTimer();
-                    FurnaceObjectCreation(other.gameObject);
+                    var grabbable = other.GetComponent<DistanceGrabbable>();
+                    if (grabbable)
+                    {
+                        _timerCountdown = timeToSmelt;
+                        currentState = FurnaceState.Smelting;
+                    }
                 }
             }
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<DistanceGrabbable>())
-        {
-            _timer.Stop();
-            _elapsedCounter = _counter;
-        }
-    }
-
-    private void SetTimer()
-    {
-        // Create a timer with a two second interval.
-        _timer = new System.Timers.Timer(1000);
-
-        // Hook up the Elapsed event for the timer. 
-        _timer.Elapsed += timer1_Tick;
-        _timer.AutoReset = true;
-        _timer.Enabled = true;
-    }
-
-    private void timer1_Tick(object sender, EventArgs e)
-    {
-        _elapsedCounter--;
-        if (_elapsedCounter == 0)
-        {
-            _timer.Stop();
-        }
-    }
-
-    private void FurnaceObjectCreation(GameObject originalObject)
-    {
-        // Change original item to smelted version
-        Destroy(originalObject);
-        Instantiate(_switchFurnaceObject);
-        
-        // Set position of new smelted object to original object
-        _switchFurnaceObject.transform.position = originalObject.transform.position;
-
-        // Reset timer
-        _timer.Stop();
-        _elapsedCounter = _counter;
     }
 }

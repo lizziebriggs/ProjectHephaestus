@@ -5,29 +5,29 @@ using UnityEngine;
 
 public class GaugeManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _anvilTimerGauge;
+    [SerializeField] private GameObject[] _gauges;
 
     private void Start()
     {
-        foreach (var Gauge in _anvilTimerGauge)
-            Gauge.SetActive(false);
+        foreach (GameObject gauge in _gauges)
+            gauge.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.GetComponent<DistanceGrabbable>() == true)
+        if (other.GetComponent<DistanceGrabbable>())
         {
-            foreach (var Gauge in _anvilTimerGauge)
-                Gauge.SetActive(false);
+            foreach (GameObject gauge in _gauges)
+                gauge.SetActive(false);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<DistanceGrabbable>() == true)
+        if (other.GetComponent<DistanceGrabbable>())
         {
-            foreach (var Gauge in _anvilTimerGauge)
-                Gauge.SetActive(false);
+            foreach (GameObject gauge in _gauges)
+                gauge.SetActive(false);
         }
     }
 }
