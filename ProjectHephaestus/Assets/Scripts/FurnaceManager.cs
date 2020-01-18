@@ -11,7 +11,7 @@ public class FurnaceManager : MonoBehaviour
     private FurnaceState currentState;
 
     [Header("Smelting")]
-    [SerializeField] Transform _smeltedSpawn;
+    [SerializeField] Transform _smeltedObjectSpawn;
     private float _timerCountdown;
     private GameObject _furnaceObject;
     private GameObject _smeltedObject;
@@ -58,7 +58,7 @@ public class FurnaceManager : MonoBehaviour
         Instantiate(_smeltedObject);
 
         // Set position of new smelted object to spawn position
-        _smeltedObject.transform.position = _smeltedSpawn.transform.position;
+        _smeltedObject.transform.position = _smeltedObjectSpawn.transform.position;
 
         currentState = FurnaceState.Waiting;
     }

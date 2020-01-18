@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1472,7 +1472,7 @@ GameObject:
   - component: {fileID: 514416401}
   - component: {fileID: 514416400}
   m_Layer: 0
-  m_Name: Furnace (3)
+  m_Name: FurnaceWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2022,7 +2022,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.83672e-40, y: -3.11e-43, z: 3.1e-44, w: 6e-45}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2193,6 +2193,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4118570343382581461, guid: e1e7600a306308a4290ec183ae0604b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690692939015024874, guid: e1e7600a306308a4290ec183ae0604b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e1e7600a306308a4290ec183ae0604b7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2248,21 +2258,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2690692939015024874, guid: e1e7600a306308a4290ec183ae0604b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3061514662589243326, guid: e1e7600a306308a4290ec183ae0604b7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 38d11f61a678e254e88e71216453816f, type: 2}
-    - target: {fileID: 4118570343382581461, guid: e1e7600a306308a4290ec183ae0604b7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5562690123974649392, guid: e1e7600a306308a4290ec183ae0604b7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4565,10 +4565,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 40349375}
     m_Modifications:
-    - target: {fileID: 100052, guid: 02d2c3f5b5ca1014c8fb700e729167ae, type: 3}
-      propertyPath: m_Name
-      value: vr_glove_model
-      objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 02d2c3f5b5ca1014c8fb700e729167ae, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.41822705
@@ -4612,6 +4608,10 @@ PrefabInstance:
     - target: {fileID: 400052, guid: 02d2c3f5b5ca1014c8fb700e729167ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100052, guid: 02d2c3f5b5ca1014c8fb700e729167ae, type: 3}
+      propertyPath: m_Name
+      value: vr_glove_model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02d2c3f5b5ca1014c8fb700e729167ae, type: 3}
@@ -5169,7 +5169,7 @@ GameObject:
   - component: {fileID: 1713669393}
   - component: {fileID: 1713669392}
   m_Layer: 0
-  m_Name: Furnace (1)
+  m_Name: FurnaceWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6099,7 +6099,7 @@ GameObject:
   - component: {fileID: 2104653388}
   - component: {fileID: 2104653387}
   m_Layer: 0
-  m_Name: Furnace (2)
+  m_Name: FurnaceWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

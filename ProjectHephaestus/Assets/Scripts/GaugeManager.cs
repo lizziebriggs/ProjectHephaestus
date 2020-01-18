@@ -18,7 +18,7 @@ public class GaugeManager : MonoBehaviour
         if (other.GetComponent<DistanceGrabbable>())
         {
             foreach (GameObject gauge in _gauges)
-                gauge.SetActive(false);
+                gauge.SetActive(true);
         }
     }
 
