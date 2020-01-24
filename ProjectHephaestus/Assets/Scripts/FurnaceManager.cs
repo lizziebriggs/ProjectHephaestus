@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class FurnaceManager : MonoBehaviour
 {
-    private enum FurnaceState { Waiting, Smelting };
+    private enum FurnaceState { Waiting, Smelting, Smelted };
 
     private FurnaceState currentState;
 
@@ -16,12 +16,20 @@ public class FurnaceManager : MonoBehaviour
     private GameObject _furnaceObject;
     private GameObject _smeltedObject;
 
-    
+    [Header("Effects")]
+    [SerializeField] private GameObject _fireParticleEffect;
+    [SerializeField] private GameObject _smokeParticleEffect;
+    [SerializeField] private float _smokeDuration;
+    private float _smokeTimerCountdown;
+
 
     private void Start()
     {
         currentState = FurnaceState.Waiting;
         _timerCountdown = 0;
+
+        _fireParticleEffect.SetActive(false);
+        _smokeParticleEffect.SetActive(false);
     }
 
 
@@ -37,6 +45,10 @@ public class FurnaceManager : MonoBehaviour
                 Smelting();
                 break;
 
+            case FurnaceState.Smelted:
+                PlaySmokePuff();
+                break;
+
             default:
                 break;
         }
@@ -45,6 +57,8 @@ public class FurnaceManager : MonoBehaviour
 
     private void Smelting()
     {
+        _fireParticleEffect.SetActive(true);
+
         _timerCountdown -= Time.deltaTime;
         if (_timerCountdown > 0) return;
         Smelt();
@@ -60,6 +74,21 @@ public class FurnaceManager : MonoBehaviour
         // Set position of new smelted object to spawn position
         _smeltedObject.transform.position = _smeltedObjectSpawn.transform.position;
 
+        _fireParticleEffect.SetActive(false);
+
+        _smokeTimerCountdown = _smokeDuration; ;
+        currentState = FurnaceState.Smelted;
+    }
+
+
+    private void PlaySmokePuff()
+    {
+        _smokeParticleEffect.SetActive(true);
+
+        _smokeTimerCountdown -= Time.deltaTime;
+        if (_smokeTimerCountdown > 0) return;
+
+        _smokeParticleEffect.SetActive(false);
         currentState = FurnaceState.Waiting;
     }
 
@@ -71,14 +100,18 @@ public class FurnaceManager : MonoBehaviour
             var timeToSmelt = other.GetComponent<Smelt>().SmeltingTime;
             var smeltObject = other.GetComponent<Smelt>();
 
+            // If the object is smeltable
             if (smeltObject && smeltObject.canBeSmelted)
             {
                 _smeltedObject = smeltObject.Smelted;
                 _furnaceObject = smeltObject.gameObject;
 
+                // If the object isn't already the object to be smelted into
                 if (smeltObject != _smeltedObject)
                 {
                     var grabbable = other.GetComponent<DistanceGrabbable>();
+
+                    // If the object can be grabbed then smelt
                     if (grabbable)
                     {
                         _timerCountdown = timeToSmelt;
