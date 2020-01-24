@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class FurnaceManager : MonoBehaviour
 {
-    private enum FurnaceState { Waiting, Smelting, Smelted };
+    private enum FurnaceState { Idle, Smelting, Smelted };
 
     private FurnaceState currentState;
 
@@ -25,7 +25,7 @@ public class FurnaceManager : MonoBehaviour
 
     private void Start()
     {
-        currentState = FurnaceState.Waiting;
+        currentState = FurnaceState.Idle;
         _timerCountdown = 0;
 
         _fireParticleEffect.SetActive(false);
@@ -37,7 +37,7 @@ public class FurnaceManager : MonoBehaviour
     {
         switch (currentState)
         {
-            case FurnaceState.Waiting:
+            case FurnaceState.Idle:
                 // On trigger enter switches to smelting state
                 break;
 
@@ -89,7 +89,7 @@ public class FurnaceManager : MonoBehaviour
         if (_smokeTimerCountdown > 0) return;
 
         _smokeParticleEffect.SetActive(false);
-        currentState = FurnaceState.Waiting;
+        currentState = FurnaceState.Idle;
     }
 
 
