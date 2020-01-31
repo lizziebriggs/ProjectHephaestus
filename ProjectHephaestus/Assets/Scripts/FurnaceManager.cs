@@ -12,6 +12,8 @@ public class FurnaceManager : MonoBehaviour
 
     [Header("Smelting")]
     [SerializeField] Transform _smeltedObjectSpawn;
+    [SerializeField] GameObject _smeltingTimerDisplay;
+    [SerializeField] TextMesh _smeltingTimerMesh;
     private float _timerCountdown;
     private GameObject _furnaceObject;
     private GameObject _smeltedObject;
@@ -28,6 +30,7 @@ public class FurnaceManager : MonoBehaviour
         currentState = FurnaceState.Idle;
         _timerCountdown = 0;
 
+        _smeltingTimerDisplay.SetActive(false);
         _fireParticleEffect.SetActive(false);
         _smokeParticleEffect.SetActive(false);
     }
@@ -57,7 +60,8 @@ public class FurnaceManager : MonoBehaviour
 
     private void Smelting()
     {
-        _fireParticleEffect.SetActive(true);
+        // Round up to whole number
+        _smeltingTimerMesh.text = Math.Ceiling(_timerCountdown).ToString();
 
         _timerCountdown -= Time.deltaTime;
         if (_timerCountdown > 0) return;
@@ -74,6 +78,7 @@ public class FurnaceManager : MonoBehaviour
         // Set position of new smelted object to spawn position
         _smeltedObject.transform.position = _smeltedObjectSpawn.transform.position;
 
+        _smeltingTimerDisplay.SetActive(false);
         _fireParticleEffect.SetActive(false);
 
         _smokeTimerCountdown = _smokeDuration; ;
@@ -115,6 +120,10 @@ public class FurnaceManager : MonoBehaviour
                     if (grabbable)
                     {
                         _timerCountdown = timeToSmelt;
+
+                        _smeltingTimerDisplay.SetActive(true);
+                        _fireParticleEffect.SetActive(true);
+
                         currentState = FurnaceState.Smelting;
                     }
                 }
