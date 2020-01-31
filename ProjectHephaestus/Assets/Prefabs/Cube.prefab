@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1937737804836105408}
   - component: {fileID: 1937737804836105409}
   - component: {fileID: 914281610034289955}
+  - component: {fileID: -3342028651904846235}
   m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
@@ -144,3 +145,16 @@ MonoBehaviour:
   _smelted: {fileID: 3886956993682656021, guid: 70d2719b7c27ae741aadf2027afbd713,
     type: 3}
   canBeSmelted: 1
+--- !u!65 &-3342028651904846235
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937737804836105414}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
