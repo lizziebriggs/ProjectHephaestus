@@ -7,8 +7,11 @@ public class AnvilManager : MonoBehaviour
 {
     private enum AnvilState { Idle, Anvilling, Anvilled }
     private AnvilState _anvilState;
+
     [SerializeField] private GameObject[] _gauges;
     [SerializeField] private Transform _anvilPosition;
+    [SerializeField] private StrikerTimerController _strikerTimerController;
+
     private GameObject _anvillingObject;
     private GameObject _anvilledObject;
 
@@ -47,6 +50,17 @@ public class AnvilManager : MonoBehaviour
                 foreach (GameObject gauge in _gauges) // set all gauges active
                 {
                     gauge.SetActive(true);
+                }
+
+                MalleableMaterial malleableMaterial = _anvillingObject.GetComponent<MalleableMaterial>();
+
+                _strikerTimerController.speed = malleableMaterial.Speed;
+
+                var thresholdValues = malleableMaterial.ThresholdValues;
+
+                foreach (var thresholdValue in thresholdValues)
+                {
+                    if (!_strikerTimerController.thresholdValues.Contains(thresholdValue)) _strikerTimerController.thresholdValues.Add(thresholdValue);
                 }
 
                 _anvilState = AnvilState.Anvilling; // change to anvilling state

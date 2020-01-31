@@ -145,6 +145,9 @@ MonoBehaviour:
   hitCount: 5
   hammered: {fileID: 8440024689571798044, guid: 5c956558c4126db4cb85f961e149d2a9,
     type: 3}
+  _thresholdValues: []
+  _speed: 3
+  isMalleable: 0
 --- !u!65 &-8130008316803262453
 BoxCollider:
   m_ObjectHideFlags: 0
