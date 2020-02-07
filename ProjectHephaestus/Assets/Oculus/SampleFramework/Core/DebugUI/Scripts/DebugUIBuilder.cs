@@ -30,30 +30,33 @@ public class DebugUIBuilder : MonoBehaviour
   public const int DEBUG_PANE_LEFT = 2;
 
   [SerializeField]
-  private RectTransform buttonPrefab = null;
+  private RectTransform buttonPrefab;
   [SerializeField]
-  private RectTransform labelPrefab = null;
+  private RectTransform labelPrefab;
   [SerializeField]
-  private RectTransform sliderPrefab = null;
+  private RectTransform sliderPrefab;
   [SerializeField]
-  private RectTransform dividerPrefab = null;
+  private RectTransform dividerPrefab;
   [SerializeField]
-  private RectTransform togglePrefab = null;
+  private RectTransform togglePrefab;
   [SerializeField]
-  private RectTransform radioPrefab = null;
+  private RectTransform radioPrefab;
 
   [SerializeField]
-  private GameObject uiHelpersToInstantiate = null;
+  private GameObject uiHelpersToInstantiate;
 
   [SerializeField]
-  private Transform[] targetContentPanels = null;
+  private Transform[] targetContentPanels;
+
+  [SerializeField]
+  private bool manuallyResizeContentPanels;
 
   private bool[] reEnable;
 
   [SerializeField]
-  private List<GameObject> toEnable = null;
+  private List<GameObject> toEnable;
   [SerializeField]
-  private List<GameObject> toDisable = null;
+  private List<GameObject> toDisable;
 
   public static DebugUIBuilder instance;
 

@@ -145,8 +145,11 @@ MonoBehaviour:
   hitCount: 5
   hammered: {fileID: 3865990066317821122, guid: c344b839ae5722c43924f241b5b827b7,
     type: 3}
-  _thresholdValues: []
-  _speed: 1
+  _thresholdValues:
+  - 0.25
+  - 0.5
+  - 0.75
+  _speed: 2
   isMalleable: 0
 --- !u!135 &4980005417493810248
 SphereCollider:

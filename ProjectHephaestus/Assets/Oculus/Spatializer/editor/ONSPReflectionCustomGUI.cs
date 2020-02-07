@@ -42,16 +42,7 @@ public class OculusSpatializerReflectionCustomGUI : IAudioEffectPluginGUI
     public override bool OnGUI(IAudioEffectPlugin plugin)
     {
 		float fval = 0.0f;
-        bool bval = false;
-
-        Separator();
-        Label("Voice limit (1 - 1024)");
-        ONSPSettings.Instance.voiceLimit = EditorGUILayout.IntField(" ", ONSPSettings.Instance.voiceLimit);
-        if (GUI.changed)
-        {
-            GUI.changed = false;
-            EditorUtility.SetDirty(ONSPSettings.Instance);
-        }
+		bool  bval = false;
 
 		Separator();
 		Label ("GLOBAL SCALE (0.00001 - 10000.0)");

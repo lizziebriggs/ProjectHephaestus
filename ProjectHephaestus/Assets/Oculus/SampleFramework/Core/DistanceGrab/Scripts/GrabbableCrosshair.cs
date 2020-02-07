@@ -21,9 +21,9 @@ namespace OculusSampleFramework
         Transform m_centerEyeAnchor;
 
         [SerializeField]
-        GameObject m_targetedCrosshair = null;
+        GameObject m_targetedCrosshair;
         [SerializeField]
-        GameObject m_enabledCrosshair = null;
+        GameObject m_enabledCrosshair;
 
         private void Start()
         {

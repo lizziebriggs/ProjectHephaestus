@@ -4,6 +4,7 @@ using System;
 using Oculus.Avatar;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -43,10 +44,21 @@ public class PacketRecordSettings
 
 public class OvrAvatar : MonoBehaviour
 {
-    [Header("Avatar")]
-    public IntPtr sdkAvatar = IntPtr.Zero;
-    public string oculusUserID;
+    public OvrAvatarMaterialManager DefaultBodyMaterialManager;
+    public OvrAvatarMaterialManager DefaultHandMaterialManager;
+
     public OvrAvatarDriver Driver;
+
+    internal OvrAvatarBase Base = null;
+    internal OvrAvatarTouchController ControllerLeft = null;
+    internal OvrAvatarTouchController ControllerRight = null;
+    internal OvrAvatarBody Body = null;
+    internal OvrAvatarHand HandLeft = null;
+    internal OvrAvatarHand HandRight = null;
+
+    [Header("Oculus User ID")]
+    public string oculusUserID;
+    internal UInt64 oculusUserIDInternal;
 
     [Header("Capabilities")]
     public bool EnableBody = true;
@@ -59,39 +71,18 @@ public class OvrAvatar : MonoBehaviour
     public bool UseSDKPackets = true;
     public PacketRecordSettings PacketSettings = new PacketRecordSettings();
 
-    [Header("Visibility")]
+    [Header("Other")]
     public bool StartWithControllers;
     public AvatarLayer FirstPersonLayer;
     public AvatarLayer ThirdPersonLayer;
     public bool ShowFirstPerson = true;
     public bool ShowThirdPerson;
+    public bool CanOwnMicrophone = true;
     internal ovrAvatarCapabilities Capabilities = ovrAvatarCapabilities.Body;
 
-    [Header("Performance")]
-#if UNITY_ANDROID
-    [Tooltip(
-        "LOD mesh complexity and texture resolution. Highest LOD recommended on PC and simple mobile apps." +
-        " Medium LOD recommended on mobile devices or for background characters on PC." +
-        " Lowest LOD recommended for background characters on mobile.")]
-    [SerializeField]
-    internal ovrAvatarAssetLevelOfDetail LevelOfDetail = ovrAvatarAssetLevelOfDetail.Medium;
-#else
-    [SerializeField]
-    internal ovrAvatarAssetLevelOfDetail LevelOfDetail = ovrAvatarAssetLevelOfDetail.Highest;
-#endif
-#if UNITY_ANDROID && UNITY_5_5_OR_NEWER
-    [Tooltip(
-        "Enable to use combined meshes to reduce draw calls. Currently only available on mobile devices. " +
-        "Will be forced to false on PC.")]
-    private bool CombineMeshes = true;
-#else
-    private bool CombineMeshes = false;
-#endif
-    [Tooltip(
-        "Enable to use transparent queue, disable to use geometry queue. Requires restart to take effect.")]
-    public bool UseTransparentRenderQueue = true;
-
     [Header("Shaders")]
+    [Tooltip("Enable this to use transparent queue, disable to use for geometry queue. Requires restart to take effect.")]
+    public bool UseTransparentRenderQueue = true;
     public Shader Monochrome_SurfaceShader;
     public Shader Monochrome_SurfaceShader_SelfOccluding;
     public Shader Monochrome_SurfaceShader_PBS;
@@ -103,84 +94,70 @@ public class OvrAvatar : MonoBehaviour
     public Shader Skinshaded_Expressive_VertFrag_CombinedMesh;
     public Shader Loader_VertFrag_CombinedMesh;
     public Shader EyeLens;
-    public Shader ControllerShader;
 
-    [Header("Other")]
-    public bool CanOwnMicrophone = true;
-    [Tooltip(
-        "Enable laughter detection and animation as part of OVRLipSync.")]
-    public bool EnableLaughter = true;
-    public GameObject MouthAnchor;
-    public Transform LeftHandCustomPose;
-    public Transform RightHandCustomPose;
-
-    // Avatar asset
-    private HashSet<UInt64> assetLoadingIds = new HashSet<UInt64>();
-    private bool assetsFinishedLoading = false;
-    private int renderPartCount = 0;
-
-    // Material manager
-    private OvrAvatarMaterialManager materialManager;
-    private bool waitingForCombinedMesh = false;
-
-    // Global expressive system initialization
-    private static bool doneExpressiveGlobalInit = false;
-
-    // Clothing offsets
-    private Vector4 clothingAlphaOffset = new Vector4(0f, 0f, 0f, 1f);
-    private UInt64 clothingAlphaTexture = 0;
-
-    // Lipsync
-    private OVRLipSyncMicInput micInput = null;
-    private OVRLipSyncContext lipsyncContext = null;
-    private OVRLipSync.Frame currentFrame = new OVRLipSync.Frame();
-    private float[] visemes = new float[VISEME_COUNT];
-    private AudioSource audioSource;
-    private ONSPAudioSource spatializedSource;
-    private List<float[]> voiceUpdates = new List<float[]>();
-    private static ovrAvatarVisemes RuntimeVisemes;
-
-    // Custom hand poses
-    private Transform cachedLeftHandCustomPose;
-    private Transform[] cachedCustomLeftHandJoints;
-    private ovrAvatarTransform[] cachedLeftHandTransforms;
-    private Transform cachedRightHandCustomPose;
-    private Transform[] cachedCustomRightHandJoints;
-    private ovrAvatarTransform[] cachedRightHandTransforms;
-    private bool showLeftController;
-    private bool showRightController;
-
-    // Consts
-#if UNITY_ANDROID
-    private const bool USE_MOBILE_TEXTURE_FORMAT = true;
-#else
-    private const bool USE_MOBILE_TEXTURE_FORMAT = false;
-#endif
-    private static readonly Vector3 MOUTH_HEAD_OFFSET = new Vector3(0, -0.085f, 0.09f);
-    private const string MOUTH_HELPER_NAME = "MouthAnchor";
-    // Initial 'silence' score, 14 viseme scores and 1 laughter score as last element
-    private const int VISEME_COUNT = 16;
-    // Lipsync animation speeds
-    private const float ACTION_UNIT_ONSET_SPEED = 30f;
-    private const float ACTION_UNIT_FALLOFF_SPEED = 20f;
-    private const float VISEME_LEVEL_MULTIPLIER = 1.5f;
-
-    // Internals
-    internal UInt64 oculusUserIDInternal;
-    internal OvrAvatarBase Base = null;
-    internal OvrAvatarTouchController ControllerLeft = null;
-    internal OvrAvatarTouchController ControllerRight = null;
-    internal OvrAvatarBody Body = null;
-    internal OvrAvatarHand HandLeft = null;
-    internal OvrAvatarHand HandRight = null;
-    internal ovrAvatarLookAndFeelVersion LookAndFeelVersion = ovrAvatarLookAndFeelVersion.Two;
-    internal ovrAvatarLookAndFeelVersion FallbackLookAndFeelVersion = ovrAvatarLookAndFeelVersion.Two;
-#if AVATAR_INTERNAL
+ #if AVATAR_INTERNAL
     public AvatarControllerBlend BlendController;
     public UnityEvent AssetsDoneLoading = new UnityEvent();
 #endif
 
-    // Avatar packets
+    private static readonly Vector3 MOUTH_HEAD_OFFSET = new Vector3(0, -0.085f, 0.09f);
+    private const string MOUTH_HELPER_NAME = "MouthAnchor";
+
+    private OVRLipSyncMicInput micInput = null;
+    private OVRLipSyncContext lipsyncContext = null;
+    private OVRLipSync.Frame currentFrame = new OVRLipSync.Frame();
+    private float[] visemes = new float[15];
+    private AudioSource audioSource;
+    private ONSPAudioSource spatializedSource;
+
+    int renderPartCount = 0;
+    bool showLeftController;
+    bool showRightController;
+    List<float[]> voiceUpdates = new List<float[]>();
+
+#if UNITY_ANDROID && UNITY_5_5_OR_NEWER
+    #if !UNITY_EDITOR || QA_CONFIGURATION
+        bool CombineMeshes = true;
+    #else
+        bool CombineMeshes = false;
+    #endif
+#else
+    bool CombineMeshes = false;
+#endif
+
+#if UNITY_EDITOR && UNITY_ANDROID
+    bool ForceMobileTextureFormat = true;
+#else
+    bool ForceMobileTextureFormat = false;
+
+#endif
+
+    private bool WaitingForCombinedMesh = false;
+
+    public IntPtr sdkAvatar = IntPtr.Zero;
+    private HashSet<UInt64> assetLoadingIds = new HashSet<UInt64>();
+    private Dictionary<string, OvrAvatarComponent> trackedComponents =
+        new Dictionary<string, OvrAvatarComponent>();
+
+    bool assetsFinishedLoading = false;
+
+    static bool doneExpressiveGlobalInit = false;
+
+    [Header("Misc")]
+    public GameObject MouthAnchor;
+    public Transform LeftHandCustomPose;
+    public Transform RightHandCustomPose;
+    Transform cachedLeftHandCustomPose;
+    Transform[] cachedCustomLeftHandJoints;
+    ovrAvatarTransform[] cachedLeftHandTransforms;
+    Transform cachedRightHandCustomPose;
+    Transform[] cachedCustomRightHandJoints;
+    ovrAvatarTransform[] cachedRightHandTransforms;
+
+
+    private Vector4 clothingAlphaOffset = new Vector4(0f, 0f, 0f, 1f);
+    private UInt64 clothingAlphaTexture = 0;
+
     public class PacketEventArgs : EventArgs
     {
         public readonly OvrAvatarPacket Packet;
@@ -189,8 +166,8 @@ public class OvrAvatar : MonoBehaviour
             Packet = packet;
         }
     }
-    private OvrAvatarPacket CurrentUnityPacket;
-    public EventHandler<PacketEventArgs> PacketRecorded;
+
+    OvrAvatarPacket CurrentUnityPacket;
 
     public enum HandType
     {
@@ -229,11 +206,27 @@ public class OvrAvatar : MonoBehaviour
         }
     };
 
+#if UNITY_ANDROID
+    internal ovrAvatarAssetLevelOfDetail LevelOfDetail = ovrAvatarAssetLevelOfDetail.Medium;
+#else
+    internal ovrAvatarAssetLevelOfDetail LevelOfDetail = ovrAvatarAssetLevelOfDetail.Highest;
+#endif
+
+#if QA_CONFIGURATION
+    public ovrAvatarLookAndFeelVersion LookAndFeelVersion = ovrAvatarLookAndFeelVersion.Two;
+    public ovrAvatarLookAndFeelVersion FallbackLookAndFeelVersion = ovrAvatarLookAndFeelVersion.One;
+#else
+    internal ovrAvatarLookAndFeelVersion LookAndFeelVersion = ovrAvatarLookAndFeelVersion.Two;
+    internal ovrAvatarLookAndFeelVersion FallbackLookAndFeelVersion = ovrAvatarLookAndFeelVersion.One;
+#endif
+
+    private static ovrAvatarVisemes RuntimeVisemes;
+
     static OvrAvatar()
     {
         // This size has to match the 'MarshalAs' attribute in the ovrAvatarVisemes declaration.
         RuntimeVisemes.visemeParams = new float[32];
-        RuntimeVisemes.visemeParamCount = VISEME_COUNT;
+        RuntimeVisemes.visemeParamCount = 15;
     }
 
     void OnDestroy()
@@ -244,6 +237,8 @@ public class OvrAvatar : MonoBehaviour
         }
     }
 
+    public EventHandler<PacketEventArgs> PacketRecorded;
+
     public void AssetLoadedCallback(OvrAvatarAsset asset)
     {
         assetLoadingIds.Remove(asset.assetID);
@@ -251,7 +246,7 @@ public class OvrAvatar : MonoBehaviour
 
     public void CombinedMeshLoadedCallback(IntPtr assetPtr)
     {
-        if (!waitingForCombinedMesh)
+        if (!WaitingForCombinedMesh)
         {
             return;
         }
@@ -264,20 +259,34 @@ public class OvrAvatar : MonoBehaviour
 
         CAPI.ovrAvatar_GetCombinedMeshAlphaData(sdkAvatar, ref clothingAlphaTexture, ref clothingAlphaOffset);
 
-        waitingForCombinedMesh = false;
+        WaitingForCombinedMesh = false;
+    }
+
+    private void AddAvatarComponent(GameObject componentObject, ovrAvatarComponent component)
+    {
+        OvrAvatarComponent ovrComponent = componentObject.AddComponent<OvrAvatarComponent>();
+        trackedComponents.Add(component.name, ovrComponent);
+
+        if (ovrComponent.name == "body")
+        {
+            ovrComponent.ClothingAlphaOffset = clothingAlphaOffset;
+            ovrComponent.ClothingAlphaTexture = clothingAlphaTexture;
+        }
+
+        AddRenderParts(ovrComponent, component, componentObject.transform);
     }
 
     private OvrAvatarSkinnedMeshRenderComponent AddSkinnedMeshRenderComponent(GameObject gameObject, ovrAvatarRenderPart_SkinnedMeshRender skinnedMeshRender)
     {
         OvrAvatarSkinnedMeshRenderComponent skinnedMeshRenderer = gameObject.AddComponent<OvrAvatarSkinnedMeshRenderComponent>();
-        skinnedMeshRenderer.Initialize(skinnedMeshRender, Monochrome_SurfaceShader, Monochrome_SurfaceShader_SelfOccluding, ThirdPersonLayer.layerIndex, FirstPersonLayer.layerIndex);
+        skinnedMeshRenderer.Initialize(skinnedMeshRender, Monochrome_SurfaceShader, Monochrome_SurfaceShader_SelfOccluding, ThirdPersonLayer.layerIndex, FirstPersonLayer.layerIndex, renderPartCount++);
         return skinnedMeshRenderer;
     }
 
     private OvrAvatarSkinnedMeshRenderPBSComponent AddSkinnedMeshRenderPBSComponent(GameObject gameObject, ovrAvatarRenderPart_SkinnedMeshRenderPBS skinnedMeshRenderPBS)
     {
         OvrAvatarSkinnedMeshRenderPBSComponent skinnedMeshRenderer = gameObject.AddComponent<OvrAvatarSkinnedMeshRenderPBSComponent>();
-        skinnedMeshRenderer.Initialize(skinnedMeshRenderPBS, Monochrome_SurfaceShader_PBS, ThirdPersonLayer.layerIndex, FirstPersonLayer.layerIndex);
+        skinnedMeshRenderer.Initialize(skinnedMeshRenderPBS, Monochrome_SurfaceShader_PBS, ThirdPersonLayer.layerIndex, FirstPersonLayer.layerIndex, renderPartCount++);
         return skinnedMeshRenderer;
     }
 
@@ -285,6 +294,7 @@ public class OvrAvatar : MonoBehaviour
         IntPtr renderPart,
         GameObject go,
         ovrAvatarRenderPart_SkinnedMeshRenderPBS_V2 skinnedMeshRenderPBSV2,
+        OvrAvatarMaterialManager materialManager,
         bool isBodyPartZero,
         bool isControllerModel)
     {
@@ -295,6 +305,7 @@ public class OvrAvatar : MonoBehaviour
             materialManager,
             ThirdPersonLayer.layerIndex,
             FirstPersonLayer.layerIndex,
+            renderPartCount++,
             isBodyPartZero && CombineMeshes,
             LevelOfDetail,
             isBodyPartZero && EnableExpressive,
@@ -304,30 +315,44 @@ public class OvrAvatar : MonoBehaviour
         return skinnedMeshRenderer;
     }
 
+    private OvrAvatarProjectorRenderComponent AddProjectorRenderComponent(GameObject gameObject, ovrAvatarRenderPart_ProjectorRender projectorRender)
+    {
+        ovrAvatarComponent component = CAPI.ovrAvatarComponent_Get(sdkAvatar, projectorRender.componentIndex);
+        OvrAvatarComponent ovrComponent;
+        if (trackedComponents.TryGetValue(component.name, out ovrComponent))
+        {
+            if (projectorRender.renderPartIndex < ovrComponent.RenderParts.Count)
+            {
+                OvrAvatarRenderComponent targetRenderPart = ovrComponent.RenderParts[(int)projectorRender.renderPartIndex];
+                OvrAvatarProjectorRenderComponent projectorComponent = gameObject.AddComponent<OvrAvatarProjectorRenderComponent>();
+                projectorComponent.InitializeProjectorRender(projectorRender, Monochrome_SurfaceShader, targetRenderPart);
+                return projectorComponent;
+            }
+        }
+        return null;
+    }
+
     static public IntPtr GetRenderPart(ovrAvatarComponent component, UInt32 renderPartIndex)
     {
-        return Marshal.ReadIntPtr(component.renderParts, Marshal.SizeOf(typeof(IntPtr)) * (int)renderPartIndex);
+        long offset = Marshal.SizeOf(typeof(IntPtr)) * renderPartIndex;
+        IntPtr marshalPtr = new IntPtr(component.renderParts.ToInt64() + offset);
+        return (IntPtr)Marshal.PtrToStructure(marshalPtr, typeof(IntPtr));
+    }
+
+    private void UpdateAvatarComponent(ovrAvatarComponent component)
+    {
+        OvrAvatarComponent ovrComponent;
+        if (!trackedComponents.TryGetValue(component.name, out ovrComponent))
+        {
+            throw new Exception(string.Format("trackedComponents didn't have {0}", component.name));
+        }
+
+        ovrComponent.UpdateAvatar(component, this);
     }
 
     private static string GetRenderPartName(ovrAvatarComponent component, uint renderPartIndex)
     {
         return component.name + "_renderPart_" + (int)renderPartIndex;
-    }
-
-    internal static void ConvertTransform(float[] transform, ref ovrAvatarTransform target)
-    {
-        target.position.x = transform[0];
-        target.position.y = transform[1];
-        target.position.z = transform[2];
-
-        target.orientation.x = transform[3];
-        target.orientation.y = transform[4];
-        target.orientation.z = transform[5];
-        target.orientation.w = transform[6];
-
-        target.scale.x = transform[7];
-        target.scale.y = transform[8];
-        target.scale.z = transform[9];
     }
 
     internal static void ConvertTransform(ovrAvatarTransform transform, Transform target)
@@ -365,66 +390,69 @@ public class OvrAvatar : MonoBehaviour
 
     private void BuildRenderComponents()
     {
-        ovrAvatarBaseComponent baseComponnet = new ovrAvatarBaseComponent();
-        ovrAvatarHandComponent leftHandComponnet = new ovrAvatarHandComponent();
-        ovrAvatarHandComponent rightHandComponnet = new ovrAvatarHandComponent();
-        ovrAvatarControllerComponent leftControllerComponent = new ovrAvatarControllerComponent();
-        ovrAvatarControllerComponent rightControllerComponent = new ovrAvatarControllerComponent();
-        ovrAvatarBodyComponent bodyComponent = new ovrAvatarBodyComponent();
+        var leftHand = CAPI.ovrAvatarPose_GetLeftHandComponent(sdkAvatar);
+        var rightHand = CAPI.ovrAvatarPose_GetRightHandComponent(sdkAvatar);
+        var body = CAPI.ovrAvatarPose_GetBodyComponent(sdkAvatar);
+        var leftController = CAPI.ovrAvatarPose_GetLeftControllerComponent(sdkAvatar);
+        var rightController = CAPI.ovrAvatarPose_GetRightControllerComponent(sdkAvatar);
+        var baseComponent = CAPI.ovrAvatarPose_GetBaseComponent(sdkAvatar);
 
-        ovrAvatarComponent dummyComponent = new ovrAvatarComponent();
-
-        const bool FetchName = true;
-
-        if (CAPI.ovrAvatarPose_GetLeftHandComponent(sdkAvatar, ref leftHandComponnet))
+        UInt32 componentCount = CAPI.ovrAvatarComponent_Count(sdkAvatar);
+        for (UInt32 i = 0; i < componentCount; i++)
         {
-            CAPI.ovrAvatarComponent_Get(leftHandComponnet.renderComponent, FetchName, ref dummyComponent);
-            AddAvatarComponent(ref HandLeft, dummyComponent);
-            HandLeft.isLeftHand = true;
-        }
+            IntPtr ptr = CAPI.ovrAvatarComponent_Get_Native(sdkAvatar, i);
+            ovrAvatarComponent component = (ovrAvatarComponent)Marshal.PtrToStructure(ptr, typeof(ovrAvatarComponent));
+            if (!trackedComponents.ContainsKey(component.name))
+            {
+                GameObject componentObject = new GameObject();
+                componentObject.name = component.name;
+                componentObject.transform.SetParent(transform);
+                AddAvatarComponent(componentObject, component);
 
-        if (CAPI.ovrAvatarPose_GetRightHandComponent(sdkAvatar, ref rightHandComponnet))
-        {
-            CAPI.ovrAvatarComponent_Get(rightHandComponnet.renderComponent, FetchName, ref dummyComponent);
-            AddAvatarComponent(ref HandRight, dummyComponent);
-            HandRight.isLeftHand = false;
-        }
+                if (leftHand.HasValue && ptr == leftHand.Value.renderComponent)
+                {
+                    HandLeft = componentObject.AddComponent<OvrAvatarHand>();
+                }
 
-        if (CAPI.ovrAvatarPose_GetBodyComponent(sdkAvatar, ref bodyComponent))
-        {
-            CAPI.ovrAvatarComponent_Get(bodyComponent.renderComponent, FetchName, ref dummyComponent);
-            AddAvatarComponent(ref Body, dummyComponent);
-        }
+                if (rightHand.HasValue && ptr == rightHand.Value.renderComponent)
+                {
+                    HandRight = componentObject.AddComponent<OvrAvatarHand>();
+                }
 
-        if (CAPI.ovrAvatarPose_GetLeftControllerComponent(sdkAvatar, ref leftControllerComponent))
-        {
-            CAPI.ovrAvatarComponent_Get(leftControllerComponent.renderComponent, FetchName, ref dummyComponent);
-            AddAvatarComponent(ref ControllerLeft, dummyComponent);
-            ControllerLeft.isLeftHand = true;
-        }
+                if (body.HasValue && ptr == body.Value.renderComponent)
+                {
+                    Body = componentObject.AddComponent<OvrAvatarBody>();
+                }
 
-        if (CAPI.ovrAvatarPose_GetRightControllerComponent(sdkAvatar, ref rightControllerComponent))
-        {
-            CAPI.ovrAvatarComponent_Get(rightControllerComponent.renderComponent, FetchName, ref dummyComponent);
-            AddAvatarComponent(ref ControllerRight, dummyComponent);
-            ControllerRight.isLeftHand = false;
-        }
+                if (leftController.HasValue && ptr == leftController.Value.renderComponent)
+                {
+                    ControllerLeft = componentObject.AddComponent<OvrAvatarTouchController>();
+                }
 
-        if (CAPI.ovrAvatarPose_GetBaseComponent(sdkAvatar, ref baseComponnet))
-        {
-            CAPI.ovrAvatarComponent_Get(baseComponnet.renderComponent, FetchName, ref dummyComponent);
-            AddAvatarComponent(ref Base, dummyComponent);
+                if (rightController.HasValue && ptr == rightController.Value.renderComponent)
+                {
+                    ControllerRight = componentObject.AddComponent<OvrAvatarTouchController>();
+                }
+
+                if (baseComponent.HasValue && ptr == baseComponent.Value.renderComponent)
+                {
+                    Base = componentObject.AddComponent<OvrAvatarBase>();
+                }
+            }
         }
     }
 
-    private void AddAvatarComponent<T>(ref T root, ovrAvatarComponent nativeComponent) where T : OvrAvatarComponent
+    private void UpdateSDKAvatarUnityState()
     {
-        GameObject componentObject = new GameObject();
-        componentObject.name = nativeComponent.name;
-        componentObject.transform.SetParent(transform);
-        root = componentObject.AddComponent<T>();
-        root.SetOvrAvatarOwner(this);
-        AddRenderParts(root, nativeComponent, componentObject.transform);
+        UInt32 componentCount = CAPI.ovrAvatarComponent_Count(sdkAvatar);
+        for (UInt32 i = 0; i < componentCount; i++)
+        {
+            IntPtr ptr = CAPI.ovrAvatarComponent_Get_Native(sdkAvatar, i);
+            ovrAvatarComponent component = (ovrAvatarComponent)Marshal.PtrToStructure(ptr, typeof(ovrAvatarComponent));
+            UpdateAvatarComponent(component);
+        }
+
+        UpdateVoiceBehavior();
     }
 
     void UpdateCustomPoses()
@@ -516,12 +544,6 @@ public class OvrAvatar : MonoBehaviour
         ShowLeftController(showLeftController);
         ShowRightController(showRightController);
 
-        // Pump the Remote driver once to push the controller type through
-        if (Driver != null)
-        {
-            Driver.UpdateTransformsFromPose(sdkAvatar);
-        }
-
         //Fetch all the assets that this avatar uses.
         UInt32 assetCount = CAPI.ovrAvatar_GetReferencedAssetCount(sdkAvatar);
         for (UInt32 i = 0; i < assetCount; ++i)
@@ -548,25 +570,21 @@ public class OvrAvatar : MonoBehaviour
 
     void Start()
     {
-        if (OvrAvatarSDKManager.Instance == null)
-        {
-            return;
-        }
 #if !UNITY_ANDROID
         if (CombineMeshes)
         {
             CombineMeshes = false;
-            AvatarLogger.Log("Combined Meshes currently only supported on mobile");
+            AvatarLogger.Log("Combine Meshes Currently Only Supported On Android");
         }
 #endif
+
 #if !UNITY_5_5_OR_NEWER
         if (CombineMeshes)
         {
             CombineMeshes = false;
-            AvatarLogger.LogWarning("Combined Meshes requires Unity 5.5.0+");
+            AvatarLogger.LogWarning("Unity Version too old to use Combined Mesh Shader, required 5.5.0+");
         }
 #endif
-        materialManager = gameObject.AddComponent<OvrAvatarMaterialManager>();
 
         try
         {
@@ -575,86 +593,39 @@ public class OvrAvatar : MonoBehaviour
         catch (Exception)
         {
             oculusUserIDInternal = 0;
-            AvatarLogger.LogWarning("Invalid Oculus User ID Format");
-        }
 
-        // If no oculus ID is supplied then turn off combine meshes to prevent the texture arrays
-        // being populated by invalid textures.
-        if (oculusUserIDInternal == 0)
-        {
-            AvatarLogger.LogWarning("Oculus User ID set to 0. Provide actual user ID: " + gameObject.name);
-            CombineMeshes = false;
+            AvatarLogger.LogWarning("Invalid Oculus User ID Format");
         }
 
         AvatarLogger.Log("Starting OvrAvatar " + gameObject.name);
         AvatarLogger.Log(AvatarLogger.Tab + "LOD: " + LevelOfDetail.ToString());
         AvatarLogger.Log(AvatarLogger.Tab + "Combine Meshes: " + CombineMeshes);
-        AvatarLogger.Log(AvatarLogger.Tab + "Force Mobile Textures: " + USE_MOBILE_TEXTURE_FORMAT);
+        AvatarLogger.Log(AvatarLogger.Tab + "Force Mobile Textures: " + ForceMobileTextureFormat);
         AvatarLogger.Log(AvatarLogger.Tab + "Oculus User ID: " + oculusUserIDInternal);
 
         Capabilities = 0;
-
-        bool is3Dof = false;
-        var headsetType = OVRPlugin.GetSystemHeadsetType();
-        switch (headsetType)
-        {
-            case OVRPlugin.SystemHeadset.GearVR_R320:
-            case OVRPlugin.SystemHeadset.GearVR_R321:
-            case OVRPlugin.SystemHeadset.GearVR_R322:
-            case OVRPlugin.SystemHeadset.GearVR_R323:
-            case OVRPlugin.SystemHeadset.GearVR_R324:
-            case OVRPlugin.SystemHeadset.GearVR_R325:
-            case OVRPlugin.SystemHeadset.Oculus_Go:
-                is3Dof = true;
-                break;
-            case OVRPlugin.SystemHeadset.Oculus_Quest:
-            case OVRPlugin.SystemHeadset.Rift_S:
-            case OVRPlugin.SystemHeadset.Rift_DK1:
-            case OVRPlugin.SystemHeadset.Rift_DK2:
-            case OVRPlugin.SystemHeadset.Rift_CV1:
-            default:
-                break;
-        }
-
-        // The SDK 3 DOF Arm Model requires the body skeleton to pose itself. It will crash without it
-        // The likely use case here is trying to have an invisible body.
-        // T45010595
-        if (is3Dof && !EnableBody)
-        {
-            AvatarLogger.Log("Forcing the Body component for 3Dof hand tracking, and setting the visibility to 1st person");
-            EnableBody = true;
-            ShowFirstPerson = true;
-            ShowThirdPerson = false;
-        }
-
         if (EnableBody) Capabilities |= ovrAvatarCapabilities.Body;
         if (EnableHands) Capabilities |= ovrAvatarCapabilities.Hands;
         if (EnableBase && EnableBody) Capabilities |= ovrAvatarCapabilities.Base;
         if (EnableExpressive) Capabilities |= ovrAvatarCapabilities.Expressive;
 
-        // Enable body tilt on 6dof devices
-        if(OVRPlugin.positionSupported)
-        {
-            Capabilities |= ovrAvatarCapabilities.BodyTilt;
-        }
+#if !UNITY_ANDROID
+        Capabilities |= ovrAvatarCapabilities.BodyTilt;
+#endif
 
         ShowLeftController(StartWithControllers);
         ShowRightController(StartWithControllers);
-
-        OvrAvatarSDKManager.AvatarSpecRequestParams avatarSpecRequest = new OvrAvatarSDKManager.AvatarSpecRequestParams(
+        OvrAvatarSDKManager.Instance.RequestAvatarSpecification(
             oculusUserIDInternal,
             this.AvatarSpecificationCallback,
             CombineMeshes,
             LevelOfDetail,
-            USE_MOBILE_TEXTURE_FORMAT,
+            ForceMobileTextureFormat,
             LookAndFeelVersion,
             FallbackLookAndFeelVersion,
             EnableExpressive);
 
-        OvrAvatarSDKManager.Instance.RequestAvatarSpecification(avatarSpecRequest);
-        OvrAvatarSDKManager.Instance.AddLoadingAvatar(GetInstanceID());
-
-        waitingForCombinedMesh = CombineMeshes;
+        WaitingForCombinedMesh = CombineMeshes;
         if (Driver != null)
         {
             Driver.Mode = UseSDKPackets ? OvrAvatarDriver.PacketMode.SDK : OvrAvatarDriver.PacketMode.Unity;
@@ -663,7 +634,7 @@ public class OvrAvatar : MonoBehaviour
 
     void Update()
     {
-        if (!OvrAvatarSDKManager.Instance || sdkAvatar == IntPtr.Zero || materialManager == null)
+        if (sdkAvatar == IntPtr.Zero)
         {
             return;
         }
@@ -696,24 +667,15 @@ public class OvrAvatar : MonoBehaviour
         {
             if (!assetsFinishedLoading)
             {
-                try
-                {
-                    BuildRenderComponents();
-                }
-                catch (Exception e)
-                {
-                    assetsFinishedLoading = true;
-                    throw; // rethrow the original exception to preserve callstack
-                }
+                BuildRenderComponents();
 #if AVATAR_INTERNAL
                 AssetsDoneLoading.Invoke();
 #endif
                 InitPostLoad();
                 assetsFinishedLoading = true;
-                OvrAvatarSDKManager.Instance.RemoveLoadingAvatar(GetInstanceID());
             }
 
-            UpdateVoiceBehavior();
+            UpdateSDKAvatarUnityState();
             UpdateCustomPoses();
             if (EnableExpressive)
             {
@@ -874,7 +836,7 @@ public class OvrAvatar : MonoBehaviour
             renderPartObject.transform.SetParent(parent);
             IntPtr renderPart = GetRenderPart(component, renderPartIndex);
             ovrAvatarRenderPartType type = CAPI.ovrAvatarRenderPart_GetType(renderPart);
-            OvrAvatarRenderComponent ovrRenderPart = null;
+            OvrAvatarRenderComponent ovrRenderPart;
             switch (type)
             {
                 case ovrAvatarRenderPartType.SkinnedMeshRender:
@@ -883,24 +845,25 @@ public class OvrAvatar : MonoBehaviour
                 case ovrAvatarRenderPartType.SkinnedMeshRenderPBS:
                     ovrRenderPart = AddSkinnedMeshRenderPBSComponent(renderPartObject, CAPI.ovrAvatarRenderPart_GetSkinnedMeshRenderPBS(renderPart));
                     break;
+                case ovrAvatarRenderPartType.ProjectorRender:
+                    ovrRenderPart = AddProjectorRenderComponent(renderPartObject, CAPI.ovrAvatarRenderPart_GetProjectorRender(renderPart));
+                    break;
                 case ovrAvatarRenderPartType.SkinnedMeshRenderPBS_V2:
                     {
                         ovrRenderPart = AddSkinnedMeshRenderPBSV2Component(
                             renderPart,
                             renderPartObject,
                             CAPI.ovrAvatarRenderPart_GetSkinnedMeshRenderPBSV2(renderPart),
+                            isBody ? DefaultBodyMaterialManager : DefaultHandMaterialManager,
                             isBody && renderPartIndex == 0,
                             isLeftController || isReftController);
                     }
                     break;
                 default:
-                    break;
+                    throw new NotImplementedException(string.Format("Unsupported render part type: {0}", type.ToString()));
             }
 
-            if (ovrRenderPart != null)
-            {
-                ovrComponent.RenderParts.Add(ovrRenderPart);
-            }
+            ovrComponent.RenderParts.Add(ovrRenderPart);
         }
     }
 
@@ -908,30 +871,31 @@ public class OvrAvatar : MonoBehaviour
     {
         if (Body != null)
         {
-            foreach (var part in Body.RenderParts)
+            OvrAvatarComponent component = Body.GetComponent<OvrAvatarComponent>();
+
+            foreach (var part in component.RenderParts)
             {
                 Destroy(part.gameObject);
             }
 
-            Body.RenderParts.Clear();
+            component.RenderParts.Clear();
 
-            var nativeAvatarComponent = Body.GetNativeAvatarComponent();
-            if (nativeAvatarComponent.HasValue)
+            ovrAvatarBodyComponent? sdkBodyComponent = CAPI.ovrAvatarPose_GetBodyComponent(sdkAvatar);
+            if (sdkBodyComponent != null)
             {
-                AddRenderParts(Body, nativeAvatarComponent.Value, Body.gameObject.transform);
+                ovrAvatarComponent sdKComponent = (ovrAvatarComponent)Marshal.PtrToStructure(sdkBodyComponent.Value.renderComponent, typeof(ovrAvatarComponent));
+                AddRenderParts(component, sdKComponent, Body.gameObject.transform);
+            }
+            else
+            {
+                throw new Exception("Destroyed the body component, but didn't find a new one in the SDK");
             }
         }
     }
 
     public ovrAvatarBodyComponent? GetBodyComponent()
     {
-        if (Body != null)
-        {
-            CAPI.ovrAvatarPose_GetBodyComponent(sdkAvatar, ref Body.component);
-            return Body.component;
-        }
-
-        return null;
+        return CAPI.ovrAvatarPose_GetBodyComponent(sdkAvatar);
     }
 
     public Transform GetHandTransform(HandType hand, HandJoint joint)
@@ -965,6 +929,20 @@ public class OvrAvatar : MonoBehaviour
             forward = handBase.forward;
             up = handBase.up;
         }
+    }
+
+    public Transform GetMouthTransform()
+    {
+        OvrAvatarComponent component;
+        if (trackedComponents.TryGetValue("voice", out component))
+        {
+            if (component.RenderParts.Count > 0)
+            {
+                return component.RenderParts[0].transform;
+            }
+        }
+
+        return null;
     }
 
     static Vector3 MOUTH_POSITION_OFFSET = new Vector3(0, -0.018f, 0.1051f);
@@ -1016,26 +994,12 @@ public class OvrAvatar : MonoBehaviour
 
     bool IsValidMic()
     {
-        string[] devices = Microphone.devices;
-
-        if (devices.Length < 1)
+        if (Microphone.devices.Length < 1)
         {
             return false;
         }
 
-        int selectedDeviceIndex = 0;
-#if UNITY_STANDALONE_WIN
-        for (int i = 1; i < devices.Length; i++)
-        {
-            if (devices[i].ToUpper().Contains("RIFT"))
-            {
-                selectedDeviceIndex = i;
-                break;
-            }
-        }
-#endif
-
-        string selectedDevice = devices[selectedDeviceIndex];
+        string selectedDevice = Microphone.devices[0].ToString();
 
         int minFreq;
         int maxFreq;
@@ -1073,72 +1037,64 @@ public class OvrAvatar : MonoBehaviour
                 micInput.MicFrequency = 44100;
                 micInput.micControl = OVRLipSyncMicInput.micActivation.ConstantSpeak;
             }
-
-            // Set lipsync animation parameters in SDK
-            CAPI.ovrAvatar_SetActionUnitOnsetSpeed(sdkAvatar, ACTION_UNIT_ONSET_SPEED);
-            CAPI.ovrAvatar_SetActionUnitFalloffSpeed(sdkAvatar, ACTION_UNIT_FALLOFF_SPEED);
-            CAPI.ovrAvatar_SetVisemeMultiplier(sdkAvatar, VISEME_LEVEL_MULTIPLIER);
         }
     }
 
-    static ovrAvatarLights ovrLights = new ovrAvatarLights();
 	static void ExpressiveGlobalInit()
 	{
 		if (doneExpressiveGlobalInit)
 		{
 			return;
 		}
-
 		doneExpressiveGlobalInit = true;
 
-        // This array size has to match the 'MarshalAs' attribute in the ovrAvatarLights declaration.
-        const int MAXSIZE = 16;
-        ovrLights.lights = new ovrAvatarLight[MAXSIZE];
+		// Set light info. Lights are shared across all avatar instances.
+		ovrAvatarLights ovrLights = new ovrAvatarLights();
+		ovrLights.ambientIntensity = RenderSettings.ambientLight.grayscale * 0.5f;
+		// This array size has to match the 'MarshalAs' attribute in the ovrAvatarLights declaration.
+		const int maxSize = 16;
+		ovrLights.lights = new ovrAvatarLight[maxSize];
 
-        InitializeLights();
+		Light[] sceneLights = FindObjectsOfType(typeof(Light)) as Light[];
+		int index = 0;
+		for (int i = 0; i < sceneLights.Length; ++i)
+		{
+			Light sceneLight = sceneLights[i];
+			if (sceneLight && sceneLight.enabled)
+			{
+				uint instanceID = (uint) sceneLight.transform.GetInstanceID();
+				switch (sceneLight.type)
+				{
+					case LightType.Directional:
+					{
+						ovrLights.lights[index++] = CreateLightDirectional(instanceID, sceneLight.transform.forward, sceneLight.intensity);
+						break;
+					}
+					case LightType.Point:
+					{
+						ovrLights.lights[index++] = CreateLightPoint(instanceID, sceneLight.transform.position, sceneLight.range, sceneLight.intensity);
+						break;
+					}
+					case LightType.Spot:
+					{
+						ovrLights.lights[index++] = CreateLightSpot(instanceID, sceneLight.transform.position, sceneLight.transform.forward, sceneLight.spotAngle, sceneLight.range, sceneLight.intensity);
+						break;
+					}
+				}
+			}
+			if (index >= maxSize)
+			{
+				break;
+			}
+		}
+		ovrLights.lightCount = (uint) index;
+
+		CAPI.ovrAvatar_UpdateLights(ovrLights);
 	}
 
-    static void InitializeLights()
+    static ovrAvatarLight CreateLightDirectional(uint id, Vector3 direction, float intensity)
     {
-        // Set light info. Lights are shared across all avatar instances.
-        ovrLights.ambientIntensity = RenderSettings.ambientLight.grayscale * 0.5f;
-
-        Light[] sceneLights = FindObjectsOfType(typeof(Light)) as Light[];
-        int i = 0;
-        for (i = 0; i < sceneLights.Length && i < ovrLights.lights.Length; ++i)
-        {
-            Light sceneLight = sceneLights[i];
-            if (sceneLight && sceneLight.enabled)
-            {
-                uint instanceID = (uint)sceneLight.transform.GetInstanceID();
-                switch (sceneLight.type)
-                {
-                    case LightType.Directional:
-                        {
-                            CreateLightDirectional(instanceID, sceneLight.transform.forward, sceneLight.intensity, ref ovrLights.lights[i]);
-                            break;
-                        }
-                    case LightType.Point:
-                        {
-                            CreateLightPoint(instanceID, sceneLight.transform.position, sceneLight.range, sceneLight.intensity, ref ovrLights.lights[i]);
-                            break;
-                        }
-                    case LightType.Spot:
-                        {
-                            CreateLightSpot(instanceID, sceneLight.transform.position, sceneLight.transform.forward, sceneLight.spotAngle, sceneLight.range, sceneLight.intensity, ref ovrLights.lights[i]);
-                            break;
-                        }
-                }
-            }
-        }
-
-        ovrLights.lightCount = (uint)i;
-
-        CAPI.ovrAvatar_UpdateLights(ovrLights);
-    }
-
-    static ovrAvatarLight CreateLightDirectional(uint id, Vector3 direction, float intensity, ref ovrAvatarLight light)
-    {
+        ovrAvatarLight light = new ovrAvatarLight();
         light.id = id;
         light.type = ovrAvatarLightType.Direction;
         light.worldDirection = new Vector3(direction.x, direction.y, -direction.z);
@@ -1146,8 +1102,9 @@ public class OvrAvatar : MonoBehaviour
         return light;
     }
 
-    static ovrAvatarLight CreateLightPoint(uint id, Vector3 position, float range, float intensity, ref ovrAvatarLight light)
+    static ovrAvatarLight CreateLightPoint(uint id, Vector3 position, float range, float intensity)
     {
+        ovrAvatarLight light = new ovrAvatarLight();
         light.id = id;
         light.type = ovrAvatarLightType.Point;
         light.worldPosition = new Vector3(position.x, position.y, -position.z);
@@ -1156,8 +1113,9 @@ public class OvrAvatar : MonoBehaviour
         return light;
     }
 
-    static ovrAvatarLight CreateLightSpot(uint id, Vector3 position, Vector3 direction, float spotAngleDeg, float range, float intensity, ref ovrAvatarLight light)
+    static ovrAvatarLight CreateLightSpot(uint id, Vector3 position, Vector3 direction, float spotAngleDeg, float range, float intensity)
     {
+        ovrAvatarLight light = new ovrAvatarLight();
         light.id = id;
         light.type = ovrAvatarLightType.Spot;
         light.worldPosition = new Vector3(position.x, position.y, -position.z);
@@ -1190,7 +1148,7 @@ public class OvrAvatar : MonoBehaviour
         {
             MouthAnchor = CreateHelperObject(head, MOUTH_HEAD_OFFSET, MOUTH_HELPER_NAME);
         }
-
+        
         if (GetComponent<OvrAvatarLocalDriver>() != null)
         {
             if (audioSource == null)
@@ -1215,14 +1173,10 @@ public class OvrAvatar : MonoBehaviour
             if (lipsyncContext == null)
             {
                 lipsyncContext = MouthAnchor.gameObject.AddComponent<OVRLipSyncContext>();
+                lipsyncContext.provider = OVRLipSync.ContextProviders.Enhanced;
+                // Ignore audio callback if microphone is owned by VoIP
+                lipsyncContext.skipAudioSource = !CanOwnMicrophone;
             }
-
-            lipsyncContext.provider = EnableLaughter
-                ? OVRLipSync.ContextProviders.Enhanced_with_Laughter
-                : OVRLipSync.ContextProviders.Enhanced;
-
-            // Ignore audio callback if microphone is owned by VoIP
-            lipsyncContext.skipAudioSource = !CanOwnMicrophone;
 
             StartCoroutine(WaitForMouthAudioSource());
         }
@@ -1322,8 +1276,8 @@ public class OvrAvatar : MonoBehaviour
             // Get the current viseme frame
             currentFrame = lipsyncContext.GetCurrentPhonemeFrame();
 
-            // Verify length (-1 for laughter)
-            if (currentFrame.Visemes.Length != (VISEME_COUNT - 1))
+            // Verify length
+            if (currentFrame.Visemes.Length != 15)
             {
                 Debug.LogError("Unexpected number of visemes " + currentFrame.Visemes);
                 return;
@@ -1331,11 +1285,9 @@ public class OvrAvatar : MonoBehaviour
 
             // Copy to viseme array
             currentFrame.Visemes.CopyTo(visemes, 0);
-            // Copy laughter as final element
-            visemes[VISEME_COUNT - 1] = EnableLaughter ? currentFrame.laughterScore : 0.0f;
 
             // Send visemes to native implementation.
-            for (int i = 0; i < VISEME_COUNT; i++)
+            for (int i = 0; i < 15; i++)
             {
                 RuntimeVisemes.visemeParams[i] = visemes[i];
             }

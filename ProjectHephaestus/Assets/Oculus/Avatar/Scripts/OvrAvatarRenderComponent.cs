@@ -9,11 +9,10 @@ public class OvrAvatarRenderComponent : MonoBehaviour {
     private bool firstSkinnedUpdate = true;
     public SkinnedMeshRenderer mesh;
     public Transform[] bones;
-    bool isBodyComponent = false;
 
     protected void UpdateActive(OvrAvatar avatar, ovrAvatarVisibilityFlags mask)
     {
-        bool doActiveHack = isBodyComponent && avatar.EnableExpressive && avatar.ShowFirstPerson && !avatar.ShowThirdPerson;
+        bool doActiveHack = name.Contains("body") && avatar.EnableExpressive && avatar.ShowFirstPerson && !avatar.ShowThirdPerson;
         if (doActiveHack)
         {
             bool showFirstPerson = (mask & ovrAvatarVisibilityFlags.FirstPerson) != 0;
@@ -34,10 +33,8 @@ public class OvrAvatarRenderComponent : MonoBehaviour {
         }
     }
 
-    protected SkinnedMeshRenderer CreateSkinnedMesh(ulong assetID, ovrAvatarVisibilityFlags visibilityMask, int thirdPersonLayer, int firstPersonLayer)
+    protected SkinnedMeshRenderer CreateSkinnedMesh(ulong assetID, ovrAvatarVisibilityFlags visibilityMask, int thirdPersonLayer, int firstPersonLayer, int sortingOrder)
     {
-        isBodyComponent = name.Contains("body");
-
         OvrAvatarAssetMesh meshAsset = (OvrAvatarAssetMesh)OvrAvatarSDKManager.Instance.GetAsset(assetID);
         if (meshAsset == null)
         {
@@ -52,19 +49,13 @@ public class OvrAvatarRenderComponent : MonoBehaviour {
             this.gameObject.layer = firstPersonLayer;
         }
         SkinnedMeshRenderer renderer = meshAsset.CreateSkinnedMeshRendererOnObject(gameObject);
-#if UNITY_ANDROID
-        renderer.quality = SkinQuality.Bone2;
-#else
         renderer.quality = SkinQuality.Bone4;
-#endif
+        renderer.sortingOrder = sortingOrder;
         renderer.updateWhenOffscreen = true;
         if ((visibilityMask & ovrAvatarVisibilityFlags.SelfOccluding) == 0)
         {
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         }
-
-        gameObject.SetActive(false);
-
         return renderer;
     }
 
@@ -115,6 +106,13 @@ public class OvrAvatarRenderComponent : MonoBehaviour {
                 }
                 OvrAvatar.ConvertTransform(transform, targetBone);
             }
+        }
+
+        ovrAvatarBlendShapeParams blendParams = CAPI.ovrAvatarSkinnedMeshRender_GetBlendShapeParams(renderPart);
+        for (uint i = 0; i < blendParams.blendShapeParamCount; i++)
+        {
+            float value = blendParams.blendShapeParams[i];
+            mesh.SetBlendShapeWeight((int)i, value * 100.0f);
         }
 
         firstSkinnedUpdate = false;

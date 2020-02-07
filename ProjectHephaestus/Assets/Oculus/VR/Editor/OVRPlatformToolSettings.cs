@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -27,21 +24,28 @@ namespace Assets.Oculus.VR.Editor
 		{
 			get
 			{
-				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None &&
-						EditorPrefs.HasKey("OVRPlatformToolSettings_AppID" + (int)Instance.targetPlatform))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_AppID" + (int)Instance.targetPlatform);
-				}
-				else
-				{
-					return "";
-				}
+				return Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None ? Instance.appIDs[(int)Instance.targetPlatform] : "";
 			}
 			set
 			{
 				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None)
 				{
-					EditorPrefs.SetString("OVRPlatformToolSettings_AppID" + (int)Instance.targetPlatform, value);
+					Instance.appIDs[(int)Instance.targetPlatform] = value;
+				}
+			}
+		}
+
+		public static string AppToken
+		{
+			get
+			{
+				return Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None ? Instance.appTokens[(int)Instance.targetPlatform] : "";
+			}
+			set
+			{
+				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None)
+				{
+					Instance.appTokens[(int)Instance.targetPlatform] = value;
 				}
 			}
 		}
@@ -50,21 +54,13 @@ namespace Assets.Oculus.VR.Editor
 		{
 			get
 			{
-				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None &&
-						EditorPrefs.HasKey("OVRPlatformToolSettings_ReleaseNote" + (int)Instance.targetPlatform))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_ReleaseNote" + (int)Instance.targetPlatform);
-				}
-				else
-				{
-					return "";
-				}
+				return Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None ? Instance.releaseNotes[(int)Instance.targetPlatform] : "";
 			}
 			set
 			{
 				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None)
 				{
-					EditorPrefs.SetString("OVRPlatformToolSettings_ReleaseNote" + (int)Instance.targetPlatform, value);
+					Instance.releaseNotes[(int)Instance.targetPlatform] = value;
 				}
 			}
 		}
@@ -73,21 +69,13 @@ namespace Assets.Oculus.VR.Editor
 		{
 			get
 			{
-				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None &&
-						EditorPrefs.HasKey("OVRPlatformToolSettings_ReleaseChannel" + (int)Instance.targetPlatform))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_ReleaseChannel" + (int)Instance.targetPlatform);
-				}
-				else
-				{
-					return "";
-				}
+				return Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None ? Instance.releaseChannels[(int)Instance.targetPlatform] : "";
 			}
 			set
 			{
 				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None)
 				{
-					EditorPrefs.SetString("OVRPlatformToolSettings_ReleaseChannel" + (int)Instance.targetPlatform, value);
+					Instance.releaseChannels[(int)Instance.targetPlatform] = value;
 				}
 			}
 		}
@@ -96,21 +84,13 @@ namespace Assets.Oculus.VR.Editor
 		{
 			get
 			{
-				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None &&
-						EditorPrefs.HasKey("OVRPlatformToolSettings_ApkBuildPath" + (int)Instance.targetPlatform))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_ApkBuildPath" + (int)Instance.targetPlatform);
-				}
-				else
-				{
-					return "";
-				}
+				return Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None ? Instance.apkBuildPaths[(int)Instance.targetPlatform] : "";
 			}
 			set
 			{
 				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None)
 				{
-					EditorPrefs.SetString("OVRPlatformToolSettings_ApkBuildPath" + (int)Instance.targetPlatform, value);
+					Instance.apkBuildPaths[(int)Instance.targetPlatform] = value;
 				}
 			}
 		}
@@ -119,21 +99,13 @@ namespace Assets.Oculus.VR.Editor
 		{
 			get
 			{
-				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None &&
-						EditorPrefs.HasKey("OVRPlatformToolSettings_ObbFilePath" + (int)Instance.targetPlatform))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_ObbFilePath" + (int)Instance.targetPlatform);
-				}
-				else
-				{
-					return "";
-				}
+				return Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None ? Instance.obbFilePaths[(int)Instance.targetPlatform] : "";
 			}
 			set
 			{
 				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None)
 				{
-					EditorPrefs.SetString("OVRPlatformToolSettings_ObbFilePath" + (int)Instance.targetPlatform, value);
+					Instance.obbFilePaths[(int)Instance.targetPlatform] = value;
 				}
 			}
 		}
@@ -142,175 +114,63 @@ namespace Assets.Oculus.VR.Editor
 		{
 			get
 			{
-				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None &&
-						EditorPrefs.HasKey("OVRPlatformToolSettings_AssetsDirectory" + (int)Instance.targetPlatform))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_AssetsDirectory" + (int)Instance.targetPlatform);
-				}
-				else
-				{
-					return "";
-				}
+				return Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None ? Instance.assetsDirectorys[(int)Instance.targetPlatform] : "";
 			}
 			set
 			{
 				if (Instance.targetPlatform < OVRPlatformTool.TargetPlatform.None)
 				{
-					EditorPrefs.SetString("OVRPlatformToolSettings_AssetsDirectory" + (int)Instance.targetPlatform, value);
+					Instance.assetsDirectorys[(int)Instance.targetPlatform] = value;
 				}
 			}
 		}
 
 		public static string RiftBuildDirectory
 		{
-			get
-			{
-				if (EditorPrefs.HasKey("OVRPlatformToolSettings_RiftBuildDirectory"))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_RiftBuildDirectory");
-				}
-				else
-				{
-					return "";
-				}
-			}
-			set
-			{
-				EditorPrefs.SetString("OVRPlatformToolSettings_RiftBuildDirectory", value);
-			}
+			get { return Instance.riftBuildDiretory; }
+			set { Instance.riftBuildDiretory = value; }
 		}
 
 		public static string RiftBuildVersion
 		{
-			get
-			{
-				if (EditorPrefs.HasKey("OVRPlatformToolSettings_RiftBuildVersion"))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_RiftBuildVersion");
-				}
-				else
-				{
-					return "";
-				}
-			}
-			set
-			{
-				EditorPrefs.SetString("OVRPlatformToolSettings_RiftBuildVersion", value);
-			}
+			get { return Instance.riftBuildVersion; }
+			set { Instance.riftBuildVersion = value; }
 		}
 
 		public static string RiftLaunchFile
 		{
-			get
-			{
-				if (EditorPrefs.HasKey("OVRPlatformToolSettings_RiftLaunchFile"))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_RiftLaunchFile");
-				}
-				else
-				{
-					return "";
-				}
-			}
-			set
-			{
-				EditorPrefs.SetString("OVRPlatformToolSettings_RiftLaunchFile", value);
-			}
+			get { return Instance.riftLaunchFile; }
+			set { Instance.riftLaunchFile = value; }
 		}
 
 		public static string RiftLaunchParams
 		{
-			get
-			{
-				if (EditorPrefs.HasKey("OVRPlatformToolSettings_RiftLaunchParams"))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_RiftLaunchParams");
-				}
-				else
-				{
-					return "";
-				}
-			}
-			set
-			{
-				EditorPrefs.SetString("OVRPlatformToolSettings_RiftLaunchParams", value);
-			}
+			get { return Instance.riftLaunchParams; }
+			set { Instance.riftLaunchParams = value; }
 		}
 
 		public static string Rift2DLaunchFile
 		{
-			get
-			{
-				if (EditorPrefs.HasKey("OVRPlatformToolSettings_Rift2DLaunchFile"))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_Rift2DLaunchFile");
-				}
-				else
-				{
-					return "";
-				}
-			}
-			set
-			{
-				EditorPrefs.SetString("OVRPlatformToolSettings_Rift2DLaunchFile", value);
-			}
+			get { return Instance.rift2DLaunchFile; }
+			set { Instance.rift2DLaunchFile = value; }
 		}
 
 		public static string Rift2DLaunchParams
 		{
-			get
-			{
-				if (EditorPrefs.HasKey("OVRPlatformToolSettings_Rift2DLaunchParams"))
-				{
-					return EditorPrefs.GetString("OVRPlatformToolSettings_Rift2DLaunchParams");
-				}
-				else
-				{
-					return "";
-				}
-			}
-			set
-			{
-				EditorPrefs.SetString("OVRPlatformToolSettings_Rift2DLaunchParams", value);
-			}
+			get { return Instance.rift2DLaunchParams; }
+			set { Instance.rift2DLaunchParams = value; }
 		}
 
 		public static bool RiftFirewallException
 		{
-			get
-			{
-				if (EditorPrefs.HasKey("OVRPlatformToolSettings_RiftFirewallException"))
-				{
-					return EditorPrefs.GetBool("OVRPlatformToolSettings_RiftFirewallException");
-				}
-				else
-				{
-					return false;
-				}
-			}
-			set
-			{
-				EditorPrefs.SetBool("OVRPlatformToolSettings_RiftFirewallException", value);
-			}
+			get { return Instance.riftFirewallException; }
+			set { Instance.riftFirewallException = value; }
 		}
 
 		public static GamepadType RiftGamepadEmulation
 		{
-			get
-			{
-				if (EditorPrefs.HasKey("OVRPlatformToolSettings_RiftGamepadEmulation"))
-				{
-					return (GamepadType)EditorPrefs.GetInt("OVRPlatformToolSettings_RiftGamepadEmulation");
-				}
-				else
-				{
-					return GamepadType.OFF;
-				}
-			}
-			set
-			{
-				EditorPrefs.SetInt("OVRPlatformToolSettings_RiftGamepadEmulation", (int)value);
-			}
+			get { return Instance.riftGamepadEmulation; }
+			set { Instance.riftGamepadEmulation = value; }
 		}
 
 		public static List<RedistPackage> RiftRedistPackages
@@ -346,11 +206,41 @@ namespace Assets.Oculus.VR.Editor
 			set { Instance.targetPlatform = value; }
 		}
 
-		public static bool RunOvrLint
-		{
-			get { return Instance.runOvrLint; }
-			set { Instance.runOvrLint = value; }
-		}
+		[SerializeField]
+		private string[] appIDs = new string[(int)OVRPlatformTool.TargetPlatform.None];
+
+		[SerializeField]
+		private string[] appTokens = new string[(int)OVRPlatformTool.TargetPlatform.None];
+
+		[SerializeField]
+		private string[] releaseNotes = new string[(int)OVRPlatformTool.TargetPlatform.None];
+
+		[SerializeField]
+		private string[] releaseChannels = new string[(int)OVRPlatformTool.TargetPlatform.None];
+
+		[SerializeField]
+		private string riftBuildDiretory = "";
+
+		[SerializeField]
+		private string riftBuildVersion = "";
+
+		[SerializeField]
+		private string riftLaunchFile = "";
+
+		[SerializeField]
+		private string riftLaunchParams = "";
+
+		[SerializeField]
+		private string rift2DLaunchFile = "";
+
+		[SerializeField]
+		private string rift2DLaunchParams = "";
+
+		[SerializeField]
+		private bool riftFirewallException = false;
+
+		[SerializeField]
+		private GamepadType riftGamepadEmulation = GamepadType.OFF;
 
 		[SerializeField]
 		private List<RedistPackage> riftRedistPackages;
@@ -359,13 +249,19 @@ namespace Assets.Oculus.VR.Editor
 		private string languagePackDirectory = "";
 
 		[SerializeField]
+		private string[] apkBuildPaths = new string[(int)OVRPlatformTool.TargetPlatform.None];
+
+		[SerializeField]
+		private string[] obbFilePaths = new string[(int)OVRPlatformTool.TargetPlatform.None];
+
+		[SerializeField]
+		private string[] assetsDirectorys = new string[(int)OVRPlatformTool.TargetPlatform.None];
+
+		[SerializeField]
 		private AssetConfigList[] assetConfigs = new AssetConfigList[(int)OVRPlatformTool.TargetPlatform.None];
 
 		[SerializeField]
 		private OVRPlatformTool.TargetPlatform targetPlatform = OVRPlatformTool.TargetPlatform.None;
-
-		[SerializeField]
-		private bool runOvrLint = true;
 
 		private static OVRPlatformToolSettings instance;
 		public static OVRPlatformToolSettings Instance
@@ -397,7 +293,7 @@ namespace Assets.Oculus.VR.Editor
 						{
 							for (int i = 0; i < (int)OVRPlatformTool.TargetPlatform.None; i++)
 							{
-								EditorPrefs.SetString("OVRPlatformToolSettings_ReleaseChannel" + i, DEFAULT_RELEASE_CHANNEL);
+								instance.releaseChannels[i] = DEFAULT_RELEASE_CHANNEL;
 								instance.assetConfigs[i] = new AssetConfigList();
 							}
 

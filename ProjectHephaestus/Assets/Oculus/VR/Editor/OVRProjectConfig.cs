@@ -35,20 +35,7 @@ public class OVRProjectConfig : ScriptableObject
 		Quest = 1
 	}
 
-	public enum HandTrackingSupport
-	{
-		ControllersOnly = 0,
-		ControllersAndHands = 1,
-		HandsOnly = 2
-	}
-
 	public List<DeviceType> targetDeviceTypes;
-	public HandTrackingSupport handTrackingSupport;
-
-	public bool disableBackups;
-	public bool enableNSCConfig;
-
-	public bool focusAware;
 
 	//public const string OculusProjectConfigAssetPath = "Assets/Oculus/OculusProjectConfig.asset";
 
@@ -84,11 +71,7 @@ public class OVRProjectConfig : ScriptableObject
 		{
 			projectConfig = ScriptableObject.CreateInstance<OVRProjectConfig>();
 			projectConfig.targetDeviceTypes = new List<DeviceType>();
-			projectConfig.targetDeviceTypes.Add(DeviceType.Quest);
-			projectConfig.handTrackingSupport = HandTrackingSupport.ControllersOnly;
-			projectConfig.disableBackups = true;
-			projectConfig.enableNSCConfig = true;
-			projectConfig.focusAware = false;
+			projectConfig.targetDeviceTypes.Add(DeviceType.GearVrOrGo);
 			AssetDatabase.CreateAsset(projectConfig, oculusProjectConfigAssetPath);
 		}
 		return projectConfig;
