@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,9 +8,15 @@ public class LevelLoader : MonoBehaviour
 {
     private enum LevelState { Idle, LevelLoaded }
     [SerializeField] private Transform _objectPoint;
+    [SerializeField] private GameObject _portal;
     private LevelItem _currentLevel;
     private LevelState _currentState = LevelState.Idle;
     private int _speed = 50;
+
+    private void Start()
+    {
+        if (_portal.activeSelf) _portal.SetActive(false);
+    }
 
     private void Update()
     {
@@ -35,6 +42,7 @@ public class LevelLoader : MonoBehaviour
                 _currentLevel = level;
                 _currentState = LevelState.LevelLoaded;
                 SceneManager.LoadScene(level.Level, LoadSceneMode.Additive);
+                if (_portal.activeSelf != true) _portal.SetActive(true);
             }
 
             else if (_currentLevel != level)
@@ -43,6 +51,7 @@ public class LevelLoader : MonoBehaviour
                 SceneManager.LoadScene(level.Level, LoadSceneMode.Additive);
                 _currentLevel = level;
                 _currentState = LevelState.LevelLoaded;
+                if (_portal.activeSelf != true) _portal.SetActive(true);
             }
         }
     }
@@ -57,6 +66,7 @@ public class LevelLoader : MonoBehaviour
             if (_currentLevel)
             {
                 SceneManager.UnloadSceneAsync(_currentLevel.Level);
+                if (_portal.activeSelf != false) _portal.SetActive(false);
                 _currentState = LevelState.Idle;
                 _currentLevel = null;
             }
