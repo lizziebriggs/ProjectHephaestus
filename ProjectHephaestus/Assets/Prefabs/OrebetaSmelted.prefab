@@ -129,9 +129,10 @@ MonoBehaviour:
   hammered: {fileID: 6173357754465327088, guid: fc711d8f279cc1e4eb2097f9611cc63e,
     type: 3}
   _thresholdValues:
-  - 0.25
-  - 0.5
-  - 0.75
+  - 0.2
+  - 0.45
+  - 0.7
+  - 0.9
   _speed: 1
   isMalleable: 0
 --- !u!54 &3320612164102007255
@@ -149,4 +150,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
