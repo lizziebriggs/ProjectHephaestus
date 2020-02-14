@@ -132,8 +132,10 @@ MonoBehaviour:
   - 0.2
   - 0.45
   - 0.7
-  - 0.9
+  - 1
   _speed: 1
+  _strikerTimerController: {fileID: 5336148690991102305, guid: f05a7ad3a8a3db8419e92fbea51851bb,
+    type: 3}
   isMalleable: 0
 --- !u!54 &3320612164102007255
 Rigidbody:

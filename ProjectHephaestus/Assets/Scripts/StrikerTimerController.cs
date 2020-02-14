@@ -21,6 +21,13 @@ public class StrikerTimerController : MonoBehaviour
     [HideInInspector] public float speed;
     private SliderState currentState;
 
+    public Slider SliderBar => _sliderBar;
+    public Color Red => _thresholdColours[0];
+    public Color Amber => _thresholdColours[1];
+    public Color Green => _thresholdColours[2];
+    public Color Blue => _thresholdColours[3];
+    public Image Fill => _fill;
+
     void Start()
     {
         _sliderBar.value = 0;
@@ -69,18 +76,5 @@ public class StrikerTimerController : MonoBehaviour
                 break;
             }
         }
-
-
-        //if (_sliderBar.value < thresholdValues[0])
-        //    _fill.color = _thresholdColours[0];
-
-        //else if (_sliderBar.value < thresholdValues[1])
-        //    _fill.color = _thresholdColours[1];
-
-        //else if (_sliderBar.value < thresholdValues[2])
-        //    _fill.color = _thresholdColours[2];
-
-        //else if (_sliderBar.value < thresholdValues[3])
-        //    _fill.color = _thresholdColours[3];
     }
 }
