@@ -4,7 +4,6 @@ namespace Oculus.Platform
   using System.IO;
   using UnityEditor;
   using UnityEngine;
-  using UnityEngine.Networking;
 
   // This classes implements a UI to edit the PlatformSettings class.
   // The UI is accessible from a the menu bar via: Oculus Platform -> Edit Settings
@@ -14,7 +13,7 @@ namespace Oculus.Platform
     private bool isUnityEditorSettingsExpanded;
     private bool isBuildSettingsExpanded;
 
-    private UnityWebRequest getAccessTokenRequest;
+    private WWW getAccessTokenRequest;
 
     private void OnEnable()
     {
@@ -125,13 +124,13 @@ namespace Oculus.Platform
             if (GUILayout.Button(loginLabel))
             {
               WWWForm form = new WWWForm();
+              var headers = form.headers;
+              headers.Add("Authorization", "Bearer OC|1141595335965881|");
               form.AddField("email", StandalonePlatformSettings.OculusPlatformTestUserEmail);
               form.AddField("password", StandalonePlatformSettings.OculusPlatformTestUserPassword);
 
               // Start the WWW request to get the access token
-              getAccessTokenRequest = UnityWebRequest.Post("https://graph.oculus.com/login", form);
-              getAccessTokenRequest.SetRequestHeader("Authorization", "Bearer OC|1141595335965881|");
-              getAccessTokenRequest.SendWebRequest();
+              getAccessTokenRequest = new WWW("https://graph.oculus.com/login", form.data, headers);
               EditorApplication.update += GetAccessToken;
             }
             GUI.enabled = true;
@@ -233,13 +232,12 @@ namespace Oculus.Platform
 
         if (String.IsNullOrEmpty(getAccessTokenRequest.error))
         {
-          var Response = JsonUtility.FromJson<OculusStandalonePlatformResponse>(getAccessTokenRequest.downloadHandler.text);
+          var Response = JsonUtility.FromJson<OculusStandalonePlatformResponse>(getAccessTokenRequest.text);
           StandalonePlatformSettings.OculusPlatformTestUserAccessToken = Response.access_token;
         }
 
         GUI.changed = true;
         EditorApplication.update -= GetAccessToken;
-        getAccessTokenRequest.Dispose();
         getAccessTokenRequest = null;
       }
     }

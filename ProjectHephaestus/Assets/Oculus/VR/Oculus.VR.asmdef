@@ -4,12 +4,5 @@
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "versionDefines": [
-        {
-            "name": "com.unity.xr.management",
-            "expression": "",
-            "define": "USING_XR_SDK"
-        }
-    ]
+    "allowUnsafeCode": false
 }

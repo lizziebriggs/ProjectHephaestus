@@ -4,9 +4,8 @@
 // NOTE for android developers: The existence of UnityEngine.Microphone causes Unity to insert the 
 // android.permission.RECORD_AUDIO permission into the AndroidManifest.xml generated at build time
 
-#if OVR_PLATFORM_USE_MICROPHONE
+#if false
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace Oculus.Platform
 {
@@ -17,16 +16,12 @@ namespace Oculus.Platform
     int lastMicrophoneSample;
     int micBufferSizeSamples;
 
-    private Dictionary<int, float[]> micSampleBuffers;
-
     public MicrophoneInput()
     {
       int bufferLenSeconds = 1; //minimum size unity allows
       int inputFreq = 48000; //this frequency is fixed throughout the voip system atm
       microphoneClip = Microphone.Start(null, true, bufferLenSeconds, inputFreq);
       micBufferSizeSamples = bufferLenSeconds * inputFreq;
-
-      micSampleBuffers = new Dictionary<int, float[]>();
     }
 
     public void Start()
@@ -56,13 +51,7 @@ namespace Oculus.Platform
         return null;
       }
 
-      float[] samples;
-      if (!micSampleBuffers.TryGetValue(copySize, out samples))
-      {
-        samples = new float[copySize];
-        micSampleBuffers[copySize] = samples;
-      }
-
+      float[] samples = new float[copySize]; //TODO 10376403 - pool this
       microphoneClip.GetData(samples, lastMicrophoneSample);
       lastMicrophoneSample = pos;
       return samples;

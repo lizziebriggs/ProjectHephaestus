@@ -39,7 +39,7 @@ public class OVRManagerEditor : Editor
 		}
 		while (newCount > targetDeviceTypes.Count)
 		{
-			targetDeviceTypes.Add(OVRProjectConfig.DeviceType.Quest);
+			targetDeviceTypes.Add(OVRProjectConfig.DeviceType.GearVrOrGo);
 			hasModified = true;
 		}
 		for (int i = 0; i < targetDeviceTypes.Count; i++)
@@ -67,22 +67,6 @@ public class OVRManagerEditor : Editor
 #endif
 
 #if UNITY_ANDROID
-		EditorGUILayout.Space();
-		EditorGUILayout.LabelField("Security", EditorStyles.boldLabel);
-		EditorGUI.BeginChangeCheck();
-
-		bool disableBackups = projectConfig.disableBackups;
-		bool enableNSCConfig = projectConfig.enableNSCConfig;
-		SetupBoolField("Disable Backups", ref disableBackups);
-		SetupBoolField("Enable NSC Configuration", ref enableNSCConfig);
-
-		if(EditorGUI.EndChangeCheck())
-		{
-			projectConfig.disableBackups = disableBackups;
-			projectConfig.enableNSCConfig = enableNSCConfig;
-			OVRProjectConfig.CommitProjectConfig(projectConfig);
-		}
-
 		EditorGUILayout.Space();
 		EditorGUILayout.LabelField("Mixed Reality Capture for Quest (experimental)", EditorStyles.boldLabel);
 		EditorGUI.indentLevel++;
@@ -119,14 +103,20 @@ public class OVRManagerEditor : Editor
 				EditorGUILayout.LabelField("External Composition", EditorStyles.boldLabel);
 				EditorGUI.indentLevel++;
 
-				SetupColorField("backdropColor (Rift)", ref manager.externalCompositionBackdropColorRift);
-				SetupColorField("backdropColor (Quest)", ref manager.externalCompositionBackdropColorQuest);
+				SetupColorField("backdropColor", ref manager.externalCompositionBackdropColor);
 			}
 
-			if (manager.compositionMethod == OVRManager.CompositionMethod.Direct)
+			if (manager.compositionMethod == OVRManager.CompositionMethod.Direct || manager.compositionMethod == OVRManager.CompositionMethod.Sandwich)
 			{
 				EditorGUILayout.Space();
-				EditorGUILayout.LabelField("Direct Composition", EditorStyles.boldLabel);
+				if (manager.compositionMethod == OVRManager.CompositionMethod.Direct)
+				{
+					EditorGUILayout.LabelField("Direct Composition", EditorStyles.boldLabel);
+				}
+				else
+				{
+					EditorGUILayout.LabelField("Sandwich Composition", EditorStyles.boldLabel);
+				}
 				EditorGUI.indentLevel++;
 
 				EditorGUILayout.Space();
@@ -160,6 +150,11 @@ public class OVRManagerEditor : Editor
 				EditorGUILayout.Space();
 				EditorGUILayout.LabelField("Latency Control", EditorStyles.boldLabel);
 				SetupFloatField("handPoseStateLatency", ref manager.handPoseStateLatency);
+				if  (manager.compositionMethod == OVRManager.CompositionMethod.Sandwich)
+				{
+					SetupFloatField("sandwichCompositionRenderLatency", ref manager.sandwichCompositionRenderLatency);
+					SetupIntField("sandwichCompositionBufferedFrames", ref manager.sandwichCompositionBufferedFrames);
+				}
 				EditorGUI.indentLevel--;
 			}
 

@@ -35,12 +35,6 @@ public class ONSPAudioSource : MonoBehaviour
     static int readOnly_NumberOfUsedSpatializedVoices = 9;
 #endif
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void OnBeforeSceneLoadRuntimeMethod()
-    {
-        OSP_SetGlobalVoiceLimit(ONSPSettings.Instance.voiceLimit);
-    }
-
     // Import functions
     public const string strONSPS = "AudioPluginOculusSpatializer";
 
@@ -358,7 +352,4 @@ public class ONSPAudioSource : MonoBehaviour
             RoomReflectionGizmoAS = null;
         }
     }
-    
-    [System.Runtime.InteropServices.DllImport("AudioPluginOculusSpatializer")]
-    private static extern int OSP_SetGlobalVoiceLimit(int VoiceLimit);
 }

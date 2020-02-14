@@ -34,12 +34,5 @@ namespace Oculus.Avatar
         {
             Debug.LogError(LogAvatar + logMsg);
         }
-
-        [System.Diagnostics.Conditional("ENABLE_AVATAR_LOGS"),
-         System.Diagnostics.Conditional("ENABLE_AVATAR_LOG_ERROR")]
-        public static void LogError(string logMsg, Object context)
-        {
-            Debug.LogError(LogAvatar + logMsg, context);
-        }
     };
 }

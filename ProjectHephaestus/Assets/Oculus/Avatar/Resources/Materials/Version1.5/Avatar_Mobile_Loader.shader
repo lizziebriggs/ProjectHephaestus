@@ -23,7 +23,6 @@ Shader "OvrAvatar/Avatar_Mobile_Loader"
 
     SubShader
     {
-        Tags { "LightMode" = "ForwardBase" "IgnoreProjector" = "True"}
         Pass
         {
             Blend One Zero

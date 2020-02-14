@@ -21,7 +21,6 @@ namespace Oculus.Platform.Models
     public readonly LanguagePackInfo LanguageOptional;
     [Obsolete("Deprecated in favor of LanguageOptional")]
     public readonly LanguagePackInfo Language;
-    public readonly string Metadata;
 
 
     public AssetDetails(IntPtr o)
@@ -40,7 +39,6 @@ namespace Oculus.Platform.Models
           LanguageOptional = Language;
         }
       }
-      Metadata = CAPI.ovr_AssetDetails_GetMetadata(o);
     }
   }
 

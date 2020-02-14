@@ -90,13 +90,12 @@ public class OVRNetwork
 				return;
 			}
 
-			IPAddress localAddr = IPAddress.Any;
+			IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 
 			tcpListener = new TcpListener(localAddr, listeningPort);
 			try
 			{
 				tcpListener.Start();
-				Debug.LogFormat("TcpListener started. Local endpoint: {0}", tcpListener.LocalEndpoint.ToString());
 			}
 			catch (SocketException e)
 			{

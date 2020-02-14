@@ -37,9 +37,6 @@ public class OVRProjectConfig : ScriptableObject
 
 	public List<DeviceType> targetDeviceTypes;
 
-	public bool disableBackups;
-	public bool enableNSCConfig;
-
 	//public const string OculusProjectConfigAssetPath = "Assets/Oculus/OculusProjectConfig.asset";
 
 	private static string GetOculusProjectConfigAssetPath()
@@ -74,9 +71,7 @@ public class OVRProjectConfig : ScriptableObject
 		{
 			projectConfig = ScriptableObject.CreateInstance<OVRProjectConfig>();
 			projectConfig.targetDeviceTypes = new List<DeviceType>();
-			projectConfig.targetDeviceTypes.Add(DeviceType.Quest);
-			projectConfig.disableBackups = true;
-			projectConfig.enableNSCConfig = true;
+			projectConfig.targetDeviceTypes.Add(DeviceType.GearVrOrGo);
 			AssetDatabase.CreateAsset(projectConfig, oculusProjectConfigAssetPath);
 		}
 		return projectConfig;
