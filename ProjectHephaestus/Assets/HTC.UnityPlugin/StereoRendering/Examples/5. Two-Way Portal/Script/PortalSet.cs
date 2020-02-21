@@ -20,6 +20,8 @@ public class PortalSet : MonoBehaviour
 
     IEnumerator MovePlayer(StereoRenderer stereoRenderer)
     {
+        
+
         isColliding = true;
 
         Debug.Log(stereoRenderer.gameObject.transform.parent.name);
@@ -39,8 +41,12 @@ public class PortalSet : MonoBehaviour
 
         Vector3 camRigTargetPos = hmdRig.transform.position + posDiff;
 
+        hmdRig.GetComponent<CharacterController>().enabled = false;
+
         // assign the target position to camera rig
         hmdRig.transform.position = camRigTargetPos;
+
+        hmdRig.GetComponent<CharacterController>().enabled = true;
 
         stereoRenderer.shouldRender = true;
 
