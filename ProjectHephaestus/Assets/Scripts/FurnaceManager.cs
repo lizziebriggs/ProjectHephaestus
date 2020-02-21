@@ -24,6 +24,9 @@ public class FurnaceManager : MonoBehaviour
     [SerializeField] private float _smokeDuration;
     private float _smokeTimerCountdown;
 
+    [Header("Striker Timer Controller")]
+    [SerializeField] private StrikerTimerController _strikerTimerController;
+
 
     private void Start()
     {
@@ -77,6 +80,8 @@ public class FurnaceManager : MonoBehaviour
 
         // Set position of new smelted object to spawn position
         _smeltedObject.transform.position = _smeltedObjectSpawn.transform.position;
+        var _smeltedComponent = _smeltedObject.GetComponent<MalleableMaterial>();
+        _smeltedComponent.strikerTimerController = _strikerTimerController;
 
         _smeltingTimerDisplay.SetActive(false);
         _fireParticleEffect.SetActive(false);
