@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7445192818630988149}
   - component: {fileID: 3320612164102007255}
   m_Layer: 0
-  m_Name: OrebetaSmelted
+  m_Name: OrebetaSmelted 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77ae8621b1caaa4cbbbbd6806876707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitCount: 5
+  hitCount: 3
   hammered: {fileID: 6173357754465327088, guid: fc711d8f279cc1e4eb2097f9611cc63e,
     type: 3}
   _thresholdValues:

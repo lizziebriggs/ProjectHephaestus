@@ -8,7 +8,7 @@ public class AnvilManager : MonoBehaviour
     private enum AnvilState { Idle, Anvilling, Anvilled }
     private AnvilState _anvilState;
 
-    [SerializeField] private GameObject[] _gauges;
+    [SerializeField] private GameObject _gauges;
     [SerializeField] private Transform _anvilPosition;
     [SerializeField] private StrikerTimerController _strikerTimerController;
 
@@ -17,8 +17,7 @@ public class AnvilManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (GameObject gauge in _gauges)
-            gauge.SetActive(false);
+        _gauges.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,7 +26,7 @@ public class AnvilManager : MonoBehaviour
         switch(_anvilState)
         {
             case AnvilState.Idle:
-                //await input
+                //do nothing
                 break;
             case AnvilState.Anvilling:
                 Anvilling();
@@ -47,10 +46,11 @@ public class AnvilManager : MonoBehaviour
             _anvillingObject = other.gameObject;// get the object to be hammered
             if (other.GetComponent<DistanceGrabbable>()) // check for grabbable component
             {
-                foreach (GameObject gauge in _gauges) // set all gauges active
+                if (!_gauges.activeSelf)
                 {
-                    gauge.SetActive(true);
-                }
+                    _gauges.SetActive(true);
+                    _strikerTimerController.currentState = StrikerTimerController.SliderState.Up;
+                }                
 
                 MalleableMaterial malleableMaterial = _anvillingObject.GetComponent<MalleableMaterial>();
 
@@ -72,10 +72,8 @@ public class AnvilManager : MonoBehaviour
     {
         if (other.GetComponent<DistanceGrabbable>()) // check objects are grabbable
         {
-            foreach (GameObject gauge in _gauges)// set all gauges inactive
-            {
-                gauge.SetActive(false);
-            }
+            _strikerTimerController.thresholdValues.Clear();
+            _gauges.SetActive(false);
             _anvilState = AnvilState.Idle; // change to idle state
         }
     }
@@ -89,6 +87,7 @@ public class AnvilManager : MonoBehaviour
             if (!anvillingRigidbody.isKinematic) // when the object is not being held
             {
                 malleable.isMalleable = true; // allow it to be hammered
+                //malleable.BoxCollider.isTrigger = true;
                 _anvilledObject.transform.up = _anvilPosition.up; // set up rotation
                 _anvillingObject.transform.position = _anvilPosition.position;// hold position on the anvil
 
@@ -98,6 +97,7 @@ public class AnvilManager : MonoBehaviour
             {
                 anvillingRigidbody.constraints = RigidbodyConstraints.None; // unfreeze rotation
                 malleable.isMalleable = false; // stop allowing it to be hammered
+                //malleable.BoxCollider.isTrigger = false;
             }
             if (malleable.HitCounter >= malleable.HitCount) // once the hit counter has reached max
             {

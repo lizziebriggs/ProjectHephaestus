@@ -7,7 +7,7 @@ public class MalleableMaterial : MonoBehaviour
     [SerializeField] int hitCount;
     [SerializeField] GameObject hammered;
     [SerializeField, Range(0, 1)] float[] _thresholdValues;
-    [SerializeField] float _speed;
+    [SerializeField, Range(0.1f, 1)] float _speed;
     [HideInInspector] public StrikerTimerController strikerTimerController;
 
     [HideInInspector] public bool isMalleable = false;
@@ -15,8 +15,6 @@ public class MalleableMaterial : MonoBehaviour
     private float _maxPoints;
     private float _finalPoints;
     private int hitCounter;
-
-    private bool justHit = false;
 
     public float[] ThresholdValues => _thresholdValues;
     public float Speed => _speed;
@@ -27,34 +25,13 @@ public class MalleableMaterial : MonoBehaviour
 
     private void Start()
     {
-        _maxPoints = HitCounter;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (!justHit && collision.gameObject.GetComponent<HammerController>() && isMalleable)
-        {
-            //Debug.Log("Collided with hammer");
-            //Debug.Log("Hit counter: " + hitCounter);
-            UpdateValue();
-        }
-
-        justHit = true;
+        _maxPoints = HitCount;
+        Debug.Log("Max points: " + _maxPoints);
     }
 
 
-    private void OnCollisionExit(Collision collision)
-    {
-        justHit = false;
-    }
-
-
-    private void UpdateValue()
-    {
-        //Debug.Log("Hit");
-        ////maxValue == hitCount
-
+    public void UpdateValue()
+    { 
         // Shit
         if (strikerTimerController.Fill.color == strikerTimerController.Red)
         {
@@ -91,19 +68,26 @@ public class MalleableMaterial : MonoBehaviour
 
     private void FinalHit()
     {
-        if (_finalPoints < _maxPoints / _thresholdValues.Length)
+        _finalPoints = Mathf.Floor(_finalPoints * 100) / 100;
+
+        Debug.Log("Final points: " + _finalPoints);
+        
+
+        if (_finalPoints <= _maxPoints / _thresholdValues.Length)
         {
+            Debug.Log(_maxPoints / _thresholdValues.Length);
             //spawn shit object
             Debug.Log("Shit Item");
         }
         // Ok
-        else if (_finalPoints < (_maxPoints / _thresholdValues.Length) * 2)
+        else if (_finalPoints <= (_maxPoints / _thresholdValues.Length) * 2)
         {
+            Debug.Log((_maxPoints / _thresholdValues.Length) * 2);
             //spawn ok object
             Debug.Log("Ok Item");
         }
         // Good
-        else if (_finalPoints < (_maxPoints / _thresholdValues.Length) * 3)
+        else if (_finalPoints < _maxPoints)
         {
             //good item
             Debug.Log("Good Item");
@@ -111,7 +95,7 @@ public class MalleableMaterial : MonoBehaviour
         // Perfect
         else if (_finalPoints >= _maxPoints)
         {
-            //perfect item
+           //perfect item
             Debug.Log("Perfect Item");
         }
 
