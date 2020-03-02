@@ -11,6 +11,8 @@ public class AnvilManager : MonoBehaviour
     [SerializeField] private GameObject _gauges;
     [SerializeField] private Transform _anvilPosition;
     [SerializeField] private StrikerTimerController _strikerTimerController;
+    [SerializeField] private ParticleSystem[] particles;
+    public ParticleSystem[] Particles => particles;
 
     private GameObject _anvillingObject;
     private GameObject _anvilledObject;
@@ -37,6 +39,8 @@ public class AnvilManager : MonoBehaviour
             default:
                 break;
         }
+
+        
     }
     private void OnTriggerStay(Collider other)
     {
@@ -53,6 +57,7 @@ public class AnvilManager : MonoBehaviour
                 }                
 
                 MalleableMaterial malleableMaterial = _anvillingObject.GetComponent<MalleableMaterial>();
+                malleableMaterial.AnvilManager = this;
 
                 _strikerTimerController.speed = malleableMaterial.Speed;
 
@@ -70,7 +75,7 @@ public class AnvilManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<DistanceGrabbable>()) // check objects are grabbable
+        if (other.GetComponent<DistanceGrabbable>() && other.gameObject.layer != 11) // check objects are grabbable
         {
             _strikerTimerController.thresholdValues.Clear();
             _gauges.SetActive(false);
@@ -102,7 +107,7 @@ public class AnvilManager : MonoBehaviour
             if (malleable.HitCounter >= malleable.HitCount) // once the hit counter has reached max
             {
                 Destroy(_anvillingObject); // destroy the hammered object
-                GameObject hammeredObject = Instantiate(_anvilledObject); // create the new object
+                GameObject hammeredObject = Instantiate(malleable.FinalHit()); // create the new object
                 _anvilledObject = hammeredObject;
                 hammeredObject.transform.position = _anvilPosition.position; // set the position
                 _anvilState = AnvilState.Anvilled; // change the state

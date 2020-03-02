@@ -135,6 +135,11 @@ MonoBehaviour:
   - 1
   _speed: 1
   strikerTimerController: {fileID: 0}
+  hammeredObjects:
+  - {fileID: 6491972410499016521, guid: af0ad7df0570985419068e90618eee68, type: 3}
+  - {fileID: 6573356833911397897, guid: 355045f80b46fa34bb076cf81c4ddfdb, type: 3}
+  - {fileID: 1332686752937064791, guid: 30123bade5e72784a919dede920c78f7, type: 3}
+  - {fileID: 5733456567533225203, guid: db28eb2e3077d104fad23ddd7b09f0e3, type: 3}
   isMalleable: 0
 --- !u!54 &3320612164102007255
 Rigidbody:

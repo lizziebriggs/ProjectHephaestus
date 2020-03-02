@@ -1,5 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class MalleableMaterial : MonoBehaviour
@@ -9,6 +10,10 @@ public class MalleableMaterial : MonoBehaviour
     [SerializeField, Range(0, 1)] float[] _thresholdValues;
     [SerializeField, Range(0.1f, 1)] float _speed;
     [HideInInspector] public StrikerTimerController strikerTimerController;
+    [HideInInspector] public AnvilManager AnvilManager;
+
+    [SerializeField] private GameObject[] hammeredObjects;
+    
 
     [HideInInspector] public bool isMalleable = false;
 
@@ -38,6 +43,7 @@ public class MalleableMaterial : MonoBehaviour
             //endValue += 1f / thresholdLength 
             _finalPoints += 1f / _thresholdValues.Length;
             hitCounter++;
+            AnvilManager.Particles[0].Play();
             Debug.Log("Shit hit");
         }
         // Ok
@@ -46,6 +52,7 @@ public class MalleableMaterial : MonoBehaviour
             //endValue +=  (1 / thresholdLength) * 2
             _finalPoints += (1f / _thresholdValues.Length) * 2;
             hitCounter++;
+            AnvilManager.Particles[1].Play();
             Debug.Log("Ok hit");
         }
         // Good
@@ -53,6 +60,7 @@ public class MalleableMaterial : MonoBehaviour
         {
             _finalPoints += (1f / _thresholdValues.Length) * 3;
             hitCounter++;
+            AnvilManager.Particles[2].Play();
             Debug.Log("Good hit");
         }
         // Perfect
@@ -60,59 +68,45 @@ public class MalleableMaterial : MonoBehaviour
         {
             _finalPoints += 1f;
             hitCounter++;
+            AnvilManager.Particles[3].Play();
             Debug.Log("Perfect hit");
         }
 
         if (hitCounter == hitCount) FinalHit();
     }
 
-    private void FinalHit()
+    public GameObject FinalHit()
     {
         _finalPoints = Mathf.Floor(_finalPoints * 100) / 100;
 
         Debug.Log("Final points: " + _finalPoints);
-        
 
         if (_finalPoints <= _maxPoints / _thresholdValues.Length)
         {
-            Debug.Log(_maxPoints / _thresholdValues.Length);
-            //spawn shit object
             Debug.Log("Shit Item");
+            return hammeredObjects[0];
         }
         // Ok
         else if (_finalPoints <= (_maxPoints / _thresholdValues.Length) * 2)
         {
-            Debug.Log((_maxPoints / _thresholdValues.Length) * 2);
-            //spawn ok object
             Debug.Log("Ok Item");
+            return hammeredObjects[1];
         }
         // Good
         else if (_finalPoints < _maxPoints)
         {
-            //good item
             Debug.Log("Good Item");
+            return hammeredObjects[2];
         }
         // Perfect
-        else if (_finalPoints >= _maxPoints)
+        else
         {
-           //perfect item
             Debug.Log("Perfect Item");
+            return hammeredObjects[3];
         }
 
+        //var value = _maxPoints % _finalPoints;
+        //Debug.Log("Return value: " + value);
+        //return hammeredObjects[(int)Mathf.Ceil(value)];
     }
-
-    
-    /*
-     * method ValueUpdate(value)
-     * 
-     *bunch of if statements
-     * if value == _threshold1
-     * totalValueCounter+=0.1
-     * hitCounter++
-     * 
-     * if hitCounter == max
-     * bunch of ifs statement
-     * if totalValueCounter == shitRange
-     * instantiate(shitItem)
-     */
 }
