@@ -1,9 +1,3 @@
-Job Board with job deposit
-Set up scenes
-Add Sounds
-Resize particles on anvil
-Furnace item selection
-UI menu
 
 1. Job board with job deposit
 2. Sounds
@@ -12,3 +6,4 @@ UI menu
 5. Furnace Item Selection
 6. Lighting
 7. Rezise particles on anvil
+
