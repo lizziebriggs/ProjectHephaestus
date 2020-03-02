@@ -19,6 +19,7 @@ TagManager:
   - Grabbable
   - Hub
   - StereoRender_Ignore
+  - Hammer
   - 
   - Interact
   - 
