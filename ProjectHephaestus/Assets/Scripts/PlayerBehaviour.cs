@@ -17,9 +17,11 @@ public class PlayerBehaviour : MonoBehaviour
         {
             //new job logic goes here
             //reset active job colour
+            
             _activeJob.ButtonColour.color = _activeJob.InactiveColour;
             newJob.ButtonColour.color = newJob.ActiveColour;
             //active job = new job
+            _activeJob = newJob;
         }
     }
 }

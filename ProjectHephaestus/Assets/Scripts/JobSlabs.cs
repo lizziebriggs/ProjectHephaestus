@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class JobSlabs : MonoBehaviour
 {
-    [SerializeField] public string newName;
+    [SerializeField] public string itemName;
     [SerializeField] public int reward;
     [SerializeField, TextArea] private String toDo;
     [SerializeField] private Text uiText;
