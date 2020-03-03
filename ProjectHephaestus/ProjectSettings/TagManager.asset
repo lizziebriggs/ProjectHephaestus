@@ -7,6 +7,8 @@ TagManager:
   - TaskLeft
   - TaskRight
   - TaskCol
+  - Button
+  - Finger
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,6 @@ TagManager:
   - Hammer
   - 
   - Interact
-  - 
   - 
   - 
   - 

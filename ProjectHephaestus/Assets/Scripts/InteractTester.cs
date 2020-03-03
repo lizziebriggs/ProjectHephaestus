@@ -8,13 +8,13 @@ public class InteractTester : MonoBehaviour
 {
     [SerializeField] private string name;
     [SerializeField] private int reward;
-    [SerializeField, TextArea] private String _description;
+    [SerializeField, TextArea] private String description;
     [SerializeField] private Image itemImage;
     [SerializeField] private Text uiText;
 
     private void Awake()
     {
-        uiText.text = _description;
+        uiText.text = description;
     }
 
     private void OnTriggerEnter(Collider other)
