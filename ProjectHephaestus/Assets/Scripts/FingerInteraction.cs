@@ -7,28 +7,33 @@ public class FingerInteraction : MonoBehaviour
 {
     /*[SerializeField] private GameObject player;*/
     [SerializeField] private Transform target;
+    //attach the playerbehaviour script to the player, then drop the player in this field
+    [SerializeField] private PlayerBehaviour _player;
     public static bool button1;
     public static bool button2;
     
 
-    private void FixedUpdate()
+    private void FixedUpdate() => transform.position = target.position;
+
+    private void OnTriggerEnter(Collider other)
     {
-        transform.position = target.position;
+        var buttonInteraction = other.gameObject.GetComponent<ButtonInteraction>();
+        if (buttonInteraction) _player.SetActiveJob(buttonInteraction);
     }
 
-    private void Update()
-    {
-        if (button1 == true)
-        {
-            Debug.Log("Button1 active");
-            
-        }
-
-        else if (button2 == true)
-        {
-            Debug.Log("Button2 is active");
-        }
-    }
+    // private void Update()
+    // {
+    //     if (button1 == true)
+    //     {
+    //         Debug.Log("Button1 active");
+    //         
+    //     }
+    //
+    //     else if (button2 == true)
+    //     {
+    //         Debug.Log("Button2 is active");
+    //     }
+    // }
 }
 
 
