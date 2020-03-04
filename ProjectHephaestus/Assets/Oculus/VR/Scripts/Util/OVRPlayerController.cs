@@ -618,6 +618,6 @@ public class OVRPlayerController : MonoBehaviour
 
 	public void AdjustRotation(float newRotation)
 	{
-		
+		RotationAmount = newRotation;
 	}
 }
