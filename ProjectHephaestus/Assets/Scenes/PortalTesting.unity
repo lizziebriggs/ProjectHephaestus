@@ -176,7 +176,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 90
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -184,7 +184,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 8fe53ee4580cae445a5b8f54ba237adb, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -530,8 +530,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864792499}
   m_LocalRotation: {x: -0, y: 0.7072082, z: -0, w: -0.7070054}
-  m_LocalPosition: {x: -81.67, y: 7.27, z: -7.28}
-  m_LocalScale: {x: 4.374098, y: 6.5092583, z: 2.6481338}
+  m_LocalPosition: {x: -81.67, y: 6.39, z: -7.28}
+  m_LocalScale: {x: 4.213306, y: 4.869239, z: 1.492038}
   m_Children:
   - {fileID: 799519429}
   - {fileID: 487604741}
@@ -554,11 +554,11 @@ MonoBehaviour:
   m_canvasOriginWorldPosition: {x: -69.31851, y: 5.544486, z: -4.4699907}
   m_canvasOriginWorldRotation: {x: -0, y: 180.00026, z: 0}
   anchorTransform: {fileID: 0}
-  m_anchorWorldPosition: {x: -1.0987593, y: 7.5991325, z: 16.234138}
+  m_anchorWorldPosition: {x: -1.0987593, y: 6.2572403, z: 16.234138}
   m_anchorWorldRotation: {x: -0, y: 180, z: 0}
   shouldRender: 1
   useObliqueClip: 1
-  useScissor: 1
+  useScissor: 0
   isUnlit: 0
   stereoCameraHead: {fileID: 799519428}
   stereoCameraEye: {fileID: 116233466}
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_anchorWorldRotation: {x: -0, y: 90.00001, z: -0}
   shouldRender: 1
   useObliqueClip: 1
-  useScissor: 1
+  useScissor: 0
   isUnlit: 0
   stereoCameraHead: {fileID: 378287477}
   stereoCameraEye: {fileID: 1570899122}
@@ -1217,6 +1217,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.0000008
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: _trackingOriginType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 14300000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_Radius
       value: 0.05
@@ -1265,13 +1269,13 @@ PrefabInstance:
       propertyPath: HmdResetsY
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
-      propertyPath: _trackingOriginType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2015248, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_HDR
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015248, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: field of view
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 11462408, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_Enabled
@@ -1357,7 +1361,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 90
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
