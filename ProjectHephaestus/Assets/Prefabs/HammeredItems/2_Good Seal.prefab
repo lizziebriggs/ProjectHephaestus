@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 6448865415395766642}
   - component: {fileID: 739278112608259467}
   - component: {fileID: 631643098939119957}
+  - component: {fileID: -4720459948144884613}
   - component: {fileID: 5136846297043857382}
   - component: {fileID: -3361466769952369459}
   m_Layer: 0
-  m_Name: Good Seal
+  m_Name: 2_Good Seal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,6 +99,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-4720459948144884613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332686752937064791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4987ac3a957332468e8c475d62831b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _finalItem: seal
+  _value: 75
 --- !u!114 &5136846297043857382
 MonoBehaviour:
   m_ObjectHideFlags: 0

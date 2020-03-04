@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 329056587277339862}
   - component: {fileID: 6317849142301356079}
   - component: {fileID: 5684698558083301420}
+  - component: {fileID: -7293638564406200680}
   - component: {fileID: 2885933090018813681}
   - component: {fileID: 6452814063916235192}
   m_Layer: 0
-  m_Name: Perfect Seal
+  m_Name: 3_Perfect Seal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,6 +99,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-7293638564406200680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733456567533225203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4987ac3a957332468e8c475d62831b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _finalItem: seal
+  _value: 100
 --- !u!114 &2885933090018813681
 MonoBehaviour:
   m_ObjectHideFlags: 0

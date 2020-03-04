@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 1168998913172379180}
   - component: {fileID: 4829432451572886229}
   - component: {fileID: 5493328157297682816}
+  - component: {fileID: -4445291899759919294}
   - component: {fileID: 2410327819885847834}
   - component: {fileID: -3307560918590373690}
   m_Layer: 0
-  m_Name: Okay Seal
+  m_Name: 1_Okay Seal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,6 +99,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-4445291899759919294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6573356833911397897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4987ac3a957332468e8c475d62831b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _finalItem: seal
+  _value: 50
 --- !u!114 &2410327819885847834
 MonoBehaviour:
   m_ObjectHideFlags: 0

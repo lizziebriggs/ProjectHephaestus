@@ -6,20 +6,17 @@ using UnityEngine.UI;
 
 public class JobSlabs : MonoBehaviour
 {
-    [SerializeField] public string itemName;
-    [SerializeField] public int reward;
+    [SerializeField] private string itemName;
+    [SerializeField] private int reward;
     [SerializeField, TextArea] private String toDo;
     [SerializeField] private Text uiText;
-    // Start is called before the first frame update
-    void Start()
+
+    public string ItemName => itemName;
+
+    public int Reward => reward;
+
+    private void Awake()
     {
         uiText.text = toDo;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-        
     }
 }

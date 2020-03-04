@@ -76,11 +76,11 @@ public class FurnaceManager : MonoBehaviour
     {
         // Change original item to smelted version
         Destroy(_furnaceObject);
-        Instantiate(_smeltedObject);
+        var smelted = Instantiate(_smeltedObject);
 
         // Set position of new smelted object to spawn position
-        _smeltedObject.transform.position = _smeltedObjectSpawn.transform.position;
-        var _smeltedComponent = _smeltedObject.GetComponent<MalleableMaterial>();
+        smelted.transform.position = _smeltedObjectSpawn.transform.position;
+        var _smeltedComponent = smelted.GetComponent<MalleableMaterial>();
         _smeltedComponent.strikerTimerController = _strikerTimerController;
 
         _smeltingTimerDisplay.SetActive(false);
