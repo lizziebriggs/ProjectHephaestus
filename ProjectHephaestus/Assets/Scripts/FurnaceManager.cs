@@ -18,6 +18,11 @@ public class FurnaceManager : MonoBehaviour
     private GameObject _furnaceObject;
     private GameObject _smeltedObject;
 
+    [Header("Fuel")]
+    private int fuel;
+    [SerializeField] private int burnSpeed;
+    public int Fuel { get; set; }
+
     [Header("Effects")]
     [SerializeField] private GameObject _fireParticleEffect;
     [SerializeField] private GameObject _smokeParticleEffect;
@@ -58,6 +63,17 @@ public class FurnaceManager : MonoBehaviour
             default:
                 break;
         }
+
+        if (fuel > 0)
+        {
+            _fireParticleEffect.SetActive(true);
+            BurnFuel();
+        }
+    }
+
+    private void BurnFuel()
+    {
+
     }
 
 
@@ -105,6 +121,7 @@ public class FurnaceManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Check for smeltable item
         if (other.GetComponent<Smelt>())
         {
             var timeToSmelt = other.GetComponent<Smelt>().SmeltingTime;
