@@ -463,9 +463,11 @@ PrefabInstance:
       propertyPath: _smokeDuration
       value: 5
       objectReference: {fileID: 0}
+
     - target: {fileID: 931919464, guid: 7f41a08cd4816dd4ab249e9104f68fad, type: 3}
       propertyPath: m_FontSize
       value: 200
+
       objectReference: {fileID: 0}
     - target: {fileID: 931919464, guid: 7f41a08cd4816dd4ab249e9104f68fad, type: 3}
       propertyPath: m_Font
