@@ -1283,17 +1283,17 @@ PrefabInstance:
     - target: {fileID: 4911095226832404685, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.532
+      value: -3.251
       objectReference: {fileID: 0}
     - target: {fileID: 4911095226832404685, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.222
+      value: 5.301
       objectReference: {fileID: 0}
     - target: {fileID: 4911095226832404685, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.269
+      value: -2.149
       objectReference: {fileID: 0}
     - target: {fileID: 4911095226832404685, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}
@@ -2482,17 +2482,17 @@ PrefabInstance:
     - target: {fileID: 6744708468029495723, guid: 15e497aa0d2a1054bb02d869d25e9673,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: -1.572
       objectReference: {fileID: 0}
     - target: {fileID: 6744708468029495723, guid: 15e497aa0d2a1054bb02d869d25e9673,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.72
+      value: 5.013
       objectReference: {fileID: 0}
     - target: {fileID: 6744708468029495723, guid: 15e497aa0d2a1054bb02d869d25e9673,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.10899331
+      value: -0.762
       objectReference: {fileID: 0}
     - target: {fileID: 6744708468029495723, guid: 15e497aa0d2a1054bb02d869d25e9673,
         type: 3}
@@ -2540,6 +2540,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8526522688424006835, guid: dbf36043785ccde47894c5d945fa821a,
         type: 3}
+    - target: {fileID: 8884321813623146672, guid: 15e497aa0d2a1054bb02d869d25e9673,
+        type: 3}
+      propertyPath: _smeltingTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15e497aa0d2a1054bb02d869d25e9673, type: 3}
 --- !u!1 &660123272 stripped
@@ -5943,8 +5948,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.67, z: 0.74}
-  m_Center: {x: 0.75, y: 0.35, z: 1.69}
+  m_Size: {x: 0.7934997, y: 0.67, z: 0.7399995}
+  m_Center: {x: 0.64674985, y: 0.35, z: 1.6900005}
 --- !u!114 &2002716496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5960,7 +5965,8 @@ MonoBehaviour:
   _smeltedObjectSpawn: {fileID: 522117455}
   _smeltingTimerDisplay: {fileID: 931919462}
   _smeltingTimerMesh: {fileID: 931919464}
-  burnSpeed: 0
+  fuel: 0
+  _burnSpeed: 2
   _fireParticleEffect: {fileID: 639159198}
   _smokeParticleEffect: {fileID: 1573158824}
   _smokeDuration: 1
@@ -6532,7 +6538,7 @@ PrefabInstance:
     - target: {fileID: 4911095226832404685, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.129
+      value: -3.592
       objectReference: {fileID: 0}
     - target: {fileID: 4911095226832404685, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}
@@ -6542,7 +6548,7 @@ PrefabInstance:
     - target: {fileID: 4911095226832404685, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.285
+      value: -1.227
       objectReference: {fileID: 0}
     - target: {fileID: 4911095226832404685, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}

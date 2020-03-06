@@ -14,14 +14,16 @@ public class FurnaceManager : MonoBehaviour
     [SerializeField] Transform _smeltedObjectSpawn;
     [SerializeField] GameObject _smeltingTimerDisplay;
     [SerializeField] TextMesh _smeltingTimerMesh;
-    private float _timerCountdown;
+    private float _smeltingCountdown;
     private GameObject _furnaceObject;
     private GameObject _smeltedObject;
 
     [Header("Fuel")]
-    private int fuel;
-    [SerializeField] private int burnSpeed;
-    public int Fuel { get; set; }
+    public int fuel;
+    [SerializeField] private float _burnSpeed;
+    public float BurnSpeed => _burnSpeed;
+    private float _fuelTimer;
+
 
     [Header("Effects")]
     [SerializeField] private GameObject _fireParticleEffect;
@@ -36,7 +38,10 @@ public class FurnaceManager : MonoBehaviour
     private void Start()
     {
         currentState = FurnaceState.Idle;
-        _timerCountdown = 0;
+        _smeltingCountdown = 0;
+
+        fuel = 0;
+        _fuelTimer = _burnSpeed;
 
         _smeltingTimerDisplay.SetActive(false);
         _fireParticleEffect.SetActive(false);
@@ -53,7 +58,9 @@ public class FurnaceManager : MonoBehaviour
                 break;
 
             case FurnaceState.Smelting:
-                Smelting();
+                if (fuel > 0)
+                    Smelting();
+                else _smeltingTimerMesh.text = "Out of Fuel!";
                 break;
 
             case FurnaceState.Smelted:
@@ -69,21 +76,31 @@ public class FurnaceManager : MonoBehaviour
             _fireParticleEffect.SetActive(true);
             BurnFuel();
         }
+        else _fireParticleEffect.SetActive(false);
     }
 
     private void BurnFuel()
     {
+        _fuelTimer -= Time.deltaTime;
 
+        if (_fuelTimer <= 0)
+        {
+            fuel--;
+            _fuelTimer = _burnSpeed;
+            return;
+        }
     }
 
 
     private void Smelting()
     {
         // Round up to whole number
-        _smeltingTimerMesh.text = Math.Ceiling(_timerCountdown).ToString();
+        _smeltingTimerMesh.text = Math.Ceiling(_smeltingCountdown).ToString();
 
-        _timerCountdown -= Time.deltaTime;
-        if (_timerCountdown > 0) return;
+        _smeltingCountdown -= Time.deltaTime;
+        if (_smeltingCountdown > 0) return;
+
+        // When timer has finished
         Smelt();
     }
 
@@ -100,12 +117,11 @@ public class FurnaceManager : MonoBehaviour
         _smeltedComponent.strikerTimerController = _strikerTimerController;
 
         _smeltingTimerDisplay.SetActive(false);
-        _fireParticleEffect.SetActive(false);
+        //_fireParticleEffect.SetActive(false);
 
         _smokeTimerCountdown = _smokeDuration; ;
         currentState = FurnaceState.Smelted;
     }
-
 
     private void PlaySmokePuff()
     {
@@ -141,10 +157,10 @@ public class FurnaceManager : MonoBehaviour
                     // If the object can be grabbed then smelt
                     if (grabbable)
                     {
-                        _timerCountdown = timeToSmelt;
+                        _smeltingCountdown = timeToSmelt;
 
                         _smeltingTimerDisplay.SetActive(true);
-                        _fireParticleEffect.SetActive(true);
+                        //_fireParticleEffect.SetActive(true);
 
                         currentState = FurnaceState.Smelting;
                     }
