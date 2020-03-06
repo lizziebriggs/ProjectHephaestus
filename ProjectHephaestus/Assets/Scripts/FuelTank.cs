@@ -12,7 +12,8 @@ public class FuelTank : MonoBehaviour
 
         if (fuelAdded)
         {
-            furnace.fuel += fuelAdded.FuelValue;
+            furnace.AddFuel(fuelAdded);
+            fuelAdded._furnace = furnace;
 
             fuelAdded.StartBurning(furnace.BurnSpeed);
         }

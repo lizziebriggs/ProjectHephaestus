@@ -19,7 +19,7 @@ public class FurnaceManager : MonoBehaviour
     private GameObject _smeltedObject;
 
     [Header("Fuel")]
-    public int fuel;
+    public int Fuel;
     [SerializeField] private float _burnSpeed;
     public float BurnSpeed => _burnSpeed;
     private float _fuelTimer;
@@ -34,13 +34,16 @@ public class FurnaceManager : MonoBehaviour
     [Header("Striker Timer Controller")]
     [SerializeField] private StrikerTimerController _strikerTimerController;
 
+    public List<Fuel> _fuelCount = new List<Fuel>();
+    private float _temp;
+
 
     private void Start()
     {
         currentState = FurnaceState.Idle;
         _smeltingCountdown = 0;
 
-        fuel = 0;
+        Fuel = 0;
         _fuelTimer = _burnSpeed;
 
         _smeltingTimerDisplay.SetActive(false);
@@ -58,7 +61,7 @@ public class FurnaceManager : MonoBehaviour
                 break;
 
             case FurnaceState.Smelting:
-                if (fuel > 0)
+                if (Fuel > 0)
                     Smelting();
                 else _smeltingTimerMesh.text = "Out of Fuel!";
                 break;
@@ -71,12 +74,16 @@ public class FurnaceManager : MonoBehaviour
                 break;
         }
 
-        if (fuel > 0)
+        if (Fuel > 0)
         {
             _fireParticleEffect.SetActive(true);
             BurnFuel();
         }
-        else _fireParticleEffect.SetActive(false);
+        else
+        {
+            _fireParticleEffect.SetActive(false);
+            if (_temp > 0) _temp -= Time.deltaTime;
+        }
     }
 
     private void BurnFuel()
@@ -85,8 +92,11 @@ public class FurnaceManager : MonoBehaviour
 
         if (_fuelTimer <= 0)
         {
-            fuel--;
+            Fuel--;
             _fuelTimer = _burnSpeed;
+            if (_temp < _fuelCount.Count * 10) _temp += Time.deltaTime * _fuelCount.Count * 10;
+            else if (_temp > _fuelCount.Count * 10) _temp -= Time.deltaTime * _fuelCount.Count * 10;
+            Debug.Log("Temp: " + _temp);
             return;
         }
     }
@@ -132,6 +142,12 @@ public class FurnaceManager : MonoBehaviour
 
         _smokeParticleEffect.SetActive(false);
         currentState = FurnaceState.Idle;
+    }
+
+    public void AddFuel(Fuel fuel)
+    {
+        Fuel += fuel.FuelValue;
+        if (!_fuelCount.Contains(fuel)) _fuelCount.Add(fuel);
     }
 
 

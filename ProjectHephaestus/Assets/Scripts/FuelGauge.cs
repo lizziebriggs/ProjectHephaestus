@@ -24,11 +24,11 @@ public class FuelGauge : MonoBehaviour
     {
         ChangeColour();
 
-        _slider.value = furnace.fuel;
+        _slider.value = furnace.Fuel;
     }
 
     public void ChangeColour()
     {
-        _fill.color = Color.Lerp(_minColor, _maxColor, furnace.fuel / _slider.maxValue);
+        _fill.color = Color.Lerp(_minColor, _maxColor, furnace.Fuel / _slider.maxValue);
     }
 }

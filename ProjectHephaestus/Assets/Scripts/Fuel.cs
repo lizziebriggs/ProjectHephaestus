@@ -5,6 +5,7 @@ using UnityEngine;
 public class Fuel : MonoBehaviour
 {
     [SerializeField, Range(0, 100)] private int fuelValue;
+    public FurnaceManager _furnace;
     public int FuelValue => fuelValue;
 
     public int fuelLeft;
@@ -21,7 +22,11 @@ public class Fuel : MonoBehaviour
     void Update()
     {
         if (_canBurn) Burn();
-        if (fuelLeft <= 0) Destroy(gameObject);
+        if (fuelLeft <= 0)
+        {
+            _furnace._fuelCount.Remove(this);
+            Destroy(gameObject);
+        }
     }
 
     public void StartBurning(float countdownValue)
