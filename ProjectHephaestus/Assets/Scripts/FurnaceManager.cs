@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FurnaceManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class FurnaceManager : MonoBehaviour
     public int Fuel;
     [SerializeField] private float _burnSpeed;
     [SerializeField] private int _tempSpeed;
+    [SerializeField] private Text _tempDisplay;
     public float BurnSpeed => _burnSpeed;
     private float _fuelTimer;
 
@@ -86,12 +88,15 @@ public class FurnaceManager : MonoBehaviour
             _fireParticleEffect.SetActive(false);
             if (_temp > 0) _temp -= Time.deltaTime;
         }
+
+        var tempInt = (int) _temp;
+        _tempDisplay.text = tempInt + "C";
     }
 
     private void BurnFuel()
     {
         _fuelTimer -= Time.deltaTime;
-        if (!_fuelCount[0]._canBurn)
+        if (_fuelCount[0] && !_fuelCount[0]._canBurn)
         {
             _fuelCount[0].StartBurning(_burnSpeed);
         }
