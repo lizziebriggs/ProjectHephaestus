@@ -21,6 +21,7 @@ public class FurnaceManager : MonoBehaviour
     [Header("Fuel")]
     public int Fuel;
     [SerializeField] private float _burnSpeed;
+    [SerializeField] private int _tempSpeed;
     public float BurnSpeed => _burnSpeed;
     private float _fuelTimer;
 
@@ -34,8 +35,9 @@ public class FurnaceManager : MonoBehaviour
     [Header("Striker Timer Controller")]
     [SerializeField] private StrikerTimerController _strikerTimerController;
 
-    public List<Fuel> _fuelCount = new List<Fuel>();
+    [HideInInspector] public List<Fuel> _fuelCount = new List<Fuel>();
     private float _temp;
+    public float TempValue { get; set; }
 
 
     private void Start()
@@ -89,15 +91,17 @@ public class FurnaceManager : MonoBehaviour
     private void BurnFuel()
     {
         _fuelTimer -= Time.deltaTime;
+        if (!_fuelCount[0]._canBurn)
+        {
+            _fuelCount[0].StartBurning(_burnSpeed);
+        }
 
         if (_fuelTimer <= 0)
         {
             Fuel--;
             _fuelTimer = _burnSpeed;
-            if (_temp < _fuelCount.Count * 10) _temp += Time.deltaTime * _fuelCount.Count * 10;
-            else if (_temp > _fuelCount.Count * 10) _temp -= Time.deltaTime * _fuelCount.Count * 10;
-            Debug.Log("Temp: " + _temp);
-            return;
+            if (_temp < TempValue) _temp += Time.deltaTime * (_fuelCount.Count * _tempSpeed);
+            else if (_temp > TempValue) _temp -= Time.deltaTime * (_fuelCount.Count * _tempSpeed);
         }
     }
 
@@ -146,8 +150,12 @@ public class FurnaceManager : MonoBehaviour
 
     public void AddFuel(Fuel fuel)
     {
-        Fuel += fuel.FuelValue;
-        if (!_fuelCount.Contains(fuel)) _fuelCount.Add(fuel);
+        if (!_fuelCount.Contains(fuel))
+        {
+            Fuel += fuel.FuelValue;
+            TempValue += fuel.TempValue;
+            _fuelCount.Add(fuel);
+        }
     }
 
 

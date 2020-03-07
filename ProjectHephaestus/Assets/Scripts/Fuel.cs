@@ -5,26 +5,31 @@ using UnityEngine;
 public class Fuel : MonoBehaviour
 {
     [SerializeField, Range(0, 100)] private int fuelValue;
-    public FurnaceManager _furnace;
+    [SerializeField, Range(0, 100)] private int _tempValue;
+    public FurnaceManager Furnace { get; set; }
+
+    public int TempValue => _tempValue;
+
     public int FuelValue => fuelValue;
 
-    public int fuelLeft;
+    private int _fuelLeft;
 
-    private bool _canBurn;
+    [HideInInspector] public bool _canBurn;
     private float _burnCountdown;
     private float _burnTimer;
 
     void Start()
     {
-        fuelLeft = fuelValue;   
+        _fuelLeft = fuelValue;   
     }
 
     void Update()
     {
         if (_canBurn) Burn();
-        if (fuelLeft <= 0)
+        if (_fuelLeft <= 0)
         {
-            _furnace._fuelCount.Remove(this);
+            Furnace._fuelCount.Remove(this);
+            Furnace.TempValue -= TempValue;
             Destroy(gameObject);
         }
     }
@@ -42,7 +47,7 @@ public class Fuel : MonoBehaviour
 
         if (_burnTimer > 0) return;
 
-        fuelLeft--;
+        _fuelLeft--;
         _burnTimer = _burnCountdown;
     }
 }

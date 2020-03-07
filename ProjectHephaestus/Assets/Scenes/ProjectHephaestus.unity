@@ -379,6 +379,11 @@ PrefabInstance:
       propertyPath: fuelValue
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 3249062735867336824, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
+        type: 3}
+      propertyPath: _tempValue
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d, type: 3}
 --- !u!1 &60977410
@@ -1374,6 +1379,11 @@ PrefabInstance:
         type: 3}
       propertyPath: fuelValue
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249062735867336824, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
+        type: 3}
+      propertyPath: _tempValue
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d, type: 3}
@@ -6397,6 +6407,7 @@ MonoBehaviour:
   _smeltingTimerMesh: {fileID: 931919464}
   Fuel: 0
   _burnSpeed: 1
+  _tempSpeed: 20
   _fireParticleEffect: {fileID: 639159198}
   _smokeParticleEffect: {fileID: 1573158824}
   _smokeDuration: 1
@@ -6714,11 +6725,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 54536635114930526, guid: 6fae51a9f4170334e8639e8dbfc0a54b,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 114956354361317420, guid: 6fae51a9f4170334e8639e8dbfc0a54b,
         type: 3}
       propertyPath: m_controller
@@ -6754,6 +6760,11 @@ PrefabInstance:
       propertyPath: m_player
       value: 
       objectReference: {fileID: 299725485}
+    - target: {fileID: 54536635114930526, guid: 6fae51a9f4170334e8639e8dbfc0a54b,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fae51a9f4170334e8639e8dbfc0a54b, type: 3}
 --- !u!1 &2105717005 stripped
@@ -7024,6 +7035,11 @@ PrefabInstance:
     - target: {fileID: 3249062735867336824, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
         type: 3}
       propertyPath: fuelValue
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249062735867336824, guid: 98ecf3e6e1ce5af47ab04fa9d506ad6d,
+        type: 3}
+      propertyPath: _tempValue
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
