@@ -1,0 +1,9 @@
+New Checklist
+
+Change the SliderBar textures
+Audio
+Lighting
+Make UI for new features (Temperature, Fuel etc.)
+Line Up scene
+change Job board look and positioning
+Add boundries and lava particle effects to the starting HUB
