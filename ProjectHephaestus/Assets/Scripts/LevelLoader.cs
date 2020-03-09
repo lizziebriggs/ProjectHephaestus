@@ -9,6 +9,7 @@ public class LevelLoader : MonoBehaviour
     private enum LevelState { Idle, LevelLoaded }
     [SerializeField] private Transform _objectPoint;
     [SerializeField] private GameObject _portal;
+    [SerializeField] private ParticleSystem _particleSystem;
     private LevelItem _currentLevel;
     private LevelState _currentState = LevelState.Idle;
     private int _speed = 50;
@@ -82,7 +83,8 @@ public class LevelLoader : MonoBehaviour
             {
                 _currentLevel.gameObject.transform.up = transform.up; // set up rotation
                 _currentLevel.gameObject.transform.position = transform.position;// hold position on the anvil
-
+                var particleSystemMain = _particleSystem.main;
+                particleSystemMain.startColor = _currentLevel.ParticleColour;
             }
             _currentLevel.gameObject.transform.Rotate(0, 0, _speed * Time.deltaTime);
         }

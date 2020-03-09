@@ -6593,6 +6593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectPoint: {fileID: 2000449376}
   _portal: {fileID: 864792499}
+  _particleSystem: {fileID: 1527824678}
 --- !u!1 &2111383511
 GameObject:
   m_ObjectHideFlags: 0
@@ -6945,6 +6946,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062345289257736061, guid: 27b731cb1ea301b4ba2c95a26a5003cb,
+        type: 3}
+      propertyPath: _particleColour.r
+      value: 0.9811321
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062345289257736061, guid: 27b731cb1ea301b4ba2c95a26a5003cb,
+        type: 3}
+      propertyPath: _particleColour.g
+      value: 0.1064436
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062345289257736061, guid: 27b731cb1ea301b4ba2c95a26a5003cb,
+        type: 3}
+      propertyPath: _particleColour.b
+      value: 0.1064436
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27b731cb1ea301b4ba2c95a26a5003cb, type: 3}
