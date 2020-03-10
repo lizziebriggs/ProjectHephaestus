@@ -150,6 +150,8 @@ MonoBehaviour:
   - 0.5
   - 0.75
   _speed: 2
+  _strikerTimerController: {fileID: 5336148690991102305, guid: f05a7ad3a8a3db8419e92fbea51851bb,
+    type: 3}
   isMalleable: 0
 --- !u!135 &4980005417493810248
 SphereCollider:

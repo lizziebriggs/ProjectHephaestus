@@ -610,4 +610,14 @@ public class OVRPlayerController : MonoBehaviour
 			transform.rotation = Quaternion.Euler(euler);
 		}
 	}
+
+	public void AdjustSpeed(float newSpeed)
+	{
+		Acceleration = newSpeed;
+	}
+
+	public void AdjustRotation(float newRotation)
+	{
+		RotationAmount = newRotation;
+	}
 }
