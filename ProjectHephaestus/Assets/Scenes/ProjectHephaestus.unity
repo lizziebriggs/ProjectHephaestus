@@ -5278,6 +5278,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SealButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5286716170421936250, guid: 7091b0bc15446e849a2a3201af29d7ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5286716170421936245, guid: 7091b0bc15446e849a2a3201af29d7ed,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5347,6 +5352,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.08855101
+      objectReference: {fileID: 0}
+    - target: {fileID: 5286716170421936248, guid: 7091b0bc15446e849a2a3201af29d7ed,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7091b0bc15446e849a2a3201af29d7ed, type: 3}
@@ -7796,6 +7806,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SundialButton
       objectReference: {fileID: 0}
+    - target: {fileID: 7468005770148029500, guid: d4972e698e9bbca4b8c8bd0437d73055,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7468005770148029491, guid: d4972e698e9bbca4b8c8bd0437d73055,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7865,6 +7880,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.08855101
+      objectReference: {fileID: 0}
+    - target: {fileID: 7468005770148029502, guid: d4972e698e9bbca4b8c8bd0437d73055,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4972e698e9bbca4b8c8bd0437d73055, type: 3}

@@ -5,8 +5,8 @@ using UnityEngine;
 public class FinishedItem : MonoBehaviour
 {
     [SerializeField] private string _finalItem;
-    [SerializeField] private int _value;
+    [SerializeField, Range(0, 1)] private float _value;
     public string FinalItem => _finalItem;
 
-    public int Value => _value;
+    public float Value => _value;
 }
