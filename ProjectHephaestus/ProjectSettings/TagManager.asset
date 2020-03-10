@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - TaskLeft
+  - TaskRight
+  - TaskCol
+  - Button
+  - Finger
   layers:
   - Default
   - TransparentFX
@@ -16,9 +21,9 @@ TagManager:
   - Grabbable
   - Hub
   - StereoRender_Ignore
+  - Hammer
   - 
-  - 
-  - 
+  - Interact
   - 
   - 
   - 

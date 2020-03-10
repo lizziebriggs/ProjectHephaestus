@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class StrikerTimerController : MonoBehaviour
 {
-    private enum SliderState
+    public enum SliderState
     {
         Up,
-        Down
+        Down,
+        Idle
     }
 
     [Header("Thresholds")]
@@ -19,7 +20,7 @@ public class StrikerTimerController : MonoBehaviour
     [SerializeField] private Slider _sliderBar;
     [SerializeField] private Image _fill;
     [HideInInspector] public float speed;
-    private SliderState currentState;
+    [HideInInspector] public SliderState currentState;
 
     public Slider SliderBar => _sliderBar;
     public Color Red => _thresholdColours[0];
@@ -31,7 +32,7 @@ public class StrikerTimerController : MonoBehaviour
     void Start()
     {
         _sliderBar.value = 0;
-        currentState = SliderState.Up;
+        currentState = SliderState.Idle;
     }
 
 
@@ -46,6 +47,9 @@ public class StrikerTimerController : MonoBehaviour
                 break;
             case SliderState.Down:
                 SlideOnDown();
+                break;
+            case SliderState.Idle:
+                IdleState();
                 break;
             default:
                 break;
@@ -64,9 +68,16 @@ public class StrikerTimerController : MonoBehaviour
         if (_sliderBar.value <= _sliderBar.minValue) currentState = SliderState.Up;
     }
 
+    private void IdleState()
+    {
+        thresholdValues.Clear();
+        _sliderBar.value = 0;
+        currentState = SliderState.Up;
+    }
+
     private void CheckThreshold()
     {
-        for (int i = 0; i < thresholdValues.Count - 1; i++)
+        for (int i = 0; i < thresholdValues.Count; i++)
         {
             if (i > _thresholdColours.Count) break;
 

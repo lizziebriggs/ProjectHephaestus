@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class HammerController : MonoBehaviour
 {
+    private bool _justHit = false;
+    private float _waitTimer = 1;
 
-    void Start()
+    private void OnTriggerEnter(Collider collision)
     {
-        
+        if (!_justHit && collision.gameObject.GetComponent<MalleableMaterial>())
+        {
+            var malleable = collision.gameObject.GetComponent<MalleableMaterial>();
+            if (malleable.isMalleable)
+            {
+                _justHit = true;
+                malleable.UpdateValue();
+                StartCoroutine(Reset());
+            }
+        }
     }
 
-
-    void Update()
+    IEnumerator Reset()
     {
-        
+        yield return new WaitForSeconds(_waitTimer);
+        _justHit = false;
     }
 }
