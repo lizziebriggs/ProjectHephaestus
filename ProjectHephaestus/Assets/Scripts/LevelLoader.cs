@@ -9,6 +9,7 @@ public class LevelLoader : MonoBehaviour
     private enum LevelState { Idle, LevelLoaded }
     [SerializeField] private Transform _objectPoint;
     [SerializeField] private GameObject _portal;
+    [SerializeField] private ParticleSystem _particleSystem;
     private LevelItem _currentLevel;
     private LevelState _currentState = LevelState.Idle;
     private int _speed = 50;
@@ -42,6 +43,7 @@ public class LevelLoader : MonoBehaviour
                 _currentLevel = level;
                 _currentState = LevelState.LevelLoaded;
                 SceneManager.LoadScene(level.Level, LoadSceneMode.Additive);
+                if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
                 if (_portal.activeSelf != true) _portal.SetActive(true);
             }
 
@@ -51,6 +53,7 @@ public class LevelLoader : MonoBehaviour
                 SceneManager.LoadScene(level.Level, LoadSceneMode.Additive);
                 _currentLevel = level;
                 _currentState = LevelState.LevelLoaded;
+                if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
                 if (_portal.activeSelf != true) _portal.SetActive(true);
             }
         }
@@ -66,7 +69,8 @@ public class LevelLoader : MonoBehaviour
             if (_currentLevel)
             {
                 SceneManager.UnloadSceneAsync(_currentLevel.Level);
-                if (_portal.activeSelf != false) _portal.SetActive(false);
+                if (_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(false);
+                if (_portal.activeSelf) _portal.SetActive(false);
                 _currentState = LevelState.Idle;
                 _currentLevel = null;
             }
@@ -82,7 +86,8 @@ public class LevelLoader : MonoBehaviour
             {
                 _currentLevel.gameObject.transform.up = transform.up; // set up rotation
                 _currentLevel.gameObject.transform.position = transform.position;// hold position on the anvil
-
+                var particleSystemMain = _particleSystem.main;
+                particleSystemMain.startColor = _currentLevel.ParticleColour;
             }
             _currentLevel.gameObject.transform.Rotate(0, 0, _speed * Time.deltaTime);
         }
