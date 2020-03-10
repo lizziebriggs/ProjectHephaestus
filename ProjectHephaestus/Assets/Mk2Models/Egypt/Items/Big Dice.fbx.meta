@@ -3,7 +3,12 @@ guid: 30a0cb44004dede47841311e6b3c2be0
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert3
+    second: {fileID: 2100000, guid: 16153793830fae3419efc247f3d1ade3, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -36,7 +41,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 0
     sortHierarchyByName: 1
     importVisibility: 1

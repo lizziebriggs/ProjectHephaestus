@@ -23,7 +23,7 @@ public class FurnaceManager : MonoBehaviour
     [Header("Fuel")]
     public int Fuel;
     [SerializeField] private float _burnSpeed;
-    [SerializeField] private int _tempSpeed;
+    [SerializeField] private float _tempSpeed;
     [SerializeField] private Text _tempDisplay;
     public float BurnSpeed => _burnSpeed;
     private float _fuelTimer;
@@ -94,13 +94,16 @@ public class FurnaceManager : MonoBehaviour
             if (_temp > 0) _temp -= Time.deltaTime;
         }
 
-        var tempInt = (int) _temp;
+        var tempInt = (int)Math.Round(_temp);
         _tempDisplay.text = tempInt + "°C";
     }
 
     private void BurnFuel()
     {
         _fuelTimer -= Time.deltaTime;
+        
+        if (_temp < TempValue) _temp += Time.deltaTime * _tempSpeed;
+        else if (_temp > TempValue) _temp -= Time.deltaTime * _tempSpeed;
 
         if (_fuelCount.Count != 0 && !_fuelCount[0]._canBurn)
         {
@@ -111,8 +114,6 @@ public class FurnaceManager : MonoBehaviour
         {
             Fuel--;
             _fuelTimer = _burnSpeed;
-            if (_temp < TempValue) _temp += Time.deltaTime * (_fuelCount.Count * _tempSpeed);
-            else if (_temp > TempValue) _temp -= Time.deltaTime * (_fuelCount.Count * _tempSpeed);
         }
     }
 

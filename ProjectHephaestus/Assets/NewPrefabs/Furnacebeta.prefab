@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &409154634
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 409154635}
-  m_Layer: 0
-  m_Name: SmeltedSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &409154635
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409154634}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.3073177, y: 0.416, z: 1.6996574}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7101458734651891441}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &562599884
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,98 +75,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &821437282
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 821437283}
-  - component: {fileID: 821437293}
-  - component: {fileID: 821437292}
-  m_Layer: 0
-  m_Name: SmeltingTimerDisplay
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &821437283
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821437282}
-  m_LocalRotation: {x: -0, y: 0.7245027, z: -0, w: -0.68927205}
-  m_LocalPosition: {x: 0.524, y: 1.257, z: 1.695}
-  m_LocalScale: {x: 0.01610437, y: 0.01610437, z: 0.01610437}
-  m_Children: []
-  m_Father: {fileID: 7101458734651891441}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!23 &821437293
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821437282}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 6a82eda111ed1bb46a9e11c85fc965bc, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!102 &821437292
-TextMesh:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821437282}
-  m_Text: Smelting
-  m_OffsetZ: 0
-  m_CharacterSize: 1
-  m_LineSpacing: 1
-  m_Anchor: 4
-  m_Alignment: 1
-  m_TabSize: 4
-  m_FontSize: 200
-  m_FontStyle: 0
-  m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 6a82eda111ed1bb46a9e11c85fc965bc, type: 3}
-  m_Color:
-    serializedVersion: 2
-    rgba: 4283334897
 --- !u!1 &1246081645
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,10 +216,16 @@ MonoBehaviour:
   _smeltedObjectSpawn: {fileID: 409154635}
   _smeltingTimerDisplay: {fileID: 821437282}
   _smeltingTimerMesh: {fileID: 821437292}
+  _smeltingObjects: []
+  Fuel: 0
+  _burnSpeed: 0
+  _tempSpeed: 0
+  _tempDisplay: {fileID: 0}
   _fireParticleEffect: {fileID: 2879990211668827825}
   _smokeParticleEffect: {fileID: 2879990212038044263}
   _smokeDuration: 5
   _strikerTimerController: {fileID: 0}
+  _fuelCount: []
 --- !u!64 &609904218
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -356,6 +240,162 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4068373912626513877, guid: f91ae13afd6785f489b153155fdad8cc, type: 3}
+--- !u!1001 &2127810772245728581
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7101458734651891441}
+    m_Modifications:
+    - target: {fileID: 2127810772373862671, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_Name
+      value: SmeltedSpawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.3073177
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.416
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.6996574
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c91304629a509d44cb283bb4a7794526, type: 3}
+--- !u!4 &409154635 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
+    type: 3}
+  m_PrefabInstance: {fileID: 2127810772245728581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2465428202042142239
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7101458734651891441}
+    m_Modifications:
+    - target: {fileID: 2465428201758100861, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_Name
+      value: SmeltingTimerDisplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.524
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.257
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.695
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7245027
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.68927205
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465428201758100860, guid: 75d677531b1683c489126cbab335947f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 75d677531b1683c489126cbab335947f, type: 3}
+--- !u!1 &821437282 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2465428201758100861, guid: 75d677531b1683c489126cbab335947f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2465428202042142239}
+  m_PrefabAsset: {fileID: 0}
+--- !u!102 &821437292 stripped
+TextMesh:
+  m_CorrespondingSourceObject: {fileID: 2465428201758100851, guid: 75d677531b1683c489126cbab335947f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2465428202042142239}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2879990211140187627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -366,7 +406,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: f91ae13afd6785f489b153155fdad8cc,
         type: 3}
       propertyPath: m_Name
-      value: Furnacebeta Variant
+      value: Furnacebeta
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f91ae13afd6785f489b153155fdad8cc,
         type: 3}
