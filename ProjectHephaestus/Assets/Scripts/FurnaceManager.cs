@@ -144,7 +144,7 @@ public class FurnaceManager : MonoBehaviour
         smelted.transform.position = _smeltedObjectSpawn.transform.position;
         var _smeltedComponent = smelted.GetComponent<MalleableMaterial>();
         _smeltedComponent.strikerTimerController = _strikerTimerController;
-
+        Debug.Log(smeltedComponent.finalPoints);
         _smeltingTimerDisplay.SetActive(false);
 
         _smokeTimerCountdown = _smokeDuration; ;
@@ -153,15 +153,19 @@ public class FurnaceManager : MonoBehaviour
 
     private float CalculateDeduction(float _currentTemp, MalleableMaterial smeltedObject)
     {
-        if (_currentTemp > (smeltedObject.GoalTemperature - smeltedObject.TempDeviations[0]) || _currentTemp < (smeltedObject.GoalTemperature + smeltedObject.TempDeviations[0]))
+        // Perfect
+        if (_currentTemp > (smeltedObject.GoalTemperature - smeltedObject.TempDeviations[0]) && _currentTemp < (smeltedObject.GoalTemperature + smeltedObject.TempDeviations[0]))
             return 0;
 
-        else if (_currentTemp > (smeltedObject.GoalTemperature - smeltedObject.TempDeviations[1]) || _currentTemp < (smeltedObject.GoalTemperature + smeltedObject.TempDeviations[1]))
+        // Good
+        else if (_currentTemp > (smeltedObject.GoalTemperature - smeltedObject.TempDeviations[1]) && _currentTemp < (smeltedObject.GoalTemperature + smeltedObject.TempDeviations[1]))
             return smeltedObject.MaxPoints / smeltedObject.ThresholdValues.Length;
 
-        else if (_currentTemp > (smeltedObject.GoalTemperature - smeltedObject.TempDeviations[2]) || _currentTemp < (smeltedObject.GoalTemperature + smeltedObject.TempDeviations[2]))
+        // Okay
+        else if (_currentTemp > (smeltedObject.GoalTemperature - smeltedObject.TempDeviations[2]) && _currentTemp < (smeltedObject.GoalTemperature + smeltedObject.TempDeviations[2]))
             return (smeltedObject.MaxPoints / smeltedObject.ThresholdValues.Length) * 2;
 
+        // Shit
         else return (smeltedObject.MaxPoints / smeltedObject.ThresholdValues.Length) * 3;
     }
 

@@ -21,7 +21,7 @@ public class FingerInteraction : MonoBehaviour
         var buttonInteraction = other.gameObject.GetComponent<ButtonInteraction>();
         var fingerInteraction = other.gameObject.GetComponent<FurnaceButtons>();
         if (buttonInteraction) _player.SetActiveJob(buttonInteraction);
-        if (fingerInteraction) _furnaceManager._smeltedObject = fingerInteraction.gameObject;
+        if (fingerInteraction) _furnaceManager._smeltedObject = fingerInteraction.SmeltingObject.gameObject;
     }
 
     // private void Update()

@@ -27,7 +27,7 @@ public class MalleableMaterial : MonoBehaviour
     public int[] TempDeviations => _tempDeviations;
 
     private float _maxPoints;
-    public float finalPoints;
+    public float finalPoints { get; set; }
     private int hitCounter;
 
     public float[] ThresholdValues => _thresholdValues;
@@ -47,7 +47,7 @@ public class MalleableMaterial : MonoBehaviour
     }
 
 
-    private void Start()
+    private void Awake()
     {
         _maxPoints = HitCount;
         Debug.Log("Max points: " + _maxPoints);
