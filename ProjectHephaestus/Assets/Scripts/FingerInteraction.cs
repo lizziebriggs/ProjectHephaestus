@@ -9,6 +9,7 @@ public class FingerInteraction : MonoBehaviour
     [SerializeField] private Transform target;
     //attach the playerbehaviour script to the player, then drop the player in this field
     [SerializeField] private PlayerBehaviour _player;
+    [SerializeField] private FurnaceManager _furnaceManager;
     public static bool button1;
     public static bool button2;
     
@@ -18,7 +19,9 @@ public class FingerInteraction : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var buttonInteraction = other.gameObject.GetComponent<ButtonInteraction>();
+        var fingerInteraction = other.gameObject.GetComponent<FurnaceButtons>();
         if (buttonInteraction) _player.SetActiveJob(buttonInteraction);
+        if (fingerInteraction) _furnaceManager._smeltedObject = fingerInteraction.SmeltingObject.gameObject;
     }
 
     // private void Update()

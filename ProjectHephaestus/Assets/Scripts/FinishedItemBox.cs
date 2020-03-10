@@ -13,8 +13,8 @@ public class FinishedItemBox : MonoBehaviour
         if (!_player.ActiveJob) return;
         if (_player.ActiveJob.JobInformation.ItemName != finishedItem.FinalItem) return;
         //SHOULD output a percentage of the reward, needs testing
-        _player.Reward += (finishedItem.Value % _player.ActiveJob.JobInformation.Reward);
+        _player.Reward += (_player.ActiveJob.JobInformation.Reward * finishedItem.Value);
         //Debug to check
-        Debug.Log(finishedItem.Value % _player.ActiveJob.JobInformation.Reward);
+        Debug.Log(_player.ActiveJob.JobInformation.Reward * finishedItem.Value);
     }
 }

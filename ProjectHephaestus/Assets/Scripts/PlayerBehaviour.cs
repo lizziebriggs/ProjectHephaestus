@@ -7,7 +7,7 @@ public class PlayerBehaviour : MonoBehaviour
     private ButtonInteraction _activeJob;
 
     public ButtonInteraction ActiveJob => _activeJob;
-    public int Reward { get; set; }
+    public float Reward { get; set; }
 
     public void SetActiveJob(ButtonInteraction newJob)
     {

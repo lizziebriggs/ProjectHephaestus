@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7445192818630988149}
   - component: {fileID: 3320612164102007255}
   m_Layer: 0
-  m_Name: OrebetaSmelted 1
+  m_Name: OreDialaSmelted 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,8 +134,18 @@ MonoBehaviour:
   - 0.75
   - 1
   _speed: 1
+  hammeredObjects:
+  - {fileID: -927199367670048503, guid: 6d4600a4e3d63ca4fae12a3c0c2c2d4a, type: 3}
+  - {fileID: -927199367670048503, guid: f4af57b330be3b041a851f7723faccba, type: 3}
+  - {fileID: -927199367670048503, guid: 3b48285ffd2a11547aa1f8c92689a40b, type: 3}
+  - {fileID: -927199367670048503, guid: 7a24c40a95bcba74498a4468a095be65, type: 3}
   strikerTimerController: {fileID: 0}
+  AnvilManager: {fileID: 0}
+  _tempDeviations: 030000000a0000001e000000
   isMalleable: 0
+  _smeltingTime: 5
+  _goalTemperature: 10
+  finalPoints: 0
 --- !u!54 &3320612164102007255
 Rigidbody:
   m_ObjectHideFlags: 0
