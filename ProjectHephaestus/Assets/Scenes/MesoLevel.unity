@@ -2186,6 +2186,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 561652354364953697, guid: 1e0818ea617eee142ba516e649c8367f,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 561652355269337053, guid: 1e0818ea617eee142ba516e649c8367f,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 561652353686991273, guid: 1e0818ea617eee142ba516e649c8367f,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7199394136774990878, guid: 1e0818ea617eee142ba516e649c8367f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2251,22 +2266,7 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.066
       objectReference: {fileID: 0}
-    - target: {fileID: 561652353686991273, guid: 1e0818ea617eee142ba516e649c8367f,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 561652354111953739, guid: 1e0818ea617eee142ba516e649c8367f,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 561652354364953697, guid: 1e0818ea617eee142ba516e649c8367f,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 561652355269337053, guid: 1e0818ea617eee142ba516e649c8367f,
         type: 3}
       propertyPath: playOnAwake
       value: 0
@@ -3536,6 +3536,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1633307731}
     m_Modifications:
+    - target: {fileID: 2127810772373862671, guid: c91304629a509d44cb283bb4a7794526,
+        type: 3}
+      propertyPath: m_Name
+      value: SmeltedSpawn
+      objectReference: {fileID: 0}
     - target: {fileID: 2127810772373862670, guid: c91304629a509d44cb283bb4a7794526,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3590,11 +3595,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2127810772373862671, guid: c91304629a509d44cb283bb4a7794526,
-        type: 3}
-      propertyPath: m_Name
-      value: SmeltedSpawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c91304629a509d44cb283bb4a7794526, type: 3}
@@ -8033,6 +8033,10 @@ PrefabInstance:
       propertyPath: _pointsDisplay
       value: 
       objectReference: {fileID: 1694976606}
+    - target: {fileID: 1314832987, guid: 08bc5e17e5694b04ab2671598bdc1482, type: 3}
+      propertyPath: _keySpawnPoint
+      value: 
+      objectReference: {fileID: 2124499998}
     - target: {fileID: 144433009, guid: 08bc5e17e5694b04ab2671598bdc1482, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -8120,6 +8124,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122207729}
   m_CullTransparentMesh: 0
+--- !u!1 &2124499997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2124499998}
+  m_Layer: 0
+  m_Name: KeySpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2124499998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124499997}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 0.335, z: -0.16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2101436270}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &79621728701284641
 MeshRenderer:
   m_ObjectHideFlags: 0
