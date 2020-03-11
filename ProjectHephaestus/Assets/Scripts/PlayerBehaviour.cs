@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] private float _scoreText;
-    [SerializeField] private GameObject currentJobs;
+
+    [SerializeField] private List<ButtonInteraction> _currentJobs;
+    public List<ButtonInteraction> CurrentJobs => _currentJobs;
 
     private ButtonInteraction _activeJob;
-
     public ButtonInteraction ActiveJob => _activeJob;
+
     public float Reward {
         get { return Reward; }
         set { Reward = value; _scoreText = Reward; }

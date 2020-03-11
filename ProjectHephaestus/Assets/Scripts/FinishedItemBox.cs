@@ -9,6 +9,10 @@ public class FinishedItemBox : MonoBehaviour
     [SerializeField] private List<ParticleSystem> _particleEffects;
     [SerializeField] private TextMesh _pointsDisplay;
 
+    [Header("Key")]
+    [SerializeField] private GameObject _nextLevelKey;
+    [SerializeField] private Transform _keySpawnPoint;
+
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name);
@@ -52,5 +56,30 @@ public class FinishedItemBox : MonoBehaviour
 
         //Debug to check
         Debug.Log(_player.ActiveJob.JobInformation.Reward * finishedItem.RewardValue);
+
+        if (AllJobsCompleted()) SpawnKey();
+    }
+
+    private bool AllJobsCompleted()
+    {
+        int finishedJobCount = 0;
+
+        foreach (var job in _player.CurrentJobs)
+        {
+            if (job.IsCompleted) finishedJobCount++;
+        }
+
+        if (finishedJobCount == _player.CurrentJobs.Count) return true;
+
+        return false;
+    }
+
+    private void SpawnKey()
+    {
+        if(_nextLevelKey)
+        {
+            GameObject newKey = Instantiate(_nextLevelKey);
+            newKey.GetComponent<Rigidbody>().AddForce(0, 0, 1, ForceMode.Impulse);
+        }
     }
 }
