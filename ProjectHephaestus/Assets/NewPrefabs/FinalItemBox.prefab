@@ -337,6 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
+  _particleEffects: []
 --- !u!1001 &9078081501297580529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -347,7 +348,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: ba3c19b1f7b1b204c97ece449c49e9d1,
         type: 3}
       propertyPath: m_Name
-      value: Box Variant
+      value: FinalItemBox
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: ba3c19b1f7b1b204c97ece449c49e9d1,
         type: 3}

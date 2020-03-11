@@ -142,7 +142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _finalItem: seal
-  _value: 1
+  _rewardValue: 0
+  _itemQuality: 3
 --- !u!54 &1084463365197999204
 Rigidbody:
   m_ObjectHideFlags: 0
