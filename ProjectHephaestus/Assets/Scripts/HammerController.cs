@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HammerController : MonoBehaviour
 {
+    [SerializeField] private AudioSource _hammerAudio;
+
     private bool _justHit = false;
     private float _waitTimer = 1;
 
@@ -23,6 +25,7 @@ public class HammerController : MonoBehaviour
 
     IEnumerator Reset()
     {
+        _hammerAudio.Play();
         yield return new WaitForSeconds(_waitTimer);
         _justHit = false;
     }

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    [SerializeField] private float _scoreText;
+    [SerializeField] private Text _scoreText;
 
     [SerializeField] private List<ButtonInteraction> _currentJobs;
     public List<ButtonInteraction> CurrentJobs => _currentJobs;
@@ -12,9 +13,10 @@ public class PlayerBehaviour : MonoBehaviour
     private ButtonInteraction _activeJob;
     public ButtonInteraction ActiveJob => _activeJob;
 
+    private float _reward;
     public float Reward {
-        get { return Reward; }
-        set { Reward = value; _scoreText = Reward; }
+        get { return _reward; }
+        set { _reward = value; _scoreText.text = Reward.ToString(); }
     }
 
     public void SetActiveJob(ButtonInteraction newJob)
