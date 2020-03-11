@@ -9,12 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/PortalTesting.unity
     guid: 44bc53259d886ed4eb20543c3c906946
   - enabled: 1
-    path: Assets/Scenes/ProjectHephaestus.unity
-    guid: df96444974045df41ab824939370141c
-  - enabled: 1
-    path: Assets/Scenes/UI Test.unity
-    guid: f7fcfbad8687a6d43bb3ed7203a72a8e
-  - enabled: 1
     path: Assets/Scenes/MesoLevel.unity
     guid: f8b7b62ae709dc844bceaaa981928fc3
   - enabled: 1
