@@ -16,6 +16,6 @@ public class JobSlabs : MonoBehaviour
 
     private void Awake()
     {
-        _uiText.text = _toDo;
+        //_uiText.text = _toDo;
     }
 }

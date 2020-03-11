@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MesoLevel.unity
     guid: f8b7b62ae709dc844bceaaa981928fc3
+  - enabled: 1
+    path: Assets/Scenes/Egypt.unity
+    guid: 89fcec49858004a42a9f469ce1141a6e
   m_configObjects: {}

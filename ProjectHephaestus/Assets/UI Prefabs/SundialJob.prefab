@@ -26,16 +26,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1138505632979694989}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.415111}
-  m_LocalScale: {x: 0.3670661, y: 0.80179006, z: 0.94339645}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 0.016450638, y: 0.039210603, z: 0.042279776}
   m_Children: []
   m_Father: {fileID: 2227354937853516204}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 9.741718}
-  m_SizeDelta: {x: 255.39, y: 98.38}
+  m_AnchoredPosition: {x: 30.9, y: 37.1}
+  m_SizeDelta: {x: 200.25, y: 84.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7031363560033931207
 CanvasRenderer:
@@ -67,18 +67,19 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 42
+    m_MaxSize: 300
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1.12
+  m_Text: "                Sundial\n1: Heat furnace to 16\xB0C\n2: Smelt for 15 seconds\n3:
+    Strike on anvil 5 timesf"
 --- !u!1 &2227354937853516205
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +106,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2227354937853516205}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.9}
+  m_LocalPosition: {x: 0, y: 0, z: -2.2}
   m_LocalScale: {x: 2.7243059, y: 1.2472095, z: 1.06}
   m_Children:
   - {fileID: 2413538727907186846}
@@ -274,7 +275,6 @@ GameObject:
   - component: {fileID: 2500317408692224435}
   - component: {fileID: 2500317408692224436}
   - component: {fileID: 2227354937637079882}
-  - component: {fileID: 2227354937637079881}
   m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
@@ -289,14 +289,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2500317408692224438}
-  m_LocalRotation: {x: -0, y: 0.70701855, z: -0, w: 0.70719504}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -0.0015276162}
   m_LocalScale: {x: 0.0036029085, y: 0.007598971, z: 0.056417827}
   m_Children:
   - {fileID: 2227354937853516204}
   m_Father: {fileID: 2500317410068375069}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 89.98601, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.657815, y: 0.0027046204}
@@ -370,25 +370,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2500317408692224438}
   m_CullTransparentMesh: 0
---- !u!114 &2227354937637079881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2500317408692224438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aaf960227867044282d921171d2d7ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  pointer: {fileID: 0}
-  sortOrder: 0
 --- !u!1 &2500317410068375058
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,9 +399,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2500317410068375058}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.445, y: 6.168, z: -10.661}
-  m_LocalScale: {x: 0.03423714, y: 0.52043915, z: 0.40443712}
+  m_LocalScale: {x: 0.004833054, y: 0.33514464, z: 0.20108679}
   m_Children:
   - {fileID: 2500317408692224437}
   - {fileID: 2227354938297615587}
@@ -514,14 +495,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 516b153a499bf3e4db671834620d480c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Sundial
-  reward: 100
-  toDo: 'Step 1: Put Ore in the furnace.
-
-    Step 2: Take smelted Ore and place on Anvil.
-
-    Step 3: Hit with hammer four times, getting perfect hits consitantly. '
-  uiText: {fileID: 3406242000102703121}
+  _itemName: sundial
+  _reward: 5
+  _toDo: 
+  _uiText: {fileID: 0}
 --- !u!114 &2500317410068375057
 MonoBehaviour:
   m_ObjectHideFlags: 0

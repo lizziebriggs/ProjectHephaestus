@@ -141,8 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4987ac3a957332468e8c475d62831b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _finalItem: seal
-  _rewardValue: 0
+  _finalItemName: seal
+  _rewardValue: 0.447
   _itemQuality: 1
 --- !u!54 &2163648994507075334
 Rigidbody:

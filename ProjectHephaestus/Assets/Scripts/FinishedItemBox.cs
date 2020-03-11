@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FinishedItemBox : MonoBehaviour
 {
-    [SerializeField] private PlayerBehaviour _player;
+    public PlayerBehaviour Player { get; set; }
     [SerializeField] private List<ParticleSystem> _particleEffects;
     [SerializeField] private TextMesh _pointsDisplay;
     [SerializeField] private AudioSource _finishedItemBoxAudio;
@@ -22,7 +22,7 @@ public class FinishedItemBox : MonoBehaviour
 
         //if (!finishedItem || !_player.ActiveJob || _player.ActiveJob.JobInformation.ItemName.ToLower() != finishedItem.FinalItemName.ToLower()) return;
 
-        if(finishedItem && _player.ActiveJob.JobInformation.ItemName.ToLower() == finishedItem.FinalItemName.ToLower())
+        if(finishedItem && Player.ActiveJob.JobInformation.ItemName.ToLower() == finishedItem.FinalItemName.ToLower())
         {
             _finishedItemBoxAudio.Play();
 
@@ -52,15 +52,15 @@ public class FinishedItemBox : MonoBehaviour
                     break;
             }
 
-            _player.ActiveJob.IsCompleted = true;
+            Player.ActiveJob.IsCompleted = true;
 
             //SHOULD output a percentage of the reward, needs testing
-            float playerPoints = _player.ActiveJob.JobInformation.Reward * finishedItem.RewardValue;
-            _player.Reward += playerPoints;
+            float playerPoints = Player.ActiveJob.JobInformation.Reward * finishedItem.RewardValue;
+            Player.Reward += playerPoints;
             _pointsDisplay.text = playerPoints.ToString();
 
             //Debug to check
-            Debug.Log(_player.ActiveJob.JobInformation.Reward * finishedItem.RewardValue);
+            Debug.Log(Player.ActiveJob.JobInformation.Reward * finishedItem.RewardValue);
 
             if (AllJobsCompleted()) SpawnKey();
 
@@ -72,12 +72,12 @@ public class FinishedItemBox : MonoBehaviour
     {
         int finishedJobCount = 0;
 
-        foreach (var job in _player.CurrentJobs)
+        foreach (var job in Player.CurrentJobs)
         {
             if (job.IsCompleted) finishedJobCount++;
         }
 
-        if (finishedJobCount == _player.CurrentJobs.Count) return true;
+        if (finishedJobCount == Player.CurrentJobs.Count) return true;
 
         return false;
     }
