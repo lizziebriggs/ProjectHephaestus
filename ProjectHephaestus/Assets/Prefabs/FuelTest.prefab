@@ -141,4 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d306a1877c4f82498ac9080bcc01c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelValue: 2
+  fuelValue: 10
+  _tempValue: 10
+  _canBurn: 0
