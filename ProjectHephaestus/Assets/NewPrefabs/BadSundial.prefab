@@ -30,9 +30,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3899831533303774541}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5.338, z: -0.48728025}
-  m_LocalScale: {x: 32.79144, y: 93.5307, z: 32.79144}
+  m_LocalScale: {x: 18.645977, y: 53.18374, z: 18.645977}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -92,7 +92,7 @@ MeshCollider:
   m_GameObject: {fileID: 3899831533303774541}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -140,8 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4987ac3a957332468e8c475d62831b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _finalItem: sundial
-  _value: 0.15
+  _finalItemName: sundial
+  _rewardValue: 0.118
+  _itemQuality: 0
 --- !u!54 &6928234091294377738
 Rigidbody:
   m_ObjectHideFlags: 0

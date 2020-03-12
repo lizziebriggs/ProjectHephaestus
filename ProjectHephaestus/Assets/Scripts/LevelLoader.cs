@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : MonoBehaviour
 {
     private enum LevelState { Idle, LevelLoaded }
+    [SerializeField] private PlayerBehaviour _player;
     [SerializeField] private Transform _objectPoint;
     [SerializeField] private GameObject _portal;
     [SerializeField] private ParticleSystem _particleSystem;
+    private AsyncOperation asyncLoad;
     private LevelItem _currentLevel;
     private LevelState _currentState = LevelState.Idle;
     private int _speed = 50;
@@ -38,24 +40,7 @@ public class LevelLoader : MonoBehaviour
         var level = other.GetComponent<LevelItem>();
         if (level)
         {
-            if (!_currentLevel)
-            {
-                _currentLevel = level;
-                _currentState = LevelState.LevelLoaded;
-                SceneManager.LoadScene(level.Level, LoadSceneMode.Additive);
-                if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
-                if (_portal.activeSelf != true) _portal.SetActive(true);
-            }
-
-            else if (_currentLevel != level)
-            {
-                SceneManager.UnloadSceneAsync(_currentLevel.Level);
-                SceneManager.LoadScene(level.Level, LoadSceneMode.Additive);
-                _currentLevel = level;
-                _currentState = LevelState.LevelLoaded;
-                if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
-                if (_portal.activeSelf != true) _portal.SetActive(true);
-            }
+            StartCoroutine(LoadScene(level));
         }
     }
 
@@ -64,17 +49,55 @@ public class LevelLoader : MonoBehaviour
         var level = other.GetComponent<LevelItem>();
         if (level)
         {
-
-
-            if (_currentLevel)
-            {
-                SceneManager.UnloadSceneAsync(_currentLevel.Level);
-                if (_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(false);
-                if (_portal.activeSelf) _portal.SetActive(false);
-                _currentState = LevelState.Idle;
-                _currentLevel = null;
-            }
+            StartCoroutine(UnloadScene(level));
         }
+    }
+
+    private IEnumerator LoadScene(LevelItem level)
+    {
+        if (!_currentLevel)
+        {
+            _currentLevel = level;
+            _currentState = LevelState.LevelLoaded;
+            asyncLoad = SceneManager.LoadSceneAsync(level.Level, LoadSceneMode.Additive);
+            if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
+            if (_portal.activeSelf != true) _portal.SetActive(true);
+        }
+
+        else if (_currentLevel != level)
+        {
+            SceneManager.UnloadSceneAsync(_currentLevel.Level);
+            asyncLoad = SceneManager.LoadSceneAsync(level.Level, LoadSceneMode.Additive);
+            _currentLevel = level;
+            _currentState = LevelState.LevelLoaded;
+            if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
+            if (_portal.activeSelf != true) _portal.SetActive(true);
+        }
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        var scene = SceneManager.GetSceneByBuildIndex(level.Level);
+        var sceneObjects = scene.GetRootGameObjects();
+        Debug.Log("Scene root count: " + SceneManager.GetSceneAt(1).rootCount);
+        Debug.Log("Scene object count: " + sceneObjects.Length);
+        _player.GetJobs(sceneObjects);
+        yield return null;
+    }
+
+    private IEnumerator UnloadScene(LevelItem level)
+    {
+        if (_currentLevel)
+        {
+            SceneManager.UnloadSceneAsync(_currentLevel.Level);
+            if (_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(false);
+            if (_portal.activeSelf) _portal.SetActive(false);
+            _currentState = LevelState.Idle;
+            _currentLevel = null;
+        }
+
+        yield return null;
     }
 
     private void LevelLoadedState()
@@ -89,7 +112,7 @@ public class LevelLoader : MonoBehaviour
                 var particleSystemMain = _particleSystem.main;
                 particleSystemMain.startColor = _currentLevel.ParticleColour;
             }
-            _currentLevel.gameObject.transform.Rotate(0, 0, _speed * Time.deltaTime);
+            _currentLevel.gameObject.transform.Rotate(0, _speed * Time.deltaTime, 0);
         }
     }
 }

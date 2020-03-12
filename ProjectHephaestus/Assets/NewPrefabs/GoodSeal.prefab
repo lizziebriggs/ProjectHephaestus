@@ -141,8 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4987ac3a957332468e8c475d62831b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _finalItem: seal
-  _value: 0.75
+  _finalItemName: seal
+  _rewardValue: 0.796
+  _itemQuality: 2
 --- !u!54 &1687213805713854439
 Rigidbody:
   m_ObjectHideFlags: 0

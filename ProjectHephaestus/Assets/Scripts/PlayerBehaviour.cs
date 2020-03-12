@@ -1,13 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    private ButtonInteraction _activeJob;
+    [SerializeField] private Text _scoreText;
 
+    [SerializeField] private List<ButtonInteraction> _currentJobs;
+    [SerializeField] private FingerInteraction[] _fingers;
+    public List<ButtonInteraction> CurrentJobs => _currentJobs;
+
+    private ButtonInteraction _activeJob;
     public ButtonInteraction ActiveJob => _activeJob;
-    public float Reward { get; set; }
+
+    private float _reward;
+    public float Reward {
+        get { return _reward; }
+        set { _reward = value; _scoreText.text = Reward.ToString(); }
+    }
+
+    public void GetJobs(GameObject[] sceneObjects)
+    {
+        _currentJobs.Clear();
+
+        foreach (var job in sceneObjects)
+        {
+            var jobComponent = job.GetComponent<JobStorage>();
+            if (jobComponent)
+            {
+                _currentJobs = jobComponent.JobButtons;
+                jobComponent.FinishedItemBox.Player = this;
+                foreach (var finger in _fingers)
+                {
+                    finger._furnaceManager = jobComponent.FurnaceManager;
+                }
+            }
+        }
+    }
 
     public void SetActiveJob(ButtonInteraction newJob)
     {
@@ -16,6 +46,7 @@ public class PlayerBehaviour : MonoBehaviour
             _activeJob = newJob;
             _activeJob.ButtonColour.color = _activeJob.ActiveColour;
         }
+
         if (_activeJob != newJob)
         {
             //new job logic goes here

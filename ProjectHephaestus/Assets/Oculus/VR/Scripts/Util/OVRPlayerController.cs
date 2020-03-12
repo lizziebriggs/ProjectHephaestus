@@ -132,6 +132,8 @@ public class OVRPlayerController : MonoBehaviour
 	/// </summary>
 	public bool RotationEitherThumbstick = false;
 
+    public AudioSource _playerAudio;
+
 	protected CharacterController Controller = null;
 	protected OVRCameraRig CameraRig = null;
 
@@ -223,7 +225,17 @@ public class OVRPlayerController : MonoBehaviour
 			buttonRotation += RotationRatchet;
 	}
 
-	protected virtual void UpdateController()
+
+    void FixedUpdate()
+    {
+        if (Controller.velocity.magnitude > 2.0f)
+        {
+            if(!_playerAudio.isPlaying)  _playerAudio.Play();
+        }
+        else _playerAudio.Stop();
+    }
+
+    protected virtual void UpdateController()
 	{
 		if (useProfileData)
 		{
@@ -326,12 +338,11 @@ public class OVRPlayerController : MonoBehaviour
 
 			bool dpad_move = false;
 
-			if (OVRInput.Get(OVRInput.Button.DpadUp))
-			{
-				moveForward = true;
-				dpad_move = true;
-
-			}
+            if (OVRInput.Get(OVRInput.Button.DpadUp))
+            {
+                moveForward = true;
+                dpad_move = true;
+            }
 
 			if (OVRInput.Get(OVRInput.Button.DpadDown))
 			{

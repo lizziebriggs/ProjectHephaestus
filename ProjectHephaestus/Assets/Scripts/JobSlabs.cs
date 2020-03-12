@@ -6,17 +6,16 @@ using UnityEngine.UI;
 
 public class JobSlabs : MonoBehaviour
 {
-    [SerializeField] private string itemName;
-    [SerializeField] private float reward;
-    [SerializeField, TextArea] private String toDo;
-    [SerializeField] private Text uiText;
+    [SerializeField] private string _itemName;
+    [SerializeField] private float _reward;
+    [SerializeField, TextArea] private String _toDo;
+    [SerializeField] private Text _uiText;
 
-    public string ItemName => itemName;
-
-    public float Reward => reward;
+    public string ItemName => _itemName;
+    public float Reward => _reward;
 
     private void Awake()
     {
-        uiText.text = toDo;
+        //_uiText.text = _toDo;
     }
 }

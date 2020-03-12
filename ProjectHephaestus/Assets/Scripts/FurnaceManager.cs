@@ -33,6 +33,7 @@ public class FurnaceManager : MonoBehaviour
     [SerializeField] private GameObject _fireParticleEffect;
     [SerializeField] private GameObject _smokeParticleEffect;
     [SerializeField] private float _smokeDuration;
+    [SerializeField] private AudioSource _furnaceAudio;
     private float _smokeTimerCountdown;
 
     [Header("Striker Timer Controller")]
@@ -133,6 +134,8 @@ public class FurnaceManager : MonoBehaviour
 
     private void Smelt()
     {
+        _furnaceAudio.Play();
+
         // Change original item to smelted version
         Destroy(_furnaceObject);
         var smelted = Instantiate(_smeltedObject);
