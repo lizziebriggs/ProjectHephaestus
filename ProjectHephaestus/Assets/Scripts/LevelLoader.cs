@@ -60,8 +60,6 @@ public class LevelLoader : MonoBehaviour
             _currentLevel = level;
             _currentState = LevelState.LevelLoaded;
             asyncLoad = SceneManager.LoadSceneAsync(level.Level, LoadSceneMode.Additive);
-            if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
-            if (_portal.activeSelf != true) _portal.SetActive(true);
         }
 
         else if (_currentLevel != level)
@@ -70,13 +68,14 @@ public class LevelLoader : MonoBehaviour
             asyncLoad = SceneManager.LoadSceneAsync(level.Level, LoadSceneMode.Additive);
             _currentLevel = level;
             _currentState = LevelState.LevelLoaded;
-            if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
-            if (_portal.activeSelf != true) _portal.SetActive(true);
         }
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+        
+        if (!_particleSystem.gameObject.activeSelf) _particleSystem.gameObject.SetActive(true);
+        if (_portal.activeSelf != true) _portal.SetActive(true);
 
         var scene = SceneManager.GetSceneByBuildIndex(level.Level);
         var sceneObjects = scene.GetRootGameObjects();
